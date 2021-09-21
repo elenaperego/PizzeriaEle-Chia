@@ -15,8 +15,8 @@ public class PizzaController {
     ArrayList<Pizza> pizzas = new ArrayList<>();
 
     @GetMapping("/create")
-    public Pizza pizza(@RequestParam(value = "name", defaultValue = "World") String name, @RequestParam(value = "price", defaultValue = "0.0") double price, @RequestParam(value = "vegetarian", defaultValue = "false") boolean veg, @RequestParam(value = "toppings", defaultValue = "none") ArrayList<String> toppings) {
-        Pizza newPizza = new Pizza(counter.incrementAndGet(), String.format(name), price, veg, toppings);
+    public Pizza pizza(@RequestParam(value = "name", defaultValue = "niente") String name, @RequestParam(value = "vegetarian", defaultValue = "false") boolean veg) {
+        Pizza newPizza = new Pizza(counter.incrementAndGet(), name, veg);
         pizzas.add(newPizza);
         return newPizza;
     }

@@ -22,10 +22,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de5680a0-8afb-4d08-b781-cf661715b336" name="Default Changelist" comment="mapper">
+    <list default="true" id="de5680a0-8afb-4d08-b781-cf661715b336" name="Default Changelist" comment="mapper and connection finished">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/ConnectionImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/ConnectionImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapperImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +100,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632231612551</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="mapper and connection finished">
+      <created>1632465470924</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1632465470924</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -119,7 +124,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Exception implemented in the code" />
     <MESSAGE value="mapper" />
-    <option name="LAST_COMMIT_MESSAGE" value="mapper" />
+    <MESSAGE value="mapper and connection finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="mapper and connection finished" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="47" key="#com.intellij.ide.util.MemberChooser" timestamp="1632225952320">
@@ -142,14 +148,14 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1632232943589" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1632231626422">
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1632465538837">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1632231626422" />
-    <state x="458" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1632426364743">
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1632465538837" />
+    <state x="458" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1632466060932">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="458" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1632426364743" />
+    <state x="458" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1632466060932" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/PizzaAPI__Ele_$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1621702250345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

@@ -7,9 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionImpl {
-    private static String URL = "jdbc:mysql://localhost:3306/java_demo?useSSL=false";
+    private static String URL = "jdbc:mysql://localhost:3306";
     private static String username = "root";
-    private static String password = "root";
+    private static String password = "Elena030801";
 
     public static Connection getConnection() {
         Connection connection = null;

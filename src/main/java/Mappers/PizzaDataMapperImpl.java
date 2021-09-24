@@ -2,7 +2,10 @@ package Mappers;
 
 import com.PizzaAPI.PizzaAPI.Pizza.Pizza;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PizzaDataMapperImpl implements PizzaDataMapper {
@@ -68,7 +71,29 @@ public class PizzaDataMapperImpl implements PizzaDataMapper {
     }
 
     @Override
-    public void delete(Pizza pizza) {
+    public void delete(Pizza pizzaToBeDeleted) {
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM pizzas WHERE pizzaId = ?;");
+            //pstmt.set ??
+            pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
+    }
+
+    public List<Pizza> getPizzas(){
+        List<Pizza> pizzasList = new ArrayList<>();
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM pizzas;");
+
+            while(rs.next()){
+                pizzasList.add(new Pizza(rs.getInt(0), rs.getString(1), rs.getBoolean(2)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return pizzasList;
     }
 }

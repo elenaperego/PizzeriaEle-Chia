@@ -22,7 +22,7 @@ public class PizzaDataMapperImpl implements PizzaDataMapper {
 
             stmt.executeUpdate("CREATE TABLE pizzas ("
                 + "pizzaId INT NOT NULL AUTO_INCREMENT, "
-                + "name VARCHAR(64), isVegeterian TINYINT, PRIMARY KEY (pizzaID))");
+                + "name VARCHAR(64), isVegeterian TINYINT, PRIMARY KEY (pizzaId))");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -33,7 +33,7 @@ public class PizzaDataMapperImpl implements PizzaDataMapper {
     public Optional<Pizza> find(int pizzaId) {
         Pizza p = null;
         try{
-            PreparedStatement pstmt = conn.prepareStatement("SELECT name, isVegeterian FROM pizzas WHERE pizzaID = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT name, isVegeterian FROM pizzas WHERE pizzaId = ?");
             pstmt.setInt(1, pizzaId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -74,7 +74,7 @@ public class PizzaDataMapperImpl implements PizzaDataMapper {
     public void delete(Pizza pizzaToBeDeleted) {
         try{
             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM pizzas WHERE pizzaId = ?;");
-            //pstmt.set ??
+            pstmt.setLong(1, pizzaToBeDeleted.getId());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

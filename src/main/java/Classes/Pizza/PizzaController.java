@@ -1,9 +1,9 @@
-package com.PizzaAPI.PizzaAPI.Pizza;
+package Classes.Pizza;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.PizzaAPI.PizzaAPI.Exceptions.*;
+import Classes.Exceptions.Exception404;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ public class PizzaController {
 
     @GetMapping("/create")
     public Pizza pizza(@RequestParam(value = "name", defaultValue = "niente") String name, @RequestParam(value = "vegetarian", defaultValue = "false") boolean veg) {
-        Pizza newPizza = new Pizza(counter.incrementAndGet(), name, veg);
+        Pizza newPizza = new Pizza((int) counter.incrementAndGet(), name, veg);
         pizzas.add(newPizza);
         return newPizza;
     }

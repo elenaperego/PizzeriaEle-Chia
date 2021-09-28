@@ -1,14 +1,14 @@
-package com.PizzaAPI.PizzaAPI.Pizza;
+package Classes.Pizza;
 
 import java.util.ArrayList;
 
 public class Pizza {
 
-    private final long id;
+    private final int id;
     private final String name;
     private final boolean vegetarian;
 
-    public Pizza(long id, String name, boolean vegetarian) {
+    public Pizza(int id, String name, boolean vegetarian) {
         this.id = id;
         this.name = name;
         this.vegetarian = vegetarian;

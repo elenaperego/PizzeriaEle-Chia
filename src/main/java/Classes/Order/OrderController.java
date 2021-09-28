@@ -1,10 +1,9 @@
-package com.PizzaAPI.PizzaAPI.Order;
+package Classes.Order;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.PizzaAPI.PizzaAPI.Order.Order;
-import com.PizzaAPI.PizzaAPI.Pizza.Pizza;
+import Classes.Pizza.Pizza;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

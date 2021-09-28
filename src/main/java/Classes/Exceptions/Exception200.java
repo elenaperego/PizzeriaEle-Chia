@@ -1,4 +1,4 @@
-package com.PizzaAPI.PizzaAPI.Exceptions;
+package Classes.Exceptions;
 
 public class Exception200 extends RuntimeException implements Exception {
 

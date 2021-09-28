@@ -1,4 +1,4 @@
-package com.PizzaAPI.PizzaAPI;
+package Classes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

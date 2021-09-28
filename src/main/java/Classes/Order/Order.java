@@ -1,6 +1,6 @@
-package com.PizzaAPI.PizzaAPI.Order;
+package Classes.Order;
 
-import com.PizzaAPI.PizzaAPI.Pizza.Pizza;
+import Classes.Pizza.Pizza;
 
 import java.time.Clock;
 import java.time.Duration;

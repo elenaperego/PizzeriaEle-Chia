@@ -1,4 +1,4 @@
-package com.PizzaAPI.PizzaAPI.Exceptions;
+package Classes.Exceptions;
 
 
 public class ExceptionDetails {

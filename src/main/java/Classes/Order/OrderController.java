@@ -18,7 +18,7 @@ public class OrderController {
         ArrayList<Order> ordersCustomer = new ArrayList<>();
         boolean found = false;
         for (int i = 0; i < orders.size(); i++) {
-            if (orders.get(i).getCustomer_id().equals(id)) {
+            if (orders.get(i).getCustomer_id() == id) {
                 ordersCustomer.add(orders.get(i));
                 found = true;
             }

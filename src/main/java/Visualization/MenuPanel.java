@@ -40,6 +40,8 @@ public class MenuPanel implements ActionListener {
         JLabel priceLabel = new JLabel("" + price + " €");
 
         nameLabel.addActionListener(this);
+        nameLabel.setBackground(Color.LIGHT_GRAY);
+        priceLabel.setBackground(Color.LIGHT_GRAY);
 
         panel.setBackground(Color.LIGHT_GRAY);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));

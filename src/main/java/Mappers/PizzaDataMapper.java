@@ -21,12 +21,13 @@ public class PizzaDataMapper implements DataMapper {
 
             stmt.executeUpdate("CREATE TABLE pizzas ("
                 + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
-                + "name VARCHAR(64), isVegeterian TINYINT, PRIMARY KEY (pizzaId))");
+                + "name VARCHAR(64), "
+                + "isVegeterian TINYINT, "
+                + "PRIMARY KEY (pizzaId))");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
     @Override
     public Optional<Pizza> find(int id) {
@@ -81,7 +82,6 @@ public class PizzaDataMapper implements DataMapper {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     public List<Pizza> getPizzas(){

@@ -1,7 +1,5 @@
 package Classes.Pizza;
 
-import java.util.ArrayList;
-
 public class Pizza {
 
     private final int id;

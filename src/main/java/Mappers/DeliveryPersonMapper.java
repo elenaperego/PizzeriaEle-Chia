@@ -1,6 +1,5 @@
 package Mappers;
 
-import Classes.Pizza.Pizza;
 import Classes.PizzaTopping.PizzaTopping;
 
 import java.sql.*;
@@ -8,22 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PizzaToppingDataMapper implements DataMapper {
-
+/*
+public class DeliveryPersonMapper {
     Connection conn;
-    public PizzaToppingDataMapper(Connection conn, boolean dropTable){
+    public DeliveryPersonMapper(Connection conn, boolean dropTable){
         this.conn = conn;
         Statement stmt;
         try{
             stmt = conn.createStatement();
 
             if(dropTable)
-                stmt.executeUpdate("DROP TABLE IF EXISTS pizzaToppings");
+                stmt.executeUpdate("DROP TABLE IF EXISTS deliveryPersons");
 
             stmt.executeUpdate("CREATE TABLE pizzaToppings ("
-                    + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
+                    + "deliveryPersonId INT NOT NULL AUTO_INCREMENT, "
                     + "pizzaId INT, name VARCHAR(64), "
-                    + "price FLOAT, PRIMARY KEY (pizzaToppingId, pizzaId))");
+                    + "price FLOAT, PRIMARY KEY (pizzaId))");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -65,7 +64,7 @@ public class PizzaToppingDataMapper implements DataMapper {
     public void insert(Object object) {
         try{
             PizzaTopping pizzaToppingToBeInserted = (PizzaTopping) object;
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO pizzaToppings (pizzaId, name, price) VALUES (?, ?, ?);");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO pizzaToppings (pizzaId, name, double) VALUES (?, ?, ?);");
             pstmt.setInt(1, pizzaToppingToBeInserted.getPizzaId());
             pstmt.setString(2, pizzaToppingToBeInserted.getName());
             pstmt.setDouble(3, pizzaToppingToBeInserted.getPrice());
@@ -103,3 +102,4 @@ public class PizzaToppingDataMapper implements DataMapper {
         return pizzaToppingsList;
     }
 }
+*/

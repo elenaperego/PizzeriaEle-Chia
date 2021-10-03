@@ -1,14 +1,14 @@
 package Classes.Customer;
 
 public class Customer {
-    private final long customerId;
+    private final int customerId;
     private final String customerName;
-    private final long phoneNumber;
+    private final String phoneNumber;
     private final String addressStreet;
-    private final long addressCode;
+    private final int addressCode;
 
 
-    public Customer(long id, String name, long number, String street, long code) {
+    public Customer(int id, String name, String number, String street, int code) {
         this.customerId = id;
         this.customerName = name;
         this.phoneNumber = number;
@@ -16,15 +16,15 @@ public class Customer {
         this.addressCode = code;
     }
 
-    public long getId() {
+    public int getId() {
         return this.customerId;
     }
 
     public String getName() { return this.customerName; }
 
-    public long getPhoneNumber() { return this.phoneNumber; }
+    public String getPhoneNumber() { return this.phoneNumber; }
 
     public String getAddressStreet() { return this.addressStreet; }
 
-    public long getAddressCode() { return this.addressCode; }
+    public int getAddressCode() { return this.addressCode; }
 }

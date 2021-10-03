@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+/*@RestController
 public class OrderController {
     private final AtomicLong counter = new AtomicLong();
     private final ArrayList<Order> orders = new ArrayList<>();
@@ -59,3 +59,4 @@ public class OrderController {
         return order;
     }
 }
+*/

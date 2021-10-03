@@ -20,11 +20,12 @@ public class DessertDataMapper implements DataMapper{
            stmt = conn.createStatement();
 
        if(dropTable)
-        stmt.executeUpdate("DROP TABLE IF EXISTS dessert");
+        stmt.executeUpdate("DROP TABLE IF EXISTS desserts");
 
-        stmt.executeUpdate("CREATE TABLE dessert ("
+        stmt.executeUpdate("CREATE TABLE desserts ("
+           + "dessertId INT NOT NULL AUTO_INCREMENT, "
            + "name VARCHAR(64), "
-           + "price TINYINT, "
+           + "price DOUBLE, "
            + "PRIMARY KEY (dessertId))");
 
        } catch (SQLException throwables) {
@@ -36,7 +37,7 @@ public class DessertDataMapper implements DataMapper{
     public Optional find(int id) {
         Dessert d = null;
         try{
-            PreparedStatement pstmt = conn.prepareStatement("SELECT name, price FROM dessert WHERE dessertId = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT name, price FROM desserts WHERE dessertId = ?");
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
@@ -53,7 +54,7 @@ public class DessertDataMapper implements DataMapper{
     public void insert(Object object) {
         try{
             Dessert dessertToBeInserted = (Dessert) object;
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO dessert (name, price) VALUES (?, ?);");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO desserts (name, price) VALUES (?, ?);");
             pstmt.setString(1, dessertToBeInserted.getName());
             pstmt.setDouble(2, dessertToBeInserted.getPrice());
             pstmt.executeUpdate();
@@ -66,7 +67,7 @@ public class DessertDataMapper implements DataMapper{
     public void update(Object object) {
         try{
             Dessert dessertToBeUpdated = (Dessert) object;
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE dessert SET name = ?, price = ? WHERE dessertId = ?;");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE desserts SET name = ?, price = ? WHERE dessertId = ?;");
             pstmt.setString(1, dessertToBeUpdated.getName());
             pstmt.setDouble(2, dessertToBeUpdated.getPrice());
             pstmt.executeUpdate();
@@ -79,8 +80,8 @@ public class DessertDataMapper implements DataMapper{
     public void delete(Object object) {
         try{
             Dessert dessertToBeDeleted = (Dessert) object;
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM dessert WHERE dessertId = ?;");
-            pstmt.setLong(1, dessertToBeDeleted.getId());
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM desserts WHERE dessertId = ?;");
+            pstmt.setInt(1, dessertToBeDeleted.getId());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

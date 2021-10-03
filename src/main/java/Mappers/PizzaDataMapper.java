@@ -20,7 +20,7 @@ public class PizzaDataMapper implements DataMapper {
                 stmt.executeUpdate("DROP TABLE IF EXISTS pizzas");
 
             stmt.executeUpdate("CREATE TABLE pizzas ("
-                + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
+                + "pizzaId INT NOT NULL AUTO_INCREMENT, "
                 + "name VARCHAR(64), "
                 + "isVegeterian TINYINT, "
                 + "PRIMARY KEY (pizzaId))");
@@ -38,7 +38,7 @@ public class PizzaDataMapper implements DataMapper {
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                p = new Pizza((int) id, rs.getString(0), rs.getBoolean(1));
+                p = new Pizza( id, rs.getString(0), rs.getBoolean(1));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

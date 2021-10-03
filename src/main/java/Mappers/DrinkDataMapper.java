@@ -20,11 +20,12 @@ public class DrinkDataMapper implements DataMapper{
                 stmt = conn.createStatement();
 
                 if(dropTable)
-                    stmt.executeUpdate("DROP TABLE IF EXISTS drink");
+                    stmt.executeUpdate("DROP TABLE IF EXISTS drinks");
 
-                stmt.executeUpdate("CREATE TABLE drink ("
+                stmt.executeUpdate("CREATE TABLE drinks ("
+                        + "drinkId INT NOT NULL AUTO_INCREMENT, "
                         + "name VARCHAR(64), "
-                        + "price TINYINT, "
+                        + "price DOUBLE, "
                         + "PRIMARY KEY (drinkId))");
 
             } catch (SQLException throwables) {
@@ -36,12 +37,12 @@ public class DrinkDataMapper implements DataMapper{
     public Optional find(int id) {
         Drink d = null;
         try{
-            PreparedStatement pstmt = conn.prepareStatement("SELECT name, price FROM drink WHERE drinkId = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT name, price FROM drinks WHERE drinkId = ?");
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                d = new Drink((int) id, rs.getString(0), rs.getDouble(1));
+                d = new Drink(id, rs.getString(0), rs.getDouble(1));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -53,7 +54,7 @@ public class DrinkDataMapper implements DataMapper{
     public void insert(Object object) {
         try{
             Drink drinkToBeInserted = (Drink) object;
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO drink (name, price) VALUES (?, ?);");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO drinks (name, price) VALUES (?, ?);");
             pstmt.setString(1, drinkToBeInserted.getName());
             pstmt.setDouble(2, drinkToBeInserted.getPrice());
             pstmt.executeUpdate();
@@ -66,7 +67,7 @@ public class DrinkDataMapper implements DataMapper{
     public void update(Object object) {
         try{
             Drink drinkToBeUpdated = (Drink) object;
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE drink SET name = ?, price = ? WHERE drinkId = ?;");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE drinks SET name = ?, price = ? WHERE drinkId = ?;");
             pstmt.setString(1, drinkToBeUpdated.getName());
             pstmt.setDouble(2, drinkToBeUpdated.getPrice());
             pstmt.executeUpdate();
@@ -79,8 +80,8 @@ public class DrinkDataMapper implements DataMapper{
     public void delete(Object object) {
         try{
             Drink drinkToBeDeleted = (Drink) object;
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM drink WHERE drinkId = ?;");
-            pstmt.setLong(1, drinkToBeDeleted.getId());
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM drinks WHERE drinkId = ?;");
+            pstmt.setInt(1, drinkToBeDeleted.getId());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

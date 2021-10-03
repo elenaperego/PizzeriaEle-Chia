@@ -1,11 +1,8 @@
 package Mappers;
 
 import Classes.DeliveryPerson.DeliveryPerson;
-import Classes.PizzaTopping.PizzaTopping;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class DeliveryPersonMapper implements DataMapper{

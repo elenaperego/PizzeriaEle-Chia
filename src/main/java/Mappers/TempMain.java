@@ -10,6 +10,8 @@ import Classes.Pizza.Pizza;
 import Classes.PizzaTopping.PizzaTopping;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -18,11 +20,12 @@ public class TempMain {
 
     static AtomicInteger counter =new AtomicInteger();;
 
-    public static void main (String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public static void main (String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
         Connection conn = ConnectionImpl.getConnection();
-        DataMapper mapper = new DiscountCodeDataMapper(conn, true);
-        DiscountCode c = new DiscountCode(counter.getAndIncrement(), true);
-        mapper.insert(c);
+
+
+
+
 
 
     }

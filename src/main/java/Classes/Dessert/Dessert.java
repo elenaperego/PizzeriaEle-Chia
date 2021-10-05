@@ -14,7 +14,7 @@ public class Dessert implements MenuItem {
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return dessertId;
     }
 

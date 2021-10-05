@@ -11,7 +11,7 @@ import java.sql.Connection;
 
 public class LogoPanel extends JPanel implements ActionListener {
 
-    Connection conn;
+    Connection conn = ConnectionImpl.getConnection();
 
     JLabel logo = new JLabel("            CHIA & ELE PIZZERIA");
     JButton pizzaLogo = new JButton();
@@ -21,8 +21,7 @@ public class LogoPanel extends JPanel implements ActionListener {
     ImageIcon vespaIcon = new ImageIcon(ImageLoader.loadImage("src/main/java/Visualization/Resources/Vespa.png"));
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    LogoPanel(Connection conn) {
-        this.conn = conn;
+    LogoPanel() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
 
         this.setBackground(Color.RED);
         this.setPreferredSize(new Dimension(screenSize.width/2, screenSize.height/6));
@@ -49,7 +48,16 @@ public class LogoPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Order order = null;
-        OrderFrame orderFrame = new OrderFrame(conn);
+        OrderFrame orderFrame = null;
+        try {
+            orderFrame = new OrderFrame();
+        } catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
+        } catch (InstantiationException instantiationException) {
+            instantiationException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
+        }
         order = orderFrame.getNewOrder();
         StatusFrame statusFrame = new StatusFrame(conn, order);
 

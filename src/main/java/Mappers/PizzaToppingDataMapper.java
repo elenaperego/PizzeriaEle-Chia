@@ -11,22 +11,21 @@ import java.util.Optional;
 public class PizzaToppingDataMapper implements DataMapper {
 
     Connection conn;
-    public PizzaToppingDataMapper(Connection conn, boolean dropTable){
+    public PizzaToppingDataMapper(Connection conn, boolean exists){
         this.conn = conn;
         Statement stmt;
         try{
             stmt = conn.createStatement();
 
-            if(dropTable)
-                stmt.executeUpdate("DROP TABLE IF EXISTS pizzaToppings");
+            if(!exists) {
 
-            stmt.executeUpdate("CREATE TABLE pizzaToppings ("
-                    + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
-                    + "pizzaId INT, "
-                    + "name VARCHAR(64), "
-                    + "price FLOAT,"
-                    + " PRIMARY KEY (pizzaToppingId, pizzaId))");
-
+                stmt.executeUpdate("CREATE TABLE pizzaToppings ("
+                        + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
+                        + "pizzaId INT, "
+                        + "name VARCHAR(64), "
+                        + "price FLOAT,"
+                        + " PRIMARY KEY (pizzaToppingId, pizzaId))");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -97,7 +96,7 @@ public class PizzaToppingDataMapper implements DataMapper {
             ResultSet rs = stmt.executeQuery("SELECT * FROM pizzaToppings;");
 
             while(rs.next()){
-                pizzaToppingsList.add(new PizzaTopping(rs.getInt(0), rs.getInt(1), rs.getString(2), rs.getDouble(3)));
+                pizzaToppingsList.add(new PizzaTopping(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4)));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

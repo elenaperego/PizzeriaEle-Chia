@@ -1,7 +1,7 @@
 package Classes;
 
 public interface MenuItem {
-    long getId();
+    int getId();
     String getName();
     double getPrice();
 }

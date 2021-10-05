@@ -10,23 +10,22 @@ public class OrderDataMapper implements DataMapper{
 
     Connection conn;
 
-    public OrderDataMapper(Connection conn, boolean dropTable) {
+    public OrderDataMapper(Connection conn, boolean exists) {
         this.conn = conn;
         Statement stmt;
         try{
             stmt = conn.createStatement();
 
-            if(dropTable)
-                stmt.executeUpdate("DROP TABLE IF EXISTS orders");
+            if(!exists) {
 
-            stmt.executeUpdate("CREATE TABLE orders ("
-                    + "orderStatus VARCHAR(64), "
-                    + "customerId TINYINT, "
-                    + "codeId INT, "
-                    + "estimatedDeliveryTime DATE, "
-                    + "totalPrice INT, "
-                    + "PRIMARY KEY (orderId))");
-
+                stmt.executeUpdate("CREATE TABLE orders ("
+                        + "orderStatus VARCHAR(64), "
+                        + "customerId TINYINT, "
+                        + "codeId INT, "
+                        + "estimatedDeliveryTime DATE, "
+                        + "totalPrice INT, "
+                        + "PRIMARY KEY (orderId))");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

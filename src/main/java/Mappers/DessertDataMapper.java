@@ -10,22 +10,21 @@ public class DessertDataMapper implements DataMapper{
 
  Connection conn;
 
-    public DessertDataMapper(Connection conn, boolean dropTable) {
+    public DessertDataMapper(Connection conn, boolean exists) {
         this.conn = conn;
        Statement stmt;
 
        try{
            stmt = conn.createStatement();
 
-       if(dropTable)
-        stmt.executeUpdate("DROP TABLE IF EXISTS desserts");
+       if(!exists) {
 
-        stmt.executeUpdate("CREATE TABLE desserts ("
-           + "dessertId INT NOT NULL AUTO_INCREMENT, "
-           + "name VARCHAR(64), "
-           + "price DOUBLE, "
-           + "PRIMARY KEY (dessertId))");
-
+           stmt.executeUpdate("CREATE TABLE desserts ("
+                   + "dessertId INT NOT NULL AUTO_INCREMENT, "
+                   + "name VARCHAR(64), "
+                   + "price DOUBLE, "
+                   + "PRIMARY KEY (dessertId))");
+       }
        } catch (SQLException throwables) {
            throwables.printStackTrace();
        }
@@ -93,7 +92,7 @@ public class DessertDataMapper implements DataMapper{
             ResultSet rs = stmt.executeQuery("SELECT * FROM desserts;");
 
             while(rs.next()){
-                dessertsList.add(new Dessert(rs.getInt(0), rs.getString(0), rs.getDouble(1)));
+                dessertsList.add(new Dessert(rs.getInt(1), rs.getString(2), rs.getDouble(3)));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

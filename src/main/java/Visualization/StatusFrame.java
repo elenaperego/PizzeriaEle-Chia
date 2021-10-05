@@ -10,7 +10,7 @@ public class StatusFrame extends JFrame {
 
     Connection conn;
     Order order;
-    JLabel orderLabel = new JLabel("STATUS ORDER " + order.getId());
+    //JLabel orderLabel = new JLabel("STATUS ORDER " + order.getId());
 
     StatusFrame(Connection conn, Order order){
         this.conn = conn;

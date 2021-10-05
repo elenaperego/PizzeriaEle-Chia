@@ -3,6 +3,7 @@ package Visualization;
 import Classes.MenuItem;
 import Classes.Order.Order;
 import Classes.Pizza.Pizza;
+import Mappers.ConnectionImpl;
 import Mappers.DiscountCodeDataMapper;
 import Mappers.OrderDataMapper;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class OrderFrame implements ActionListener {
 
-    Connection conn;
+    Connection conn = ConnectionImpl.getConnection();
 
     Order newOrder = null;
     double finalPrice = 0;
@@ -34,8 +35,7 @@ public class OrderFrame implements ActionListener {
     JTextField codeBox = new JTextField();
     JButton confirmButton = new JButton("CONFIRM ORDER");
 
-    public OrderFrame(Connection conn){
-        this.conn = conn;
+    public OrderFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
 
         orderFrame.setBackground(Color.GREEN);
         orderFrame.setSize(500, 500);
@@ -95,7 +95,16 @@ public class OrderFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        MenuPanel menu = new MenuPanel(conn);
+        MenuPanel menu = null;
+        try {
+            menu = new MenuPanel();
+        } catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
+        } catch (InstantiationException instantiationException) {
+            instantiationException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
+        }
 
         // Add pizzas to order summary if selected in the menu panel
         // Sum price of all the objects and include profits??????

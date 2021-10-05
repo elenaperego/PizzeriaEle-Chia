@@ -4,6 +4,7 @@ import Classes.Dessert.Dessert;
 import Classes.Drink.Drink;
 import Classes.MenuItem;
 import Classes.Pizza.Pizza;
+import Mappers.ConnectionImpl;
 import Mappers.DessertDataMapper;
 import Mappers.DrinkDataMapper;
 import Mappers.PizzaDataMapper;
@@ -15,14 +16,13 @@ import java.util.ArrayList;
 
 public class MenuPanel {
 
-    Connection conn;
+    Connection conn = ConnectionImpl.getConnection();
     JPanel menuPanel = new JPanel();
     JScrollPane scrollPane = new JScrollPane(menuPanel);
     ArrayList<ObjectPanel> menu = new ArrayList();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    MenuPanel(Connection conn) {
-        this.conn = conn;
+    MenuPanel() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         menuPanel.setBackground(Color.LIGHT_GRAY);
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

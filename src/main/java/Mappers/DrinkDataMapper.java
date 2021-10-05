@@ -13,22 +13,21 @@ public class DrinkDataMapper implements DataMapper{
 
     Connection conn;
 
-    public DrinkDataMapper(Connection conn, boolean dropTable) {
+    public DrinkDataMapper(Connection conn, boolean exists) {
             this.conn = conn;
             Statement stmt;
 
             try{
                 stmt = conn.createStatement();
 
-                if(dropTable)
-                    stmt.executeUpdate("DROP TABLE IF EXISTS drinks");
+                if(!exists) {
 
-                stmt.executeUpdate("CREATE TABLE drinks ("
-                        + "drinkId INT NOT NULL AUTO_INCREMENT, "
-                        + "name VARCHAR(64), "
-                        + "price DOUBLE, "
-                        + "PRIMARY KEY (drinkId))");
-
+                    stmt.executeUpdate("CREATE TABLE drinks ("
+                            + "drinkId INT NOT NULL AUTO_INCREMENT, "
+                            + "name VARCHAR(64), "
+                            + "price DOUBLE, "
+                            + "PRIMARY KEY (drinkId))");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -96,7 +95,7 @@ public class DrinkDataMapper implements DataMapper{
             ResultSet rs = stmt.executeQuery("SELECT * FROM drinks;");
 
             while(rs.next()){
-                drinksList.add(new Drink(rs.getInt(0), rs.getString(1), rs.getDouble(2)));
+                drinksList.add(new Drink(rs.getInt(1), rs.getString(2), rs.getDouble(3)));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

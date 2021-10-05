@@ -9,21 +9,19 @@ import java.util.Optional;
 public class PizzaDataMapper implements DataMapper {
 
     Connection conn;
-    public PizzaDataMapper(Connection conn, boolean dropTable){
+    public PizzaDataMapper(Connection conn, boolean exist){
         this.conn = conn;
         Statement stmt;
         try{
             stmt = conn.createStatement();
 
-            if(dropTable)
-                stmt.executeUpdate("DROP TABLE IF EXISTS pizzas");
-
-            stmt.executeUpdate("CREATE TABLE pizzas ("
-                + "pizzaId INT NOT NULL AUTO_INCREMENT, "
-                + "name VARCHAR(64), "
-                + "isVegeterian TINYINT, "
-                + "PRIMARY KEY (pizzaId))");
-
+            if(!exist) {
+                stmt.executeUpdate("CREATE TABLE pizzas ("
+                        + "pizzaId INT NOT NULL AUTO_INCREMENT, "
+                        + "name VARCHAR(64), "
+                        + "isVegeterian TINYINT, "
+                        + "PRIMARY KEY (pizzaId))");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -90,7 +88,7 @@ public class PizzaDataMapper implements DataMapper {
             ResultSet rs = stmt.executeQuery("SELECT * FROM pizzas;");
 
             while(rs.next()){
-                pizzasList.add(new Pizza(rs.getInt(0), rs.getString(1), rs.getBoolean(2)));
+                pizzasList.add(new Pizza(rs.getInt(1), rs.getString(2), rs.getBoolean(3)));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

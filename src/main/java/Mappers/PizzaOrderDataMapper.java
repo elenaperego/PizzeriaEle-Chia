@@ -8,21 +8,20 @@ import java.sql.Statement;
 public class PizzaOrderDataMapper {
     Connection conn;
 
-    public PizzaOrderDataMapper(Connection conn, boolean dropTable) {
+    public PizzaOrderDataMapper(Connection conn, boolean exists) {
         this.conn = conn;
         Statement stmt;
 
         try{
             stmt = conn.createStatement();
 
-            if(dropTable)
-                stmt.executeUpdate("DROP TABLE IF EXISTS pizzaOrders");
+            if(!exists) {
 
-            stmt.executeUpdate("CREATE TABLE pizzaOrders ("
-                    + "orderId INT NOT NULL, "
-                    + "pizzaId INT NOT NULL, "
-                    + "PRIMARY KEY (orderId, pizzaId))");
-
+                stmt.executeUpdate("CREATE TABLE pizzaOrders ("
+                        + "orderId INT NOT NULL, "
+                        + "pizzaId INT NOT NULL, "
+                        + "PRIMARY KEY (orderId, pizzaId))");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

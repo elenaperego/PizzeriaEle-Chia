@@ -18,8 +18,8 @@ public class Launch {
         frame.setSize(screenSize.width, screenSize.height);
         frame.setLayout(new BorderLayout());
 
-        frame.add(new LogoPanel(conn), BorderLayout.NORTH);
-        frame.add(new MenuPanel(conn).getMenuPanel(), BorderLayout.CENTER);
+        frame.add(new LogoPanel(), BorderLayout.NORTH);
+        frame.add(new MenuPanel().getMenuPanel(), BorderLayout.CENTER);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);

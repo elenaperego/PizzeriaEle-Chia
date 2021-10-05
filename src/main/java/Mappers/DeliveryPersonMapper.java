@@ -7,20 +7,19 @@ import java.util.Optional;
 
 public class DeliveryPersonMapper implements DataMapper{
     Connection conn;
-    public DeliveryPersonMapper(Connection conn, boolean dropTable){
+    public DeliveryPersonMapper(Connection conn, boolean exists){
         this.conn = conn;
         Statement stmt;
         try{
             stmt = conn.createStatement();
 
-            if(dropTable)
-                stmt.executeUpdate("DROP TABLE IF EXISTS deliveryPersons");
+            if(!exists) {
 
-            stmt.executeUpdate("CREATE TABLE deliveryPersons ("
-                    + "deliveryPersonId INT NOT NULL AUTO_INCREMENT, "
-                    + "isGirl TINYINT, "
-                    + "areaCode INT, PRIMARY KEY (deliveryPersonId))");
-
+                stmt.executeUpdate("CREATE TABLE deliveryPersons ("
+                        + "deliveryPersonId INT NOT NULL AUTO_INCREMENT, "
+                        + "isGirl TINYINT, "
+                        + "areaCode INT, PRIMARY KEY (deliveryPersonId))");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

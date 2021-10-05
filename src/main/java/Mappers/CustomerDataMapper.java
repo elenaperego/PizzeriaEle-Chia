@@ -10,23 +10,22 @@ public class CustomerDataMapper implements DataMapper{
 
     Connection conn;
 
-    public CustomerDataMapper(Connection conn, boolean dropTable) {
+    public CustomerDataMapper(Connection conn, boolean exists) {
         this.conn = conn;
             Statement stmt;
             try{
                 stmt = conn.createStatement();
 
-                if(dropTable)
-                    stmt.executeUpdate("DROP TABLE IF EXISTS customers");
+                if(!exists) {
 
-                stmt.executeUpdate("CREATE TABLE customers ("
-                        + "customerId INT NOT NULL AUTO_INCREMENT, "
-                        + "name VARCHAR(64), "
-                        + "phoneNumber BIGINT, "
-                        + "addressStreet VARCHAR(64), "
-                        + "addressCode INT, "
-                        + "PRIMARY KEY (customerId))");
-
+                    stmt.executeUpdate("CREATE TABLE customers ("
+                            + "customerId INT NOT NULL AUTO_INCREMENT, "
+                            + "name VARCHAR(64), "
+                            + "phoneNumber BIGINT, "
+                            + "addressStreet VARCHAR(64), "
+                            + "addressCode INT, "
+                            + "PRIMARY KEY (customerId))");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

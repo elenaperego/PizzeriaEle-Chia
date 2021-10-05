@@ -14,7 +14,7 @@ public class Drink implements MenuItem {
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return this.drinkId;
     }
 

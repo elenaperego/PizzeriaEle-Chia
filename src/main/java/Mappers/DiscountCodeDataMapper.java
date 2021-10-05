@@ -12,20 +12,19 @@ import java.util.Optional;
 
 public class DiscountCodeDataMapper implements DataMapper{
     Connection conn;
-    public DiscountCodeDataMapper(Connection conn, boolean dropTable){
+    public DiscountCodeDataMapper(Connection conn, boolean exists){
         this.conn = conn;
         Statement stmt;
         try{
             stmt = conn.createStatement();
 
-            if(dropTable)
-                stmt.executeUpdate("DROP TABLE IF EXISTS discountCodes");
+            if(!exists) {
 
-            stmt.executeUpdate("CREATE TABLE discountCodes ("
-                    + "discountCodeId INT NOT NULL AUTO_INCREMENT, "
-                    + "isUsed TINYINT, "
-                    + "PRIMARY KEY (discountCodeId))");
-
+                stmt.executeUpdate("CREATE TABLE discountCodes ("
+                        + "discountCodeId INT NOT NULL AUTO_INCREMENT, "
+                        + "isUsed TINYINT, "
+                        + "PRIMARY KEY (discountCodeId))");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

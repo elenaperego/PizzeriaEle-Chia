@@ -7,14 +7,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionImpl {
-    private static String URL = "jdbc:mysql://localhost:3306/chiaelepizzeria";
-    private static String username = "root";
-    private static String password = "Elena030801";
+
 
     public static Connection getConnection() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL, username, password);
+            connection = DriverManager.getConnection(DatabaseDetails.getURL(), DatabaseDetails.getUsername(), DatabaseDetails.getPassword());
         } catch (SQLException ex) {
             System.out.println("SQLException: "+ex.getMessage());
             System.out.println("SQLState: "+ex.getSQLState());

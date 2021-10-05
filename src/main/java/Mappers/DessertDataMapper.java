@@ -1,11 +1,9 @@
 package Mappers;
 
-import Classes.Customer.Customer;
 import Classes.Dessert.Dessert;
-import Classes.Drink.Drink;
-import Classes.Pizza.Pizza;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class DessertDataMapper implements DataMapper{
@@ -86,5 +84,20 @@ public class DessertDataMapper implements DataMapper{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public ArrayList<Dessert> getAllDesserts(){
+        ArrayList<Dessert> dessertsList = new ArrayList<>();
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM desserts;");
+
+            while(rs.next()){
+                dessertsList.add(new Dessert(rs.getInt(0), rs.getString(0), rs.getDouble(1)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return dessertsList;
     }
 }

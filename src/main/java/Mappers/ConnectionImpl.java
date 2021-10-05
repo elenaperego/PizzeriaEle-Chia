@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class ConnectionImpl {
     private static String URL = "jdbc:mysql://localhost:3306/chiaelepizzeria";
     private static String username = "root";
-    private static String password = "Elena030801";
+    private static String password = "password";
 
     public static Connection getConnection() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         Connection connection = null;

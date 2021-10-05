@@ -22,8 +22,10 @@ public class PizzaToppingDataMapper implements DataMapper {
 
             stmt.executeUpdate("CREATE TABLE pizzaToppings ("
                     + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
-                    + "pizzaId INT, name VARCHAR(64), "
-                    + "price FLOAT, PRIMARY KEY (pizzaToppingId, pizzaId))");
+                    + "pizzaId INT, "
+                    + "name VARCHAR(64), "
+                    + "price FLOAT,"
+                    + " PRIMARY KEY (pizzaToppingId, pizzaId))");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -88,8 +90,8 @@ public class PizzaToppingDataMapper implements DataMapper {
 
     }
 
-    public List<PizzaTopping> getPizzaToppings(){
-        List<PizzaTopping> pizzaToppingsList = new ArrayList<>();
+    public ArrayList<PizzaTopping> getPizzaToppings(){
+        ArrayList<PizzaTopping> pizzaToppingsList = new ArrayList<>();
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM pizzaToppings;");

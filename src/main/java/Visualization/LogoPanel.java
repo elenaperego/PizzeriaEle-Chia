@@ -1,11 +1,17 @@
 package Visualization;
 
+import Classes.Order.Order;
+import Mappers.ConnectionImpl;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 public class LogoPanel extends JPanel implements ActionListener {
+
+    Connection conn;
 
     JLabel logo = new JLabel("            CHIA & ELE PIZZERIA");
     JButton pizzaLogo = new JButton();
@@ -15,7 +21,9 @@ public class LogoPanel extends JPanel implements ActionListener {
     ImageIcon vespaIcon = new ImageIcon(ImageLoader.loadImage("src/main/java/Visualization/Resources/Vespa.png"));
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    LogoPanel() {
+    LogoPanel(Connection conn) {
+        this.conn = conn;
+
         this.setBackground(Color.RED);
         this.setPreferredSize(new Dimension(screenSize.width/2, screenSize.height/6));
         this.setLayout(new BorderLayout());
@@ -40,14 +48,16 @@ public class LogoPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Order order = null;
+        OrderFrame orderFrame = new OrderFrame(conn);
+        order = orderFrame.getNewOrder();
+        StatusFrame statusFrame = new StatusFrame(conn, order);
 
         if (e.getSource() == pizzaLogo) {
-            OrderFrame f = new OrderFrame();
-            f.setVisible(true);
+            orderFrame.getFrame().setVisible(true);
 
         } else if (e.getSource() == vespaLogo) {
-            StatusFrame f = new StatusFrame();
-            f.setVisible(true);
+            statusFrame.setVisible(true);
         }
     }
 }

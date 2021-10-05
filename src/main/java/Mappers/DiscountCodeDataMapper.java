@@ -5,6 +5,10 @@ import Classes.DiscountCode.DiscountCode;
 import java.sql.*;
 import java.util.Optional;
 
+/*
+ * Should we have some discount codes already stored when the program starts and then
+ * compare it with the one that the user inserts?
+ */
 
 public class DiscountCodeDataMapper implements DataMapper{
     Connection conn;
@@ -80,6 +84,4 @@ public class DiscountCodeDataMapper implements DataMapper{
         }
 
     }
-
 }
-

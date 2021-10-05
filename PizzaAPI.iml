@@ -72,5 +72,26 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.3.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.7.0" level="project" />
     <orderEntry type="library" name="mysql-connector-java-8.0.26" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/build/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/demo/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/generated/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/legacy/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/core-api/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/core-impl/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/protocol-impl/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/user-api/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/user-impl/java" />
+          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/test/java" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/mysql-connector-java-8.0.26" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

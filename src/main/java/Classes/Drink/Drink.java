@@ -1,6 +1,8 @@
 package Classes.Drink;
 
-public class Drink {
+import Classes.MenuItem;
+
+public class Drink implements MenuItem {
     private final int drinkId;
     private final String drinkName;
     private final double drinkPrice;
@@ -11,11 +13,14 @@ public class Drink {
         this.drinkPrice = price;
     }
 
-    public int getId() {
+    @Override
+    public long getId() {
         return this.drinkId;
     }
 
+    @Override
     public String getName() { return this.drinkName; }
 
+    @Override
     public double getPrice() { return this.drinkPrice; }
 }

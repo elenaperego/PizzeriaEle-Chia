@@ -6,7 +6,7 @@ public class Customer {
     private final String phoneNumber;
     private final String addressStreet;
     private final int addressCode;
-
+    private int orderedPizzas = 0;
 
     public Customer(int id, String name, String number, String street, int code) {
         this.customerId = id;
@@ -27,4 +27,12 @@ public class Customer {
     public String getAddressStreet() { return this.addressStreet; }
 
     public int getAddressCode() { return this.addressCode; }
+
+    // n is the number of pizza ordered during a new order
+    public void addOrderedPizzas(int n) { this.orderedPizzas += n; }
+
+    public void setOrderedPizzas(int n) { this.orderedPizzas = n; }
+
+    public int getOrderedPizzas() { return this.orderedPizzas; }
 }
+hh

@@ -1,6 +1,8 @@
 package Classes.Dessert;
 
-public class Dessert {
+import Classes.MenuItem;
+
+public class Dessert implements MenuItem {
     private final int dessertId;
     private final String dessertName;
     private final double dessertPrice;
@@ -11,11 +13,14 @@ public class Dessert {
         this.dessertPrice = price;
     }
 
-    public int getId() {
+    @Override
+    public long getId() {
         return dessertId;
     }
 
+    @Override
     public String getName() { return dessertName; }
 
+    @Override
     public double getPrice() { return dessertPrice; }
 }

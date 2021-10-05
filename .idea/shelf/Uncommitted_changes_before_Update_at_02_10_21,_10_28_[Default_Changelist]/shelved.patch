@@ -1,0 +1,363 @@
+Index: src/main/java/Classes/Pizza/Pizza.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Pizza;\n\nimport java.util.ArrayList;\n\npublic class Pizza {\n\n    private final int id;\n    private final String name;\n    private final boolean vegetarian;\n\n    public Pizza(int id, String name, boolean vegetarian) {\n        this.id = id;\n        this.name = name;\n        this.vegetarian = vegetarian;\n    }\n\n    public long getId() {\n        return id;\n    }\n\n    public boolean isVegeterian() {\n        return vegetarian;\n    }\n\n    public String getName() { return name; }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Pizza/Pizza.java b/src/main/java/Classes/Pizza/Pizza.java
+--- a/src/main/java/Classes/Pizza/Pizza.java	(revision c3a632ef39dde3c2197189765e149b1d81ccc405)
++++ b/src/main/java/Classes/Pizza/Pizza.java	(date 1633162840932)
+@@ -1,7 +1,5 @@
+ package Classes.Pizza;
+ 
+-import java.util.ArrayList;
+-
+ public class Pizza {
+ 
+     private final int id;
+Index: src/main/java/Classes/Order/Order.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Order;\n\nimport Classes.Pizza.Pizza;\n\nimport java.time.Clock;\nimport java.time.Duration;\nimport java.util.ArrayList;\n\npublic class Order {\n    private final long id;\n    private final String customer_id;\n    private String status;\n    private final String ordered_at;\n    private final boolean takeaway;\n    private final String payment_type;\n    private final String delivery_time;\n    private final ArrayList<String> delivery_address;\n    private final ArrayList<Pizza> pizzas;\n    private final Clock clockOrdered = Clock.systemUTC();\n    private final Clock clockDelivered = Clock.offset(clockOrdered, Duration.ofMinutes(20));\n\n    public Order(long id, String customer_id, String status, boolean takeaway, String payment_type, ArrayList<String> delivery_address, ArrayList<Pizza> pizzas) {\n        this.id = id;\n        this.customer_id = customer_id;\n        this.status = status;\n        this.takeaway = takeaway;\n        this.payment_type = payment_type;\n        this.delivery_address = delivery_address;\n        this.pizzas = pizzas;\n        this.ordered_at = clockOrdered.instant().toString();\n        this.delivery_time = clockDelivered.instant().toString();\n    }\n\n    public long getId() {\n        return id;\n    }\n\n    public String getCustomer_id() {\n        return customer_id;\n    }\n\n    public String getStatus() {\n        return status;\n    }\n\n    public void setStatus(String status){\n        this.status = status;\n    }\n\n    public String getOrdered_at() {\n        return ordered_at;\n    }\n\n    public boolean isTakeaway() {\n        return takeaway;\n    }\n\n    public String getPayment_type() {\n        return payment_type;\n    }\n\n    public String getDelivery_time() {\n        return delivery_time;\n    }\n\n    public ArrayList<String> getDelivery_address() {\n        return delivery_address;\n    }\n\n    public ArrayList<Pizza> getPizzas() {\n        return pizzas;\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Order/Order.java b/src/main/java/Classes/Order/Order.java
+--- a/src/main/java/Classes/Order/Order.java	(revision c3a632ef39dde3c2197189765e149b1d81ccc405)
++++ b/src/main/java/Classes/Order/Order.java	(date 1633099143572)
+@@ -7,68 +7,62 @@
+ import java.util.ArrayList;
+ 
+ public class Order {
+-    private final long id;
+-    private final String customer_id;
+-    private String status;
++    private final long orderId;
++    private final long customerId;
++    private String orderStatus;
++    private final long codeId;
++    private double totalPrice;
++    private Date estimatedDeliveryTime;
++
+     private final String ordered_at;
+-    private final boolean takeaway;
+-    private final String payment_type;
+     private final String delivery_time;
+-    private final ArrayList<String> delivery_address;
+-    private final ArrayList<Pizza> pizzas;
+     private final Clock clockOrdered = Clock.systemUTC();
+     private final Clock clockDelivered = Clock.offset(clockOrdered, Duration.ofMinutes(20));
+ 
+-    public Order(long id, String customer_id, String status, boolean takeaway, String payment_type, ArrayList<String> delivery_address, ArrayList<Pizza> pizzas) {
+-        this.id = id;
+-        this.customer_id = customer_id;
+-        this.status = status;
+-        this.takeaway = takeaway;
+-        this.payment_type = payment_type;
+-        this.delivery_address = delivery_address;
+-        this.pizzas = pizzas;
++    public Order(long orderId, long customerId, String status, long codeId, double price, Date time) {
++        this.orderId = orderId;
++        this.customerId = customerId;
++        this.codeId = codeId;
++        this.orderStatus = status;
++        this.totalPrice = price;
++        this.estimatedDeliveryTime = time;
++
+         this.ordered_at = clockOrdered.instant().toString();
+         this.delivery_time = clockDelivered.instant().toString();
+     }
+ 
+     public long getId() {
+-        return id;
++        return this.orderId;
+     }
+ 
+-    public String getCustomer_id() {
+-        return customer_id;
++    public long getCustomerId() {
++        return this.customerId;
+     }
+ 
+     public String getStatus() {
+-        return status;
++        return this.orderStatus;
+     }
+ 
+     public void setStatus(String status){
+-        this.status = status;
++        this.orderStatus = status;
+     }
++
++    public long getCodeId() { return this.codeId; }
++
++    public double getTotalPrice() { return this.totalPrice; }
++
++    public void setTotalPrice(double price) { this.totalPrice = price; }
++
++    public Date getEstimatedDeliveryTime() { return this.estimatedDeliveryTime; }
++
++    public void setEstimatedDeliveryTime(Date time) { this.estimatedDeliveryTime = time; }
+ 
+     public String getOrdered_at() {
+         return ordered_at;
+     }
+ 
+-    public boolean isTakeaway() {
+-        return takeaway;
+-    }
+-
+-    public String getPayment_type() {
+-        return payment_type;
+-    }
+-
+     public String getDelivery_time() {
+         return delivery_time;
+     }
+ 
+-    public ArrayList<String> getDelivery_address() {
+-        return delivery_address;
+-    }
+-
+-    public ArrayList<Pizza> getPizzas() {
+-        return pizzas;
+-    }
+-
+ }
+Index: src/main/java/Mappers/PizzaDataMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\nimport Classes.Pizza.Pizza;\n\nimport java.sql.*;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Optional;\n\npublic class PizzaDataMapper implements DataMapper {\n\n    Connection conn;\n    public PizzaDataMapper(Connection conn, boolean dropTable){\n        this.conn = conn;\n        Statement stmt;\n        try{\n            stmt = conn.createStatement();\n\n            if(dropTable)\n                stmt.executeUpdate(\"DROP TABLE IF EXISTS pizzas\");\n\n            stmt.executeUpdate(\"CREATE TABLE pizzas (\"\n                + \"pizzaToppingId INT NOT NULL AUTO_INCREMENT, \"\n                + \"name VARCHAR(64), isVegeterian TINYINT, PRIMARY KEY (pizzaId))\");\n\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n\n    }\n    @Override\n    public Optional<Pizza> find(int id) {\n        Pizza p = null;\n        try{\n            PreparedStatement pstmt = conn.prepareStatement(\"SELECT name, isVegeterian FROM pizzas WHERE pizzaId = ?\");\n            pstmt.setInt(1, id);\n            ResultSet rs = pstmt.executeQuery();\n\n            if(rs.next()){\n                p = new Pizza((int) id, rs.getString(0), rs.getBoolean(1));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return Optional.ofNullable(p);\n    }\n\n    @Override\n    public void update(Object object) {\n        try{\n            Pizza pizzaToBeUpdated = (Pizza) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"UPDATE pizzas SET name = ?, isVegeterian = ? WHERE pizzaId = ?;\");\n            pstmt.setString(1, pizzaToBeUpdated.getName());\n            pstmt.setBoolean(2, pizzaToBeUpdated.isVegeterian());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void insert(Object object) {\n        try{\n            Pizza pizzaToBeInserted = (Pizza) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"INSERT INTO pizzas (name, isVegeterian) VALUES (?, ?);\");\n            pstmt.setString(1, pizzaToBeInserted.getName());\n            pstmt.setBoolean(2, pizzaToBeInserted.isVegeterian());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void delete(Object object) {\n        try{\n            Pizza pizzaToBeDeleted = (Pizza) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"DELETE FROM pizzas WHERE pizzaId = ?;\");\n            pstmt.setLong(1, pizzaToBeDeleted.getId());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n\n    }\n\n    public List<Pizza> getPizzas(){\n        List<Pizza> pizzasList = new ArrayList<>();\n        try{\n            Statement stmt = conn.createStatement();\n            ResultSet rs = stmt.executeQuery(\"SELECT * FROM pizzas;\");\n\n            while(rs.next()){\n                pizzasList.add(new Pizza(rs.getInt(0), rs.getString(1), rs.getBoolean(2)));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return pizzasList;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/PizzaDataMapper.java b/src/main/java/Mappers/PizzaDataMapper.java
+--- a/src/main/java/Mappers/PizzaDataMapper.java	(revision c3a632ef39dde3c2197189765e149b1d81ccc405)
++++ b/src/main/java/Mappers/PizzaDataMapper.java	(date 1633162997735)
+@@ -21,12 +21,13 @@
+ 
+             stmt.executeUpdate("CREATE TABLE pizzas ("
+                 + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
+-                + "name VARCHAR(64), isVegeterian TINYINT, PRIMARY KEY (pizzaId))");
++                + "name VARCHAR(64), "
++                + "isVegeterian TINYINT, "
++                + "PRIMARY KEY (pizzaId))");
+ 
+         } catch (SQLException throwables) {
+             throwables.printStackTrace();
+         }
+-
+     }
+     @Override
+     public Optional<Pizza> find(int id) {
+@@ -81,7 +82,6 @@
+         } catch (SQLException throwables) {
+             throwables.printStackTrace();
+         }
+-
+     }
+ 
+     public List<Pizza> getPizzas(){
+Index: src/main/java/Visualization/MenuPanel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Visualization;\n\nimport javax.swing.*;\nimport java.awt.*;\nimport java.awt.event.ActionEvent;\nimport java.awt.event.ActionListener;\n\npublic class MenuPanel implements ActionListener {\n\n    JPanel menuPanel = new JPanel();\n    JScrollPane scrollPane = new JScrollPane(menuPanel);\n    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();\n\n    MenuPanel() {\n        menuPanel.setBackground(Color.LIGHT_GRAY);\n        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));\n        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);\n        addPanel(\"Margherita\", 5.50);\n        addPanel(\"Quattro Formaggi\", 10);\n        addPanel(\"San Daniele\", 7);\n        addPanel(\"Primavera\", 8.5);\n        addPanel(\"Boscaiola\", 10);\n        addPanel(\"Diavola\", 7);\n        addPanel(\"Quattro Stagioni\", 10);\n        addPanel(\"Bimbo\", 5);\n        addPanel(\"Elena\", 12);\n        addPanel(\"Chiara\", 12);\n        addPanel(\"Tiramisù\", 8);\n        addPanel(\"Cheesecake\", 9);\n        addPanel(\"Water\", 1.5);\n        addPanel(\"Wine\", 10);\n        addPanel(\"Beer\", 3);\n        addPanel(\"Coke\", 2);\n    }\n\n    public void addPanel(String text, double price) {\n        JPanel panel = new JPanel();\n        JCheckBox checkBox = new JCheckBox();\n        JButton nameLabel = new JButton(text);\n        JLabel priceLabel = new JLabel(\"\" + price + \" €\");\n\n        nameLabel.addActionListener(this);\n\n        panel.setBackground(Color.LIGHT_GRAY);\n        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));\n        panel.setPreferredSize(new Dimension(screenSize.width, 300));\n        panel.add(checkBox);\n        panel.add(nameLabel);\n        panel.add(priceLabel);\n        menuPanel.add(panel);\n        menuPanel.add(Box.createRigidArea(new Dimension(screenSize.width, 30)));\n    }\n\n    @Override\n    public void actionPerformed(ActionEvent e) {\n        IngredientsFrame ingredients = new IngredientsFrame();\n        ingredients.setVisible(true);\n    }\n\n    public JScrollPane getMenuPanel() { return scrollPane; }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Visualization/MenuPanel.java b/src/main/java/Visualization/MenuPanel.java
+--- a/src/main/java/Visualization/MenuPanel.java	(revision c3a632ef39dde3c2197189765e149b1d81ccc405)
++++ b/src/main/java/Visualization/MenuPanel.java	(date 1633092630253)
+@@ -40,6 +40,8 @@
+         JLabel priceLabel = new JLabel("" + price + " €");
+ 
+         nameLabel.addActionListener(this);
++        nameLabel.setBackground(Color.LIGHT_GRAY);
++        priceLabel.setBackground(Color.LIGHT_GRAY);
+ 
+         panel.setBackground(Color.LIGHT_GRAY);
+         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+Index: src/main/java/Mappers/ConnectionImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\nimport com.fasterxml.jackson.annotation.JsonIgnoreType;\n\nimport java.sql.Connection;\nimport java.sql.DriverManager;\nimport java.sql.SQLException;\n\npublic class ConnectionImpl {\n    private static String URL = \"jdbc:mysql://localhost:3306/chiaelepizzeria\";\n    private static String username = \"root\";\n    private static String password = \"Elena030801\";\n\n    public static Connection getConnection() throws ClassNotFoundException, IllegalAccessException, InstantiationException {\n        Connection connection = null;\n        try {\n            connection = DriverManager.getConnection(URL, username, password);\n        } catch (SQLException ex) {\n            System.out.println(\"SQLException: \"+ex.getMessage());\n            System.out.println(\"SQLState: \"+ex.getSQLState());\n            System.out.println(\"VendorError: \"+ex.getErrorCode());\n        }\n        return connection;\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/ConnectionImpl.java b/src/main/java/Mappers/ConnectionImpl.java
+--- a/src/main/java/Mappers/ConnectionImpl.java	(revision c3a632ef39dde3c2197189765e149b1d81ccc405)
++++ b/src/main/java/Mappers/ConnectionImpl.java	(date 1633092626964)
+@@ -9,12 +9,12 @@
+ public class ConnectionImpl {
+     private static String URL = "jdbc:mysql://localhost:3306/chiaelepizzeria";
+     private static String username = "root";
+-    private static String password = "Elena030801";
++    private static String password = null;
+ 
+     public static Connection getConnection() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+         Connection connection = null;
+         try {
+-            connection = DriverManager.getConnection(URL, username, password);
++            connection = DriverManager.getConnection(URL);
+         } catch (SQLException ex) {
+             System.out.println("SQLException: "+ex.getMessage());
+             System.out.println("SQLState: "+ex.getSQLState());
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"BranchesTreeState\">\n    <expand>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"GROUP_NODE:origin\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n    </expand>\n    <select />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"de5680a0-8afb-4d08-b781-cf661715b336\" name=\"Default Changelist\" comment=\"STRA CAZZO COLLEGATO AL DATABASEEEE!!!\">\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/Classes/PizzaTopping/PizzaTopping.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/Mappers/DataMapper.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/Mappers/PizzaToppingDataMapper.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapper.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapper.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapperImpl.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Mappers/TempMain.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Mappers/TempMain.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception200.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception200.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception400.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception400.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception404.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception404.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception412.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception412.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception422.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception422.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/ExceptionDetails.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Exceptions/ExceptionDetails.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Handler.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Exceptions/Handler.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Order/Order.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Order/Order.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Order/OrderController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Order/OrderController.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Pizza/Pizza.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Pizza/PizzaController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/Pizza/PizzaController.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/PizzaApiApplication.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Classes/PizzaApiApplication.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/com/PizzaAPI/PizzaAPI/PizzaApiApplicationTests.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/Classes/PizzaApiApplicationTests.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Interface\" />\n        <option value=\"Class\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"ProjectId\" id=\"1skLxCx4iXCLCrtWyzR0bYlCg2N\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"foldersAlwaysOnTop\" value=\"false\" />\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/../../../../../../../Program Files/Java/mysql-connector-java-8.0.26.jar\" />\n    <property name=\"project.structure.last.edited\" value=\"Libraries\" />\n    <property name=\"project.structure.proportion\" value=\"0.0\" />\n    <property name=\"project.structure.side.proportion\" value=\"0.0\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"configurable.group.editor\" />\n  </component>\n  <component name=\"RecentsManager\">\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\n      <recent name=\"com.PizzaAPI.PizzaAPI\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI\" />\n    </key>\n  </component>\n  <component name=\"RunManager\" selected=\"Application.TempMain\">\n    <configuration name=\"Launch\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"Visualization.Launch\" />\n      <module name=\"PizzaAPI\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"Visualization.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"PizzaApiApplication\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.PizzaAPI.PizzaAPI.PizzaApiApplication\" />\n      <module name=\"PizzaAPI\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.PizzaAPI.PizzaAPI.Pizza.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"TempMain\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"Mappers.TempMain\" />\n      <module name=\"PizzaAPI\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"Mappers.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Application.TempMain\" />\n        <item itemvalue=\"Application.Launch\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"de5680a0-8afb-4d08-b781-cf661715b336\" name=\"Default Changelist\" comment=\"\" />\n      <created>1621411887172</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1621411887172</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Exception implemented in the code\">\n      <created>1621703162491</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1621703162492</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"mapper\">\n      <created>1632231612551</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632231612551</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"mapper and connection finished\">\n      <created>1632465470924</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632465470924</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"mapper and connection finished\">\n      <created>1632485784060</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632485784060</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"STRA CAZZO COLLEGATO AL DATABASEEEE!!!\">\n      <created>1632499810258</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632499810258</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"6\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Exception implemented in the code\" />\n    <MESSAGE value=\"mapper\" />\n    <MESSAGE value=\"mapper and connection finished\" />\n    <MESSAGE value=\"STRA CAZZO COLLEGATO AL DATABASEEEE!!!\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"STRA CAZZO COLLEGATO AL DATABASEEEE!!!\" />\n  </component>\n  <component name=\"WindowStateProjectService\">\n    <state x=\"446\" y=\"47\" key=\"#com.intellij.ide.util.MemberChooser\" timestamp=\"1632826911088\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"446\" y=\"47\" key=\"#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680\" timestamp=\"1632826911088\" />\n    <state x=\"424\" y=\"209\" width=\"432\" height=\"268\" key=\"#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes\" timestamp=\"1632486222096\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"424\" y=\"209\" width=\"432\" height=\"268\" key=\"#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1280.680@0.0.1280.680\" timestamp=\"1632486222096\" />\n    <state x=\"371\" y=\"87\" key=\"#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog\" timestamp=\"1632826832225\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"371\" y=\"87\" key=\"#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680\" timestamp=\"1632826832225\" />\n    <state x=\"369\" y=\"81\" key=\"FileChooserDialogImpl\" timestamp=\"1632497089360\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"369\" y=\"81\" key=\"FileChooserDialogImpl/0.0.1280.680@0.0.1280.680\" timestamp=\"1632497089360\" />\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.bottom\" timestamp=\"1632669380315\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680\" timestamp=\"1632669380315\" />\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.center\" timestamp=\"1632669380315\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680\" timestamp=\"1632669380315\" />\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.left\" timestamp=\"1632669380315\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680\" timestamp=\"1632669380315\" />\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.right\" timestamp=\"1632669380315\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680\" timestamp=\"1632669380315\" />\n    <state x=\"171\" y=\"0\" key=\"Maven.ArtifactSearchDialog\" timestamp=\"1632827802393\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"171\" y=\"0\" key=\"Maven.ArtifactSearchDialog/0.0.1280.680@0.0.1280.680\" timestamp=\"1632827802393\" />\n    <state x=\"142\" y=\"0\" key=\"SettingsEditor\" timestamp=\"1632497097407\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"142\" y=\"0\" key=\"SettingsEditor/0.0.1280.680@0.0.1280.680\" timestamp=\"1632497097407\" />\n    <state x=\"233\" y=\"73\" key=\"Vcs.Push.Dialog.v2\" timestamp=\"1632499815706\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"233\" y=\"73\" key=\"Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680\" timestamp=\"1632499815706\" />\n    <state x=\"458\" y=\"254\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2\" timestamp=\"1632499776777\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"458\" y=\"254\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680\" timestamp=\"1632499776777\" />\n    <state x=\"181\" y=\"51\" width=\"918\" height=\"629\" key=\"com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2\" timestamp=\"1632497162518\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"181\" y=\"51\" width=\"918\" height=\"629\" key=\"com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680@0.0.1280.680\" timestamp=\"1632497162518\" />\n  </component>\n  <component name=\"XDebuggerManager\">\n    <breakpoint-manager>\n      <breakpoints>\n        <breakpoint enabled=\"true\" type=\"java-exception\">\n          <properties class=\"java.sql.SQLSyntaxErrorException\" package=\"java.sql\" />\n          <option name=\"timeStamp\" value=\"1\" />\n        </breakpoint>\n      </breakpoints>\n    </breakpoint-manager>\n  </component>\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\n    <SUITE FILE_PATH=\"coverage/PizzaAPI__Ele_$PizzaApiApplication.ic\" NAME=\"PizzaApiApplication Coverage Results\" MODIFIED=\"1621702250345\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\">\n      <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>\n    </SUITE>\n    <SUITE FILE_PATH=\"coverage/PizzaAPI__Latest_$PizzaApiApplication.ic\" NAME=\"PizzaApiApplication Coverage Results\" MODIFIED=\"1631546958602\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\">\n      <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>\n    </SUITE>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c3a632ef39dde3c2197189765e149b1d81ccc405)
++++ b/.idea/workspace.xml	(date 1633162841988)
+@@ -23,27 +23,13 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="de5680a0-8afb-4d08-b781-cf661715b336" name="Default Changelist" comment="STRA CAZZO COLLEGATO AL DATABASEEEE!!!">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/Classes/PizzaTopping/PizzaTopping.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/Mappers/DataMapper.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/Mappers/PizzaToppingDataMapper.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Order/Order.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Order/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Order/OrderController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/ConnectionImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/ConnectionImpl.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapper.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapperImpl.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/TempMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/TempMain.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception200.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception200.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception400.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception400.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception404.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception404.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception412.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception412.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Exception422.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Exceptions/Exception422.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/ExceptionDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Exceptions/ExceptionDetails.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Exceptions/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Exceptions/Handler.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Order/Order.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Order/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Order/OrderController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Pizza/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/Pizza/PizzaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Pizza/PizzaController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI/PizzaApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/PizzaApiApplication.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/test/java/com/PizzaAPI/PizzaAPI/PizzaApiApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Classes/PizzaApiApplicationTests.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/MenuPanel.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -60,6 +46,14 @@
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="GitSEFilterConfiguration">
++    <file-type-list>
++      <filtered-out-file-type name="LOCAL_BRANCH" />
++      <filtered-out-file-type name="REMOTE_BRANCH" />
++      <filtered-out-file-type name="TAG" />
++      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
++    </file-type-list>
+   </component>
+   <component name="ProjectId" id="1skLxCx4iXCLCrtWyzR0bYlCg2N" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+@@ -199,60 +193,6 @@
+     <MESSAGE value="STRA CAZZO COLLEGATO AL DATABASEEEE!!!" />
+     <option name="LAST_COMMIT_MESSAGE" value="STRA CAZZO COLLEGATO AL DATABASEEEE!!!" />
+   </component>
+-  <component name="WindowStateProjectService">
+-    <state x="446" y="47" key="#com.intellij.ide.util.MemberChooser" timestamp="1632826911088">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="446" y="47" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1632826911088" />
+-    <state x="424" y="209" width="432" height="268" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1632486222096">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="424" y="209" width="432" height="268" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1280.680@0.0.1280.680" timestamp="1632486222096" />
+-    <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1632826832225">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1632826832225" />
+-    <state x="369" y="81" key="FileChooserDialogImpl" timestamp="1632497089360">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="369" y="81" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1632497089360" />
+-    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1632669380315">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1632669380315" />
+-    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1632669380315">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1632669380315" />
+-    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1632669380315">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1632669380315" />
+-    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1632669380315">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1632669380315" />
+-    <state x="171" y="0" key="Maven.ArtifactSearchDialog" timestamp="1632827802393">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="171" y="0" key="Maven.ArtifactSearchDialog/0.0.1280.680@0.0.1280.680" timestamp="1632827802393" />
+-    <state x="142" y="0" key="SettingsEditor" timestamp="1632497097407">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1632497097407" />
+-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1632499815706">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1632499815706" />
+-    <state x="458" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1632499776777">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="458" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1632499776777" />
+-    <state x="181" y="51" width="918" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1632497162518">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="181" y="51" width="918" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680@0.0.1280.680" timestamp="1632497162518" />
+-  </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+       <breakpoints>
+@@ -264,10 +204,19 @@
+     </breakpoint-manager>
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
++    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$Launch.ic" NAME="Launch Coverage Results" MODIFIED="1633091073452" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>Visualization.*</FILTER>
++    </SUITE>
+     <SUITE FILE_PATH="coverage/PizzaAPI__Ele_$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1621702250345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+       <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>
+     </SUITE>
+     <SUITE FILE_PATH="coverage/PizzaAPI__Latest_$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1631546958602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$TempMain.ic" NAME="TempMain Coverage Results" MODIFIED="1633091251286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>Mappers.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1632490991463" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+       <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>
+     </SUITE>
+   </component>
+Index: src/main/java/Classes/Order/OrderController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Order;\n\nimport java.util.ArrayList;\nimport java.util.concurrent.atomic.AtomicLong;\n\nimport Classes.Pizza.Pizza;\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.*;\n\n@RestController\npublic class OrderController {\n    private final AtomicLong counter = new AtomicLong();\n    private final ArrayList<Order> orders = new ArrayList<>();\n\n    @GetMapping(\"/order/{customer_id}\")\n    public ArrayList<Order> getOrders(@RequestParam(value = \"customerID\", defaultValue = \"-1\") String id){\n        ArrayList<Order> ordersCustomer = new ArrayList<>();\n        boolean found = false;\n        for (int i = 0; i < orders.size(); i++) {\n            if (orders.get(i).getCustomer_id().equals(id)) {\n                ordersCustomer.add(orders.get(i));\n                found = true;\n            }\n        }\n        return ordersCustomer;\n    }\n\n    @PostMapping(\"/order\")\n    public Order submitOrder(@RequestParam(value = \"pizzas\", defaultValue = \"-1\") ArrayList<Pizza> pizzas, @RequestParam(value = \"takeAway\", defaultValue = \"-1\") boolean takeaway, @RequestParam(value = \"paymentType\", defaultValue = \"-1\")String payment_type, @RequestParam(value = \"customerID\", defaultValue = \"-1\")String customer_id, @RequestParam(value = \"deliveryAddress\", defaultValue = \"-1\")ArrayList<String>delivery_address){\n        return new Order(counter.incrementAndGet(), customer_id, \"In Progress\", takeaway, payment_type, delivery_address, pizzas);\n    }\n\n    @PostMapping(\"/save\")\n    public ResponseEntity<Order> addEmployee(@RequestParam(value = \"pizzas\", defaultValue = \"-1\") ArrayList<Pizza> pizzas, @RequestParam(value = \"takeAway\", defaultValue = \"-1\") boolean takeaway, @RequestParam(value = \"paymentType\", defaultValue = \"-1\")String payment_type, @RequestParam(value = \"customerID\", defaultValue = \"-1\")String customer_id, @RequestParam(value = \"deliveryAddress\", defaultValue = \"-1\")ArrayList<String>delivery_address){\n        return new ResponseEntity<Order>(new Order(counter.incrementAndGet(), customer_id, \"In Progress\", takeaway, payment_type, delivery_address, pizzas), HttpStatus.CREATED);\n    }\n\n    @PutMapping(\"/order/cancel/{order_id}\")\n    public Order cancelOrder(@RequestParam(value = \"orderID\", defaultValue = \"-1\") long orderID){\n        Order order = null;\n        for (int i = 0; i < orders.size(); i++) {\n            if (orders.get(i).getId() == orderID) {\n                orders.get(i).setStatus(\"cancelled\");\n                order = orders.get(i);\n            }\n        }\n        return order;\n    }\n\n    @GetMapping(\"/order/deliverytime/{order_id}\")\n    public Order getDeliveryTime(@RequestParam(value = \"orderID\", defaultValue = \"-1\") long orderID){\n        Order order = null;\n        for (int i = 0; i < orders.size(); i++) {\n            if (orders.get(i).getId() == orderID) {\n                order = orders.get(i);\n            }\n        }\n        return order;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Order/OrderController.java b/src/main/java/Classes/Order/OrderController.java
+--- a/src/main/java/Classes/Order/OrderController.java	(revision c3a632ef39dde3c2197189765e149b1d81ccc405)
++++ b/src/main/java/Classes/Order/OrderController.java	(date 1633096598186)
+@@ -18,7 +18,7 @@
+         ArrayList<Order> ordersCustomer = new ArrayList<>();
+         boolean found = false;
+         for (int i = 0; i < orders.size(); i++) {
+-            if (orders.get(i).getCustomer_id().equals(id)) {
++            if (orders.get(i).getCustomer_id() == id) {
+                 ordersCustomer.add(orders.get(i));
+                 found = true;
+             }

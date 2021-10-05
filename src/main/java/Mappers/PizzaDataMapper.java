@@ -4,7 +4,6 @@ import Classes.Pizza.Pizza;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class PizzaDataMapper implements DataMapper {
@@ -84,8 +83,8 @@ public class PizzaDataMapper implements DataMapper {
         }
     }
 
-    public List<Pizza> getPizzas(){
-        List<Pizza> pizzasList = new ArrayList<>();
+    public ArrayList<Pizza> getAllPizzas(){
+        ArrayList<Pizza> pizzasList = new ArrayList<>();
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM pizzas;");

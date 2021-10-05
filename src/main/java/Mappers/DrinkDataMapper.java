@@ -6,6 +6,7 @@ import Classes.Drink.Drink;
 import Classes.Pizza.Pizza;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class DrinkDataMapper implements DataMapper{
@@ -86,5 +87,20 @@ public class DrinkDataMapper implements DataMapper{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public ArrayList<Drink> getAllDrinks(){
+        ArrayList<Drink> drinksList = new ArrayList<>();
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM drinks;");
+
+            while(rs.next()){
+                drinksList.add(new Drink(rs.getInt(0), rs.getString(1), rs.getDouble(2)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return drinksList;
     }
 }

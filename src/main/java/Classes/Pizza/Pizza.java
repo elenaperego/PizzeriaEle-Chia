@@ -1,10 +1,13 @@
 package Classes.Pizza;
 
-public class Pizza {
+import Classes.MenuItem;
+
+public class Pizza implements MenuItem {
 
     private final int id;
     private final String name;
     private final boolean vegetarian;
+    private final double price = 0;
 
     public Pizza(int id, String name, boolean vegetarian) {
         this.id = id;
@@ -12,13 +15,16 @@ public class Pizza {
         this.vegetarian = vegetarian;
     }
 
+    @Override
     public long getId() {
         return id;
     }
 
-    public boolean isVegeterian() {
-        return vegetarian;
-    }
-
+    @Override
     public String getName() { return name; }
+
+    @Override
+    public double getPrice() { return price; }
+
+    public boolean isVegeterian() { return vegetarian; }
 }

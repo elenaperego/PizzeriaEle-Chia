@@ -1,0 +1,1345 @@
+Index: src/main/java/Visualization/StatusFrame.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Visualization;\n\nimport javax.swing.*;\nimport java.awt.*;\n\npublic class StatusFrame extends JFrame {\n\n    StatusFrame(){\n        this.setBackground(Color.YELLOW);\n        this.setSize(500, 500);\n        this.setTitle(\"Status\");\n        this.setLocationRelativeTo(null);\n        this.setVisible(false);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Visualization/StatusFrame.java b/src/main/java/Visualization/StatusFrame.java
+--- a/src/main/java/Visualization/StatusFrame.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Visualization/StatusFrame.java	(date 1633417619738)
+@@ -1,15 +1,28 @@
+ package Visualization;
+ 
++import Classes.Order.Order;
++
+ import javax.swing.*;
+ import java.awt.*;
++import java.sql.Connection;
+ 
+ public class StatusFrame extends JFrame {
+ 
+-    StatusFrame(){
++    Connection conn;
++    Order order;
++    JLabel orderLabel = new JLabel("STATUS ORDER " + order.getId());
++
++    StatusFrame(Connection conn, Order order){
++        this.conn = conn;
++        this.order = order;
++
+         this.setBackground(Color.YELLOW);
+         this.setSize(500, 500);
+         this.setTitle("Status");
+         this.setLocationRelativeTo(null);
++        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+         this.setVisible(false);
+     }
++
++    public void updateStatus() {}
+ }
+Index: src/main/java/Classes/Dessert/Dessert.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Dessert;\n\npublic class Dessert {\n    private final int dessertId;\n    private final String dessertName;\n    private final double dessertPrice;\n\n    public Dessert(int id, String name, double price) {\n        this.dessertId = id;\n        this.dessertName = name;\n        this.dessertPrice = price;\n    }\n\n    public int getId() {\n        return dessertId;\n    }\n\n    public String getName() { return dessertName; }\n\n    public double getPrice() { return dessertPrice; }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Dessert/Dessert.java b/src/main/java/Classes/Dessert/Dessert.java
+--- a/src/main/java/Classes/Dessert/Dessert.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Classes/Dessert/Dessert.java	(date 1633417280037)
+@@ -1,6 +1,8 @@
+ package Classes.Dessert;
+ 
+-public class Dessert {
++import Classes.MenuItem;
++
++public class Dessert implements MenuItem {
+     private final int dessertId;
+     private final String dessertName;
+     private final double dessertPrice;
+@@ -11,11 +13,14 @@
+         this.dessertPrice = price;
+     }
+ 
+-    public int getId() {
++    @Override
++    public long getId() {
+         return dessertId;
+     }
+ 
++    @Override
+     public String getName() { return dessertName; }
+ 
++    @Override
+     public double getPrice() { return dessertPrice; }
+ }
+Index: src/main/java/Classes/Customer/Customer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Customer;\n\npublic class Customer {\n    private final int customerId;\n    private final String customerName;\n    private final String phoneNumber;\n    private final String addressStreet;\n    private final int addressCode;\n\n\n    public Customer(int id, String name, String number, String street, int code) {\n        this.customerId = id;\n        this.customerName = name;\n        this.phoneNumber = number;\n        this.addressStreet = street;\n        this.addressCode = code;\n    }\n\n    public int getId() {\n        return this.customerId;\n    }\n\n    public String getName() { return this.customerName; }\n\n    public String getPhoneNumber() { return this.phoneNumber; }\n\n    public String getAddressStreet() { return this.addressStreet; }\n\n    public int getAddressCode() { return this.addressCode; }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Customer/Customer.java b/src/main/java/Classes/Customer/Customer.java
+--- a/src/main/java/Classes/Customer/Customer.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Classes/Customer/Customer.java	(date 1633418103287)
+@@ -6,7 +6,7 @@
+     private final String phoneNumber;
+     private final String addressStreet;
+     private final int addressCode;
+-
++    private int orderedPizzas = 0;
+ 
+     public Customer(int id, String name, String number, String street, int code) {
+         this.customerId = id;
+@@ -27,4 +27,12 @@
+     public String getAddressStreet() { return this.addressStreet; }
+ 
+     public int getAddressCode() { return this.addressCode; }
++
++    // n is the number of pizza ordered during a new order
++    public void addOrderedPizzas(int n) { this.orderedPizzas += n; }
++
++    public void setOrderedPizzas(int n) { this.orderedPizzas = n; }
++
++    public int getOrderedPizzas() { return this.orderedPizzas; }
+ }
++hh
+\ No newline at end of file
+Index: src/main/java/Classes/Drink/Drink.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Drink;\n\npublic class Drink {\n    private final int drinkId;\n    private final String drinkName;\n    private final double drinkPrice;\n\n    public Drink(int id, String name, double price) {\n        this.drinkId = id;\n        this.drinkName = name;\n        this.drinkPrice = price;\n    }\n\n    public int getId() {\n        return this.drinkId;\n    }\n\n    public String getName() { return this.drinkName; }\n\n    public double getPrice() { return this.drinkPrice; }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Drink/Drink.java b/src/main/java/Classes/Drink/Drink.java
+--- a/src/main/java/Classes/Drink/Drink.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Classes/Drink/Drink.java	(date 1633417280044)
+@@ -1,6 +1,8 @@
+ package Classes.Drink;
+ 
+-public class Drink {
++import Classes.MenuItem;
++
++public class Drink implements MenuItem {
+     private final int drinkId;
+     private final String drinkName;
+     private final double drinkPrice;
+@@ -11,11 +13,14 @@
+         this.drinkPrice = price;
+     }
+ 
+-    public int getId() {
++    @Override
++    public long getId() {
+         return this.drinkId;
+     }
+ 
++    @Override
+     public String getName() { return this.drinkName; }
+ 
++    @Override
+     public double getPrice() { return this.drinkPrice; }
+ }
+Index: src/main/java/Visualization/MenuPanel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Visualization;\n\nimport javax.swing.*;\nimport java.awt.*;\nimport java.awt.event.ActionEvent;\nimport java.awt.event.ActionListener;\n\npublic class MenuPanel implements ActionListener {\n\n    JPanel menuPanel = new JPanel();\n    JScrollPane scrollPane = new JScrollPane(menuPanel);\n    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();\n\n    MenuPanel() {\n        menuPanel.setBackground(Color.LIGHT_GRAY);\n        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));\n        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);\n        addPanel(\"Margherita\", 5.50);\n        addPanel(\"Quattro Formaggi\", 10);\n        addPanel(\"San Daniele\", 7);\n        addPanel(\"Primavera\", 8.5);\n        addPanel(\"Boscaiola\", 10);\n        addPanel(\"Diavola\", 7);\n        addPanel(\"Quattro Stagioni\", 10);\n        addPanel(\"Bimbo\", 5);\n        addPanel(\"Elena\", 12);\n        addPanel(\"Chiara\", 12);\n        addPanel(\"Tiramisù\", 8);\n        addPanel(\"Cheesecake\", 9);\n        addPanel(\"Water\", 1.5);\n        addPanel(\"Wine\", 10);\n        addPanel(\"Beer\", 3);\n        addPanel(\"Coke\", 2);\n    }\n\n    public void addPanel(String text, double price) {\n        JPanel panel = new JPanel();\n        JCheckBox checkBox = new JCheckBox();\n        JButton nameLabel = new JButton(text);\n        JLabel priceLabel = new JLabel(\"\" + price + \" €\");\n\n        nameLabel.addActionListener(this);\n        nameLabel.setBackground(Color.LIGHT_GRAY);\n        priceLabel.setBackground(Color.LIGHT_GRAY);\n\n        panel.setBackground(Color.LIGHT_GRAY);\n        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));\n        panel.setPreferredSize(new Dimension(screenSize.width, 300));\n        panel.add(checkBox);\n        panel.add(nameLabel);\n        panel.add(priceLabel);\n        menuPanel.add(panel);\n        menuPanel.add(Box.createRigidArea(new Dimension(screenSize.width, 30)));\n    }\n\n    @Override\n    public void actionPerformed(ActionEvent e) {\n        IngredientsFrame ingredients = new IngredientsFrame();\n        ingredients.setVisible(true);\n    }\n\n    public JScrollPane getMenuPanel() { return scrollPane; }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Visualization/MenuPanel.java b/src/main/java/Visualization/MenuPanel.java
+--- a/src/main/java/Visualization/MenuPanel.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Visualization/MenuPanel.java	(date 1633417325750)
+@@ -1,63 +1,63 @@
+ package Visualization;
+ 
++import Classes.Dessert.Dessert;
++import Classes.Drink.Drink;
++import Classes.MenuItem;
++import Classes.Pizza.Pizza;
++import Mappers.DessertDataMapper;
++import Mappers.DrinkDataMapper;
++import Mappers.PizzaDataMapper;
++
+ import javax.swing.*;
+ import java.awt.*;
+-import java.awt.event.ActionEvent;
+-import java.awt.event.ActionListener;
++import java.sql.Connection;
++import java.util.ArrayList;
+ 
+-public class MenuPanel implements ActionListener {
++public class MenuPanel {
+ 
++    Connection conn;
+     JPanel menuPanel = new JPanel();
+     JScrollPane scrollPane = new JScrollPane(menuPanel);
++    ArrayList<ObjectPanel> menu = new ArrayList();
+     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+ 
+-    MenuPanel() {
++    MenuPanel(Connection conn) {
++        this.conn = conn;
+         menuPanel.setBackground(Color.LIGHT_GRAY);
+         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+-        addPanel("Margherita", 5.50);
+-        addPanel("Quattro Formaggi", 10);
+-        addPanel("San Daniele", 7);
+-        addPanel("Primavera", 8.5);
+-        addPanel("Boscaiola", 10);
+-        addPanel("Diavola", 7);
+-        addPanel("Quattro Stagioni", 10);
+-        addPanel("Bimbo", 5);
+-        addPanel("Elena", 12);
+-        addPanel("Chiara", 12);
+-        addPanel("Tiramisù", 8);
+-        addPanel("Cheesecake", 9);
+-        addPanel("Water", 1.5);
+-        addPanel("Wine", 10);
+-        addPanel("Beer", 3);
+-        addPanel("Coke", 2);
++
++        initializeMenu();
+     }
+ 
+-    public void addPanel(String text, double price) {
+-        JPanel panel = new JPanel();
+-        JCheckBox checkBox = new JCheckBox();
+-        JButton nameLabel = new JButton(text);
+-        JLabel priceLabel = new JLabel("" + price + " €");
++    public void initializeMenu() {
++        ArrayList<Pizza> pizzaMenu = new PizzaDataMapper(conn, true).getAllPizzas();
++        ArrayList<Dessert> dessertMenu = new DessertDataMapper(conn, true).getAllDesserts();
++        ArrayList<Drink> drinkMenu = new DrinkDataMapper(conn, true).getAllDrinks();
++
++        // Loop through all the pizzas and add them to the main panel
++        for (Pizza pizza : pizzaMenu) {
++            addPanel(pizza);
++        }
+ 
+-        nameLabel.addActionListener(this);
+-        nameLabel.setBackground(Color.LIGHT_GRAY);
+-        priceLabel.setBackground(Color.LIGHT_GRAY);
++        // Loop through all the pizzas and add them to the main panel
++        for (Dessert dessert : dessertMenu) {
++            addPanel(dessert);
++        }
+ 
+-        panel.setBackground(Color.LIGHT_GRAY);
+-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+-        panel.setPreferredSize(new Dimension(screenSize.width, 300));
+-        panel.add(checkBox);
+-        panel.add(nameLabel);
+-        panel.add(priceLabel);
+-        menuPanel.add(panel);
++        // Loop through all the pizzas and add them to the main panel
++        for (Drink drink : drinkMenu) {
++            addPanel(drink);
++        }
++    }
++
++    public void addPanel(MenuItem o) {
++        ObjectPanel panel = new ObjectPanel(conn, o);
++        menuPanel.add(panel.getPanel());
+         menuPanel.add(Box.createRigidArea(new Dimension(screenSize.width, 30)));
+     }
+ 
+-    @Override
+-    public void actionPerformed(ActionEvent e) {
+-        IngredientsFrame ingredients = new IngredientsFrame();
+-        ingredients.setVisible(true);
+-    }
++    public ObjectPanel getObject(int i) { return this.menu.get(i); }
+ 
+-    public JScrollPane getMenuPanel() { return scrollPane; }
++    public JScrollPane getMenuPanel() { return this.scrollPane; }
+ }
+Index: src/main/java/Visualization/OrderFrame.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Visualization;\n\nimport javax.swing.*;\nimport java.awt.*;\n\npublic class OrderFrame extends JFrame {\n\n    JPanel orderPanel = new JPanel();\n\n    OrderFrame(){\n        this.setBackground(Color.GREEN);\n        this.setSize(500, 500);\n        this.setTitle(\"Order\");\n        this.setLocationRelativeTo(null);\n        this.setVisible(false);\n    }\n\n    public void addPanel() {\n\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Visualization/OrderFrame.java b/src/main/java/Visualization/OrderFrame.java
+--- a/src/main/java/Visualization/OrderFrame.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Visualization/OrderFrame.java	(date 1633417619729)
+@@ -1,21 +1,128 @@
+ package Visualization;
+ 
++import Classes.MenuItem;
++import Classes.Order.Order;
++import Classes.Pizza.Pizza;
++import Mappers.DiscountCodeDataMapper;
++import Mappers.OrderDataMapper;
++
+ import javax.swing.*;
+ import java.awt.*;
++import java.awt.event.ActionEvent;
++import java.awt.event.ActionListener;
++import java.sql.Connection;
++import java.sql.Date;
++import java.util.ArrayList;
++
++public class OrderFrame implements ActionListener {
+ 
+-public class OrderFrame extends JFrame {
++    Connection conn;
+ 
++    Order newOrder = null;
++    double finalPrice = 0;
++    long codeId = 0;
++    long orderCount = 0;        // Should these two counts remain updated when the application closes or
++    long customerCount = 0;     // is it possible to restart them whenever we launch the application again?
++    Date estimatedDeliveryTime = null;
++
++    JFrame orderFrame = new JFrame();
+     JPanel orderPanel = new JPanel();
++    JLabel orderLabel = new JLabel("ORDER NUMBER: " + orderCount);
++    JLabel orderSummary = new JLabel("      ORDER SUMMARY");
++    JComboBox<Object> summary = new JComboBox<>();
++    JLabel codeLabel = new JLabel("     INSERT CODE HERE");
++    JTextField codeBox = new JTextField();
++    JButton confirmButton = new JButton("CONFIRM ORDER");
+ 
+-    OrderFrame(){
+-        this.setBackground(Color.GREEN);
+-        this.setSize(500, 500);
+-        this.setTitle("Order");
+-        this.setLocationRelativeTo(null);
+-        this.setVisible(false);
++    public OrderFrame(Connection conn){
++        this.conn = conn;
++
++        orderFrame.setBackground(Color.GREEN);
++        orderFrame.setSize(500, 500);
++        orderFrame.setTitle("Order");
++        orderFrame.setLocationRelativeTo(null);
++        orderFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
++        addPanel();
++        orderFrame.setVisible(false);
+     }
+ 
+     public void addPanel() {
++        orderPanel.setSize(500, 500);
++        orderPanel.setLayout(new GridLayout(6, 1));
++
++        orderLabel.setFont(new Font("Serif", Font.BOLD, 17));
++        orderLabel.setHorizontalAlignment(SwingConstants.CENTER);
++        orderSummary.setFont(new Font("Serif", Font.BOLD, 17));
++        codeLabel.setFont(new Font("Serif", Font.BOLD, 17));
++        codeBox.setPreferredSize(new Dimension(200, 70));
++        confirmButton.setPreferredSize(new Dimension(100, 70));
++
++        orderPanel.add(orderLabel);
++        orderPanel.add(orderSummary);
++        orderPanel.add(summary);
++        orderPanel.add(codeLabel);
++        orderPanel.add(codeBox);
++        orderPanel.add(confirmButton);
++
++        this.orderFrame.add(orderPanel);
++    }
++
++    public JFrame getErrorFrame() {
++        JFrame errorFrame = new JFrame();
++        JLabel errorLabel = new JLabel(" CODE NOT ACCEPTED!!!!!!!!");
++
++        errorFrame.setBackground(Color.RED);
++        errorFrame.setSize(100, 50);
++        errorFrame.setTitle("Error");
++        errorFrame.add(errorLabel);
++        errorFrame.setLocationRelativeTo(null);
++        errorFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
++
++        errorFrame.setVisible(false);
++        return errorFrame;
++    }
++
++    public void getFinalPrice(ArrayList<MenuItem> summary) {
++        for (int i = 0; i < summary.size(); i++) {
++            finalPrice += summary.get(i).getPrice();
++        }
++        finalPrice *= 1.9; // Here the 9 % VAT is added
++    }
++
++    public void getEstimatedDeliveryTime() {
++
++    }
++
++    @Override
++    public void actionPerformed(ActionEvent e) {
++        MenuPanel menu = new MenuPanel(conn);
+ 
++        // Add pizzas to order summary if selected in the menu panel
++        // Sum price of all the objects and include profits??????
++        if (e.getSource() == summary) {
++            ArrayList<MenuItem> orderSummary = new ArrayList<>();
++            for (int i = 0; i < menu.menu.size(); i++) {
++                if (menu.getObject(i).getCheckBox().isSelected()) {
++                    summary.addItem(menu.getObject(i).getObject());
++                    orderSummary.add(menu.getObject(i).getObject());
++                }
++            }
++            getFinalPrice(orderSummary);
++
++        // Compare the code inserted by the user with the ones already in the database
++        } else if (e.getSource() == codeBox) {
++            DiscountCodeDataMapper codeMapper = new DiscountCodeDataMapper(conn, true);
++
++        // Add all the elements to the new order and close the current frame
++        } else if (e.getSource() == confirmButton) {
++            newOrder = new Order(orderCount++, customerCount++, "ordered", codeId, finalPrice, estimatedDeliveryTime);
++            OrderDataMapper orderMapper = new OrderDataMapper(conn, true);
++            orderMapper.insert(newOrder);
++            orderFrame.dispose();
++        }
+     }
++
++    public Order getNewOrder() { return newOrder; }
++
++    public JFrame getFrame() { return this.orderFrame; }
+ }
+Index: src/main/java/Visualization/Launch.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Visualization;\n\nimport javax.swing.*;\nimport java.awt.*;\n\npublic class Launch {\n\n    public static void main (String[] args){\n\n        JFrame frame = new JFrame();\n        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();\n\n        frame.setSize(screenSize.width, screenSize.height);\n        frame.setLayout(new BorderLayout());\n\n        frame.add(new LogoPanel(), BorderLayout.NORTH);\n        frame.add(new MenuPanel().getMenuPanel(), BorderLayout.CENTER);\n\n        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);\n        frame.setResizable(false);\n        frame.setVisible(true);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Visualization/Launch.java b/src/main/java/Visualization/Launch.java
+--- a/src/main/java/Visualization/Launch.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Visualization/Launch.java	(date 1633362159521)
+@@ -1,11 +1,16 @@
+ package Visualization;
+ 
++import Mappers.ConnectionImpl;
++
+ import javax.swing.*;
+ import java.awt.*;
++import java.sql.Connection;
+ 
+ public class Launch {
+ 
+-    public static void main (String[] args){
++    public static void main (String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
++
++        Connection conn = ConnectionImpl.getConnection();
+ 
+         JFrame frame = new JFrame();
+         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+@@ -13,8 +18,8 @@
+         frame.setSize(screenSize.width, screenSize.height);
+         frame.setLayout(new BorderLayout());
+ 
+-        frame.add(new LogoPanel(), BorderLayout.NORTH);
+-        frame.add(new MenuPanel().getMenuPanel(), BorderLayout.CENTER);
++        frame.add(new LogoPanel(conn), BorderLayout.NORTH);
++        frame.add(new MenuPanel(conn).getMenuPanel(), BorderLayout.CENTER);
+ 
+         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+         frame.setResizable(false);
+Index: src/main/java/Mappers/ConnectionImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\nimport com.fasterxml.jackson.annotation.JsonIgnoreType;\n\nimport java.sql.Connection;\nimport java.sql.DriverManager;\nimport java.sql.SQLException;\n\npublic class ConnectionImpl {\n    private static String URL = \"jdbc:mysql://localhost:3306/chiaelepizzeria\";\n    private static String username = \"root\";\n    private static String password = \"Elena030801\";\n\n    public static Connection getConnection() throws ClassNotFoundException, IllegalAccessException, InstantiationException {\n        Connection connection = null;\n        try {\n            connection = DriverManager.getConnection(URL, username, password);\n        } catch (SQLException ex) {\n            System.out.println(\"SQLException: \"+ex.getMessage());\n            System.out.println(\"SQLState: \"+ex.getSQLState());\n            System.out.println(\"VendorError: \"+ex.getErrorCode());\n        }\n        return connection;\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/ConnectionImpl.java b/src/main/java/Mappers/ConnectionImpl.java
+--- a/src/main/java/Mappers/ConnectionImpl.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Mappers/ConnectionImpl.java	(date 1633361099160)
+@@ -9,7 +9,7 @@
+ public class ConnectionImpl {
+     private static String URL = "jdbc:mysql://localhost:3306/chiaelepizzeria";
+     private static String username = "root";
+-    private static String password = "Elena030801";
++    private static String password = "password";
+ 
+     public static Connection getConnection() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+         Connection connection = null;
+Index: src/main/java/Visualization/LogoPanel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Visualization;\n\nimport javax.swing.*;\nimport java.awt.*;\nimport java.awt.event.ActionEvent;\nimport java.awt.event.ActionListener;\n\npublic class LogoPanel extends JPanel implements ActionListener {\n\n    JLabel logo = new JLabel(\"            CHIA & ELE PIZZERIA\");\n    JButton pizzaLogo = new JButton();\n    JButton vespaLogo = new JButton();\n\n    ImageIcon pizzaIcon = new ImageIcon(ImageLoader.loadImage(\"src/main/java/Visualization/Resources/Pizza.png\"));\n    ImageIcon vespaIcon = new ImageIcon(ImageLoader.loadImage(\"src/main/java/Visualization/Resources/Vespa.png\"));\n    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();\n\n    LogoPanel() {\n        this.setBackground(Color.RED);\n        this.setPreferredSize(new Dimension(screenSize.width/2, screenSize.height/6));\n        this.setLayout(new BorderLayout());\n\n        logo.setFont(new Font(Font.SERIF, Font.BOLD, 50));\n\n        pizzaLogo.setIcon(pizzaIcon);\n        pizzaLogo.setPreferredSize(new Dimension(screenSize.width/5, screenSize.height/6));\n        pizzaLogo.setBackground(Color.RED);\n        pizzaLogo.setBorderPainted(false);\n        pizzaLogo.addActionListener(this);\n\n        vespaLogo.setIcon(vespaIcon);\n        vespaLogo.setPreferredSize(new Dimension(screenSize.width/5, screenSize.height/6));\n        vespaLogo.setBorderPainted(false);\n        vespaLogo.addActionListener(this);\n\n        this.add(vespaLogo, BorderLayout.EAST);\n        this.add(logo, BorderLayout.CENTER);\n        this.add(pizzaLogo, BorderLayout.WEST);\n    }\n\n    @Override\n    public void actionPerformed(ActionEvent e) {\n\n        if (e.getSource() == pizzaLogo) {\n            OrderFrame f = new OrderFrame();\n            f.setVisible(true);\n\n        } else if (e.getSource() == vespaLogo) {\n            StatusFrame f = new StatusFrame();\n            f.setVisible(true);\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Visualization/LogoPanel.java b/src/main/java/Visualization/LogoPanel.java
+--- a/src/main/java/Visualization/LogoPanel.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Visualization/LogoPanel.java	(date 1633417775947)
+@@ -1,12 +1,18 @@
+ package Visualization;
+ 
++import Classes.Order.Order;
++import Mappers.ConnectionImpl;
++
+ import javax.swing.*;
+ import java.awt.*;
+ import java.awt.event.ActionEvent;
+ import java.awt.event.ActionListener;
++import java.sql.Connection;
+ 
+ public class LogoPanel extends JPanel implements ActionListener {
+ 
++    Connection conn;
++
+     JLabel logo = new JLabel("            CHIA & ELE PIZZERIA");
+     JButton pizzaLogo = new JButton();
+     JButton vespaLogo = new JButton();
+@@ -15,7 +21,9 @@
+     ImageIcon vespaIcon = new ImageIcon(ImageLoader.loadImage("src/main/java/Visualization/Resources/Vespa.png"));
+     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+ 
+-    LogoPanel() {
++    LogoPanel(Connection conn) {
++        this.conn = conn;
++
+         this.setBackground(Color.RED);
+         this.setPreferredSize(new Dimension(screenSize.width/2, screenSize.height/6));
+         this.setLayout(new BorderLayout());
+@@ -40,14 +48,16 @@
+ 
+     @Override
+     public void actionPerformed(ActionEvent e) {
++        Order order = null;
++        OrderFrame orderFrame = new OrderFrame(conn);
++        order = orderFrame.getNewOrder();
++        StatusFrame statusFrame = new StatusFrame(conn, order);
+ 
+         if (e.getSource() == pizzaLogo) {
+-            OrderFrame f = new OrderFrame();
+-            f.setVisible(true);
++            orderFrame.getFrame().setVisible(true);
+ 
+         } else if (e.getSource() == vespaLogo) {
+-            StatusFrame f = new StatusFrame();
+-            f.setVisible(true);
++            statusFrame.setVisible(true);
+         }
+     }
+ }
+Index: src/main/java/Visualization/IngredientsFrame.java
+===================================================================
+diff --git a/src/main/java/Visualization/IngredientsFrame.java b/src/main/java/Visualization/IngredientsFrame.java
+deleted file mode 100644
+--- a/src/main/java/Visualization/IngredientsFrame.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ /dev/null	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
+@@ -1,15 +0,0 @@
+-package Visualization;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-
+-public class IngredientsFrame extends JFrame {
+-
+-    IngredientsFrame() {
+-        this.setBackground(Color.RED);
+-        this.setSize(300, 200);
+-        this.setTitle("Ingredients");
+-        this.setLocationRelativeTo(null);
+-        this.setVisible(false);
+-    }
+-}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"BranchesTreeState\">\n    <expand>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"GROUP_NODE:origin\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n    </expand>\n    <select />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"de5680a0-8afb-4d08-b781-cf661715b336\" name=\"Default Changelist\" comment=\"DeliveryPersonMapper\">\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/Classes/DiscountCode/DiscountCode.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/Mappers/DiscountCodeDataMapper.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Mappers/DeliveryPersonMapper.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Mappers/DeliveryPersonMapper.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Mappers/TempMain.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Mappers/TempMain.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Interface\" />\n        <option value=\"Class\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"ProjectId\" id=\"1skLxCx4iXCLCrtWyzR0bYlCg2N\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"foldersAlwaysOnTop\" value=\"false\" />\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/../../../../../../../Program Files/Java/mysql-connector-java-8.0.26.jar\" />\n    <property name=\"project.structure.last.edited\" value=\"Libraries\" />\n    <property name=\"project.structure.proportion\" value=\"0.0\" />\n    <property name=\"project.structure.side.proportion\" value=\"0.0\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"configurable.group.editor\" />\n  </component>\n  <component name=\"RecentsManager\">\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\n      <recent name=\"com.PizzaAPI.PizzaAPI\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI\" />\n    </key>\n  </component>\n  <component name=\"RunManager\" selected=\"Application.TempMain\">\n    <configuration name=\"Launch\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"Visualization.Launch\" />\n      <module name=\"PizzaAPI\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"Visualization.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"PizzaApiApplication\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.PizzaAPI.PizzaAPI.PizzaApiApplication\" />\n      <module name=\"PizzaAPI\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.PizzaAPI.PizzaAPI.Pizza.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"TempMain\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"Mappers.TempMain\" />\n      <module name=\"PizzaAPI\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"Mappers.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Application.TempMain\" />\n        <item itemvalue=\"Application.Launch\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"de5680a0-8afb-4d08-b781-cf661715b336\" name=\"Default Changelist\" comment=\"\" />\n      <created>1621411887172</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1621411887172</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Exception implemented in the code\">\n      <created>1621703162491</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1621703162492</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"mapper\">\n      <created>1632231612551</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632231612551</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"mapper and connection finished\">\n      <created>1632465470924</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632465470924</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"mapper and connection finished\">\n      <created>1632485784060</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632485784060</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"STRA CAZZO COLLEGATO AL DATABASEEEE!!!\">\n      <created>1632499810258</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632499810258</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"sistemata interface DataMapper\">\n      <created>1632862457341</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1632862457341</updated>\n    </task>\n    <task id=\"LOCAL-00007\" summary=\"sistemata interface DataMapper\">\n      <created>1633162948209</created>\n      <option name=\"number\" value=\"00007\" />\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1633162948209</updated>\n    </task>\n    <task id=\"LOCAL-00008\" summary=\"tutti i mappers funzionano\">\n      <created>1633283032531</created>\n      <option name=\"number\" value=\"00008\" />\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1633283032531</updated>\n    </task>\n    <task id=\"LOCAL-00009\" summary=\"DeliveryPersonMapper\">\n      <created>1633283707919</created>\n      <option name=\"number\" value=\"00009\" />\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1633283707919</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"10\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Exception implemented in the code\" />\n    <MESSAGE value=\"mapper\" />\n    <MESSAGE value=\"mapper and connection finished\" />\n    <MESSAGE value=\"STRA CAZZO COLLEGATO AL DATABASEEEE!!!\" />\n    <MESSAGE value=\"sistemata interface DataMapper\" />\n    <MESSAGE value=\"tutti i mappers funzionano\" />\n    <MESSAGE value=\"DeliveryPersonMapper\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"DeliveryPersonMapper\" />\n  </component>\n  <component name=\"WindowStateProjectService\">\n    <state x=\"371\" y=\"95\" key=\"#com.intellij.codeInsight.editorActions.RestoreReferencesDialog\" timestamp=\"1633164188899\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"371\" y=\"95\" key=\"#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.0.1280.680@0.0.1280.680\" timestamp=\"1633164188899\" />\n    <state x=\"446\" y=\"47\" key=\"#com.intellij.ide.util.MemberChooser\" timestamp=\"1633283960421\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"446\" y=\"47\" key=\"#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680\" timestamp=\"1633283960421\" />\n    <state x=\"424\" y=\"209\" width=\"432\" height=\"268\" key=\"#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes\" timestamp=\"1632486222096\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"424\" y=\"209\" width=\"432\" height=\"268\" key=\"#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1280.680@0.0.1280.680\" timestamp=\"1632486222096\" />\n    <state x=\"371\" y=\"87\" key=\"#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog\" timestamp=\"1632826832225\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"371\" y=\"87\" key=\"#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680\" timestamp=\"1632826832225\" />\n    <state x=\"369\" y=\"81\" key=\"FileChooserDialogImpl\" timestamp=\"1632497089360\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"369\" y=\"81\" key=\"FileChooserDialogImpl/0.0.1280.680@0.0.1280.680\" timestamp=\"1632497089360\" />\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.bottom\" timestamp=\"1633284455025\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680\" timestamp=\"1633284455025\" />\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.center\" timestamp=\"1633284455025\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680\" timestamp=\"1633284455025\" />\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.left\" timestamp=\"1633284455025\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680\" timestamp=\"1633284455025\" />\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.right\" timestamp=\"1633284455025\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state width=\"1237\" height=\"163\" key=\"GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680\" timestamp=\"1633284455025\" />\n    <state x=\"171\" y=\"0\" key=\"Maven.ArtifactSearchDialog\" timestamp=\"1632827802393\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"171\" y=\"0\" key=\"Maven.ArtifactSearchDialog/0.0.1280.680@0.0.1280.680\" timestamp=\"1632827802393\" />\n    <state x=\"121\" y=\"50\" key=\"MergeDialog\" timestamp=\"1633163494839\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"121\" y=\"50\" key=\"MergeDialog/0.0.1280.680@0.0.1280.680\" timestamp=\"1633163494839\" />\n    <state x=\"142\" y=\"0\" key=\"SettingsEditor\" timestamp=\"1632497097407\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"142\" y=\"0\" key=\"SettingsEditor/0.0.1280.680@0.0.1280.680\" timestamp=\"1632497097407\" />\n    <state x=\"233\" y=\"73\" key=\"Vcs.Push.Dialog.v2\" timestamp=\"1633283712922\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"233\" y=\"73\" key=\"Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680\" timestamp=\"1633283712922\" />\n    <state x=\"458\" y=\"254\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2\" timestamp=\"1633283012626\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"458\" y=\"254\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680\" timestamp=\"1633283012626\" />\n    <state x=\"181\" y=\"51\" width=\"918\" height=\"629\" key=\"com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2\" timestamp=\"1632497162518\">\n      <screen x=\"0\" y=\"0\" width=\"1280\" height=\"680\" />\n    </state>\n    <state x=\"181\" y=\"51\" width=\"918\" height=\"629\" key=\"com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680@0.0.1280.680\" timestamp=\"1632497162518\" />\n  </component>\n  <component name=\"XDebuggerManager\">\n    <breakpoint-manager>\n      <breakpoints>\n        <breakpoint enabled=\"true\" type=\"java-exception\">\n          <properties class=\"java.sql.SQLSyntaxErrorException\" package=\"java.sql\" />\n          <option name=\"timeStamp\" value=\"1\" />\n        </breakpoint>\n      </breakpoints>\n    </breakpoint-manager>\n  </component>\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\n    <SUITE FILE_PATH=\"coverage/PizzaAPI__Ele_$PizzaApiApplication.ic\" NAME=\"PizzaApiApplication Coverage Results\" MODIFIED=\"1621702250345\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\">\n      <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>\n    </SUITE>\n    <SUITE FILE_PATH=\"coverage/PizzaAPI__Latest_$PizzaApiApplication.ic\" NAME=\"PizzaApiApplication Coverage Results\" MODIFIED=\"1631546958602\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\">\n      <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>\n    </SUITE>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/.idea/workspace.xml	(date 1633418001081)
+@@ -22,12 +22,30 @@
+     <select />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="de5680a0-8afb-4d08-b781-cf661715b336" name="Default Changelist" comment="DeliveryPersonMapper">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/Classes/DiscountCode/DiscountCode.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/Mappers/DiscountCodeDataMapper.java" afterDir="false" />
++    <list default="true" id="de5680a0-8afb-4d08-b781-cf661715b336" name="Default Changelist" comment="STRA CAZZO COLLEGATO AL DATABASEEEE!!!">
++      <change afterPath="$PROJECT_DIR$/src/main/java/Classes/MenuItem.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/Visualization/ToppingsFrame.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/DeliveryPersonMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/DeliveryPersonMapper.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/TempMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/TempMain.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/PizzaAPI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PizzaAPI.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Customer/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Customer/Customer.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Dessert/Dessert.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Dessert/Dessert.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Drink/Drink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Drink/Drink.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Order/Order.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Order/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Order/OrderController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/ConnectionImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/ConnectionImpl.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/DessertDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/DessertDataMapper.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/DiscountCodeDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/DiscountCodeDataMapper.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/DrinkDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/DrinkDataMapper.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/OrderDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/OrderDataMapper.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapper.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/PizzaToppingDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/PizzaToppingDataMapper.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/IngredientsFrame.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/Launch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/Launch.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/LogoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/LogoPanel.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/MenuPanel.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/OrderFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/OrderFrame.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/StatusFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/StatusFrame.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -37,13 +55,21 @@
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+-        <option value="Interface" />
+         <option value="Class" />
++        <option value="Interface" />
+       </list>
+     </option>
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="GitSEFilterConfiguration">
++    <file-type-list>
++      <filtered-out-file-type name="LOCAL_BRANCH" />
++      <filtered-out-file-type name="REMOTE_BRANCH" />
++      <filtered-out-file-type name="TAG" />
++      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
++    </file-type-list>
+   </component>
+   <component name="ProjectId" id="1skLxCx4iXCLCrtWyzR0bYlCg2N" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+@@ -57,9 +83,9 @@
+     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../Program Files/Java/mysql-connector-java-8.0.26.jar" />
+-    <property name="project.structure.last.edited" value="Libraries" />
+-    <property name="project.structure.proportion" value="0.0" />
+-    <property name="project.structure.side.proportion" value="0.0" />
++    <property name="project.structure.last.edited" value="Modules" />
++    <property name="project.structure.proportion" value="0.15" />
++    <property name="project.structure.side.proportion" value="0.55" />
+     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+   </component>
+   <component name="RecentsManager">
+@@ -70,7 +96,7 @@
+       <recent name="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="Application.TempMain">
++  <component name="RunManager" selected="Application.Launch">
+     <configuration name="Launch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="Visualization.Launch" />
+       <module name="PizzaAPI" />
+@@ -84,6 +110,19 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
++    <configuration name="PizzaApiApplication (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="Classes.PizzaApiApplication" />
++      <module name="PizzaAPI" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="Classes.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
+     <configuration name="PizzaApiApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="com.PizzaAPI.PizzaAPI.PizzaApiApplication" />
+       <module name="PizzaAPI" />
+@@ -112,8 +151,9 @@
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="Application.Launch" />
+         <item itemvalue="Application.TempMain" />
+-        <item itemvalue="Application.Launch" />
++        <item itemvalue="Application.PizzaApiApplication (1)" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -161,35 +201,7 @@
+       <option name="project" value="LOCAL" />
+       <updated>1632499810258</updated>
+     </task>
+-    <task id="LOCAL-00006" summary="sistemata interface DataMapper">
+-      <created>1632862457341</created>
+-      <option name="number" value="00006" />
+-      <option name="presentableId" value="LOCAL-00006" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1632862457341</updated>
+-    </task>
+-    <task id="LOCAL-00007" summary="sistemata interface DataMapper">
+-      <created>1633162948209</created>
+-      <option name="number" value="00007" />
+-      <option name="presentableId" value="LOCAL-00007" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1633162948209</updated>
+-    </task>
+-    <task id="LOCAL-00008" summary="tutti i mappers funzionano">
+-      <created>1633283032531</created>
+-      <option name="number" value="00008" />
+-      <option name="presentableId" value="LOCAL-00008" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1633283032531</updated>
+-    </task>
+-    <task id="LOCAL-00009" summary="DeliveryPersonMapper">
+-      <created>1633283707919</created>
+-      <option name="number" value="00009" />
+-      <option name="presentableId" value="LOCAL-00009" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1633283707919</updated>
+-    </task>
+-    <option name="localTasksCounter" value="10" />
++    <option name="localTasksCounter" value="6" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -209,72 +221,7 @@
+     <MESSAGE value="mapper" />
+     <MESSAGE value="mapper and connection finished" />
+     <MESSAGE value="STRA CAZZO COLLEGATO AL DATABASEEEE!!!" />
+-    <MESSAGE value="sistemata interface DataMapper" />
+-    <MESSAGE value="tutti i mappers funzionano" />
+-    <MESSAGE value="DeliveryPersonMapper" />
+-    <option name="LAST_COMMIT_MESSAGE" value="DeliveryPersonMapper" />
+-  </component>
+-  <component name="WindowStateProjectService">
+-    <state x="371" y="95" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1633164188899">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="371" y="95" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.0.1280.680@0.0.1280.680" timestamp="1633164188899" />
+-    <state x="446" y="47" key="#com.intellij.ide.util.MemberChooser" timestamp="1633283960421">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="446" y="47" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1633283960421" />
+-    <state x="424" y="209" width="432" height="268" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1632486222096">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="424" y="209" width="432" height="268" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1280.680@0.0.1280.680" timestamp="1632486222096" />
+-    <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1632826832225">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1632826832225" />
+-    <state x="369" y="81" key="FileChooserDialogImpl" timestamp="1632497089360">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="369" y="81" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1632497089360" />
+-    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1633284455025">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1633284455025" />
+-    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1633284455025">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1633284455025" />
+-    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1633284455025">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1633284455025" />
+-    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1633284455025">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1633284455025" />
+-    <state x="171" y="0" key="Maven.ArtifactSearchDialog" timestamp="1632827802393">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="171" y="0" key="Maven.ArtifactSearchDialog/0.0.1280.680@0.0.1280.680" timestamp="1632827802393" />
+-    <state x="121" y="50" key="MergeDialog" timestamp="1633163494839">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="121" y="50" key="MergeDialog/0.0.1280.680@0.0.1280.680" timestamp="1633163494839" />
+-    <state x="142" y="0" key="SettingsEditor" timestamp="1632497097407">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1632497097407" />
+-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1633283712922">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1633283712922" />
+-    <state x="458" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1633283012626">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="458" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1633283012626" />
+-    <state x="181" y="51" width="918" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1632497162518">
+-      <screen x="0" y="0" width="1280" height="680" />
+-    </state>
+-    <state x="181" y="51" width="918" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680@0.0.1280.680" timestamp="1632497162518" />
++    <option name="LAST_COMMIT_MESSAGE" value="STRA CAZZO COLLEGATO AL DATABASEEEE!!!" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+@@ -283,15 +230,32 @@
+           <properties class="java.sql.SQLSyntaxErrorException" package="java.sql" />
+           <option name="timeStamp" value="1" />
+         </breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/main/java/Mappers/TempMain.java</url>
++          <line>22</line>
++          <option name="timeStamp" value="9" />
++        </line-breakpoint>
+       </breakpoints>
+     </breakpoint-manager>
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
++    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$Launch.ic" NAME="Launch Coverage Results" MODIFIED="1633167803874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>Visualization.*</FILTER>
++    </SUITE>
+     <SUITE FILE_PATH="coverage/PizzaAPI__Ele_$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1621702250345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+       <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>
+     </SUITE>
+     <SUITE FILE_PATH="coverage/PizzaAPI__Latest_$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1631546958602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+       <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$TempMain.ic" NAME="TempMain Coverage Results" MODIFIED="1633091251286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>Mappers.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1632490991463" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$PizzaApiApplication__1_.ic" NAME="PizzaApiApplication (1) Coverage Results" MODIFIED="1633294261500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>Classes.*</FILTER>
+     </SUITE>
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/Mappers/DrinkDataMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\n\nimport Classes.Customer.Customer;\nimport Classes.Drink.Drink;\nimport Classes.Pizza.Pizza;\n\nimport java.sql.*;\nimport java.util.Optional;\n\npublic class DrinkDataMapper implements DataMapper{\n\n    Connection conn;\n\n    public DrinkDataMapper(Connection conn, boolean dropTable) {\n            this.conn = conn;\n            Statement stmt;\n\n            try{\n                stmt = conn.createStatement();\n\n                if(dropTable)\n                    stmt.executeUpdate(\"DROP TABLE IF EXISTS drinks\");\n\n                stmt.executeUpdate(\"CREATE TABLE drinks (\"\n                        + \"drinkId INT NOT NULL AUTO_INCREMENT, \"\n                        + \"name VARCHAR(64), \"\n                        + \"price DOUBLE, \"\n                        + \"PRIMARY KEY (drinkId))\");\n\n            } catch (SQLException throwables) {\n                throwables.printStackTrace();\n            }\n    }\n\n    @Override\n    public Optional find(int id) {\n        Drink d = null;\n        try{\n            PreparedStatement pstmt = conn.prepareStatement(\"SELECT name, price FROM drinks WHERE drinkId = ?\");\n            pstmt.setInt(1, id);\n            ResultSet rs = pstmt.executeQuery();\n\n            if(rs.next()){\n                d = new Drink(id, rs.getString(0), rs.getDouble(1));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return Optional.ofNullable(d);\n    }\n\n    @Override\n    public void insert(Object object) {\n        try{\n            Drink drinkToBeInserted = (Drink) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"INSERT INTO drinks (name, price) VALUES (?, ?);\");\n            pstmt.setString(1, drinkToBeInserted.getName());\n            pstmt.setDouble(2, drinkToBeInserted.getPrice());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void update(Object object) {\n        try{\n            Drink drinkToBeUpdated = (Drink) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"UPDATE drinks SET name = ?, price = ? WHERE drinkId = ?;\");\n            pstmt.setString(1, drinkToBeUpdated.getName());\n            pstmt.setDouble(2, drinkToBeUpdated.getPrice());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void delete(Object object) {\n        try{\n            Drink drinkToBeDeleted = (Drink) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"DELETE FROM drinks WHERE drinkId = ?;\");\n            pstmt.setInt(1, drinkToBeDeleted.getId());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/DrinkDataMapper.java b/src/main/java/Mappers/DrinkDataMapper.java
+--- a/src/main/java/Mappers/DrinkDataMapper.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Mappers/DrinkDataMapper.java	(date 1633376849158)
+@@ -6,6 +6,7 @@
+ import Classes.Pizza.Pizza;
+ 
+ import java.sql.*;
++import java.util.ArrayList;
+ import java.util.Optional;
+ 
+ public class DrinkDataMapper implements DataMapper{
+@@ -87,4 +88,19 @@
+             throwables.printStackTrace();
+         }
+     }
++
++    public ArrayList<Drink> getAllDrinks(){
++        ArrayList<Drink> drinksList = new ArrayList<>();
++        try{
++            Statement stmt = conn.createStatement();
++            ResultSet rs = stmt.executeQuery("SELECT * FROM drinks;");
++
++            while(rs.next()){
++                drinksList.add(new Drink(rs.getInt(0), rs.getString(1), rs.getDouble(2)));
++            }
++        } catch (SQLException throwables) {
++            throwables.printStackTrace();
++        }
++        return drinksList;
++    }
+ }
+Index: src/main/java/Visualization/ToppingsFrame.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Visualization/ToppingsFrame.java b/src/main/java/Visualization/ToppingsFrame.java
+new file mode 100644
+--- /dev/null	(date 1633368099424)
++++ b/src/main/java/Visualization/ToppingsFrame.java	(date 1633368099424)
+@@ -0,0 +1,58 @@
++package Visualization;
++
++import Classes.Pizza.Pizza;
++import Classes.PizzaTopping.PizzaTopping;
++import Mappers.PizzaToppingDataMapper;
++
++import javax.swing.*;
++import java.awt.*;
++import java.sql.Connection;
++import java.util.ArrayList;
++
++public class ToppingsFrame {
++
++    Connection conn;
++    Pizza pizza;
++    ArrayList<PizzaTopping> allToppings = new PizzaToppingDataMapper(conn, true).getPizzaToppings();
++    ImageIcon vegIcon = new ImageIcon(ImageLoader.loadImage("src/main/java/Visualization/Resources/Veg.png"));
++    ArrayList<PizzaTopping> toppings = new ArrayList<>();
++    JFrame toppingsFrame = new JFrame();
++    JLabel toppingsLabel = new JLabel();
++
++    ToppingsFrame(Connection conn, Pizza pizza) {
++        this.conn = conn;
++        this.pizza = pizza;
++
++        getToppings();
++
++        toppingsFrame.setLayout(new GridLayout(1, 2));
++        toppingsFrame.setBackground(Color.ORANGE);
++        toppingsFrame.setSize(300, 200);
++        toppingsFrame.setTitle("Toppings");
++        toppingsFrame.add(toppingsLabel, 1);
++
++        // Only if pizza is vegetarian add this icon!
++        if (this.pizza.isVegeterian()) {
++            toppingsFrame.add(new JLabel(vegIcon), 2);
++        }
++
++        toppingsFrame.setLocationRelativeTo(null);
++        toppingsFrame.setVisible(false);
++    }
++
++    public void getToppings() {
++        String toppingsString = "";
++
++        for (int i = 0; i < allToppings.size(); i++) {
++            PizzaTopping newTopping = allToppings.get(i);
++
++            if (newTopping.getPizzaId() == this.pizza.getId()) {
++                this.toppings.add(newTopping);
++                toppingsString += newTopping.getName() + "\n";
++            }
++        }
++        toppingsLabel.setText(toppingsString);
++    }
++
++    public JFrame getFrame() { return this.toppingsFrame; }
++}
+Index: src/main/java/Classes/MenuItem.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/MenuItem.java b/src/main/java/Classes/MenuItem.java
+new file mode 100644
+--- /dev/null	(date 1633417240597)
++++ b/src/main/java/Classes/MenuItem.java	(date 1633417240597)
+@@ -0,0 +1,7 @@
++package Classes;
++
++public interface MenuItem {
++    long getId();
++    String getName();
++    double getPrice();
++}
+Index: src/main/java/Mappers/DessertDataMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\nimport Classes.Customer.Customer;\nimport Classes.Dessert.Dessert;\nimport Classes.Drink.Drink;\nimport Classes.Pizza.Pizza;\n\nimport java.sql.*;\nimport java.util.Optional;\n\npublic class DessertDataMapper implements DataMapper{\n\n Connection conn;\n\n    public DessertDataMapper(Connection conn, boolean dropTable) {\n        this.conn = conn;\n       Statement stmt;\n\n       try{\n           stmt = conn.createStatement();\n\n       if(dropTable)\n        stmt.executeUpdate(\"DROP TABLE IF EXISTS desserts\");\n\n        stmt.executeUpdate(\"CREATE TABLE desserts (\"\n           + \"dessertId INT NOT NULL AUTO_INCREMENT, \"\n           + \"name VARCHAR(64), \"\n           + \"price DOUBLE, \"\n           + \"PRIMARY KEY (dessertId))\");\n\n       } catch (SQLException throwables) {\n           throwables.printStackTrace();\n       }\n    }\n\n    @Override\n    public Optional find(int id) {\n        Dessert d = null;\n        try{\n            PreparedStatement pstmt = conn.prepareStatement(\"SELECT name, price FROM desserts WHERE dessertId = ?\");\n            pstmt.setInt(1, id);\n            ResultSet rs = pstmt.executeQuery();\n\n            if(rs.next()){\n                d = new Dessert((int) id, rs.getString(0), rs.getDouble(1));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return Optional.ofNullable(d);\n    }\n\n    @Override\n    public void insert(Object object) {\n        try{\n            Dessert dessertToBeInserted = (Dessert) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"INSERT INTO desserts (name, price) VALUES (?, ?);\");\n            pstmt.setString(1, dessertToBeInserted.getName());\n            pstmt.setDouble(2, dessertToBeInserted.getPrice());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void update(Object object) {\n        try{\n            Dessert dessertToBeUpdated = (Dessert) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"UPDATE desserts SET name = ?, price = ? WHERE dessertId = ?;\");\n            pstmt.setString(1, dessertToBeUpdated.getName());\n            pstmt.setDouble(2, dessertToBeUpdated.getPrice());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void delete(Object object) {\n        try{\n            Dessert dessertToBeDeleted = (Dessert) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"DELETE FROM desserts WHERE dessertId = ?;\");\n            pstmt.setInt(1, dessertToBeDeleted.getId());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/DessertDataMapper.java b/src/main/java/Mappers/DessertDataMapper.java
+--- a/src/main/java/Mappers/DessertDataMapper.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Mappers/DessertDataMapper.java	(date 1633362796591)
+@@ -1,11 +1,9 @@
+ package Mappers;
+ 
+-import Classes.Customer.Customer;
+ import Classes.Dessert.Dessert;
+-import Classes.Drink.Drink;
+-import Classes.Pizza.Pizza;
+ 
+ import java.sql.*;
++import java.util.ArrayList;
+ import java.util.Optional;
+ 
+ public class DessertDataMapper implements DataMapper{
+@@ -87,4 +85,19 @@
+             throwables.printStackTrace();
+         }
+     }
++
++    public ArrayList<Dessert> getAllDesserts(){
++        ArrayList<Dessert> dessertsList = new ArrayList<>();
++        try{
++            Statement stmt = conn.createStatement();
++            ResultSet rs = stmt.executeQuery("SELECT * FROM desserts;");
++
++            while(rs.next()){
++                dessertsList.add(new Dessert(rs.getInt(0), rs.getString(0), rs.getDouble(1)));
++            }
++        } catch (SQLException throwables) {
++            throwables.printStackTrace();
++        }
++        return dessertsList;
++    }
+ }
+Index: src/main/java/Mappers/OrderDataMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\nimport Classes.Order.Order;\nimport Classes.Pizza.Pizza;\n\nimport java.sql.*;\nimport java.util.Optional;\n\npublic class OrderDataMapper implements DataMapper{\n\n    Connection conn;\n\n    public OrderDataMapper(Connection conn, boolean dropTable) {\n        this.conn = conn;\n        Statement stmt;\n        try{\n            stmt = conn.createStatement();\n\n            if(dropTable)\n                stmt.executeUpdate(\"DROP TABLE IF EXISTS orders\");\n\n            stmt.executeUpdate(\"CREATE TABLE orders (\"\n                    + \"orderId INT NOT NULL AUTO_INCREMENT, \"\n                    + \"orderStatus VARCHAR(64), \"\n                    + \"customerId INT, \"\n                    + \"codeId INT, \"\n                    + \"estimatedDeliveryTime DATE, \"\n                    + \"totalPrice INT, \"\n                    + \"PRIMARY KEY (orderId))\");\n\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public Optional find(int id) {\n        Order o = null;\n        try{\n            PreparedStatement pstmt = conn.prepareStatement(\"SELECT customerId, orderStatus, codeId, estimatedDeliveryTime, totalPrice FROM orders WHERE orderId = ?\");\n            pstmt.setInt(1, id);\n            ResultSet rs = pstmt.executeQuery();\n\n            if(rs.next()){\n                o = new Order((int) id, rs.getInt(0), rs.getString(1), rs.getInt(2), rs.getDate(3), rs.getDouble(4));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return Optional.ofNullable(o);\n    }\n\n    @Override\n    public void insert(Object object) {\n        try{\n            Order orderToBeInserted = (Order) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"INSERT INTO orders (customerId, orderStatus, codeId, estimatedDeliveryTime, totalPrice) VALUES (?, ?, ?, ?, ?);\");\n            pstmt.setInt(1, orderToBeInserted.getCustomerId());\n            pstmt.setString(2, orderToBeInserted.getStatus());\n            pstmt.setInt(3, orderToBeInserted.getCodeId());\n            pstmt.setDate(4, new java.sql.Date(orderToBeInserted.getEstimatedDeliveryTime().getTime()));\n            pstmt.setDouble(5, orderToBeInserted.getTotalPrice());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void update(Object object) {\n        try{\n            Order orderToBeUpdated = (Order) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"UPDATE orders SET customerId = ?, orderStatus = ?, codeId = ?, estimatedDeliveryTime = ?, totalPrice = ? WHERE orderId = ?;\");\n            pstmt.setInt(1, orderToBeUpdated.getCustomerId());\n            pstmt.setString(2, orderToBeUpdated.getStatus());\n            pstmt.setInt(3, orderToBeUpdated.getCodeId());\n            pstmt.setDate(4, (Date) orderToBeUpdated.getEstimatedDeliveryTime());\n            pstmt.setDouble(5, orderToBeUpdated.getTotalPrice());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void delete(Object object) {\n        try{\n            Order orderToBeDeleted = (Order) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"DELETE FROM orders WHERE orderId = ?;\");\n            pstmt.setInt(1, orderToBeDeleted.getId());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/OrderDataMapper.java b/src/main/java/Mappers/OrderDataMapper.java
+--- a/src/main/java/Mappers/OrderDataMapper.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Mappers/OrderDataMapper.java	(date 1633294258100)
+@@ -20,9 +20,8 @@
+                 stmt.executeUpdate("DROP TABLE IF EXISTS orders");
+ 
+             stmt.executeUpdate("CREATE TABLE orders ("
+-                    + "orderId INT NOT NULL AUTO_INCREMENT, "
+                     + "orderStatus VARCHAR(64), "
+-                    + "customerId INT, "
++                    + "customerId TINYINT, "
+                     + "codeId INT, "
+                     + "estimatedDeliveryTime DATE, "
+                     + "totalPrice INT, "
+@@ -37,12 +36,12 @@
+     public Optional find(int id) {
+         Order o = null;
+         try{
+-            PreparedStatement pstmt = conn.prepareStatement("SELECT customerId, orderStatus, codeId, estimatedDeliveryTime, totalPrice FROM orders WHERE orderId = ?");
++            PreparedStatement pstmt = conn.prepareStatement("SELECT orderStatus, customerId, codeId, estimatedDeliveryTime, totalPrice FROM order WHERE orderId = ?");
+             pstmt.setInt(1, id);
+             ResultSet rs = pstmt.executeQuery();
+ 
+             if(rs.next()){
+-                o = new Order((int) id, rs.getInt(0), rs.getString(1), rs.getInt(2), rs.getDate(3), rs.getDouble(4));
++                o = new Order((long) id, rs.getLong(0), rs.getString(1), rs.getLong(3), rs.getDouble(4), rs.getDate(5));
+             }
+         } catch (SQLException throwables) {
+             throwables.printStackTrace();
+@@ -54,11 +53,11 @@
+     public void insert(Object object) {
+         try{
+             Order orderToBeInserted = (Order) object;
+-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO orders (customerId, orderStatus, codeId, estimatedDeliveryTime, totalPrice) VALUES (?, ?, ?, ?, ?);");
+-            pstmt.setInt(1, orderToBeInserted.getCustomerId());
+-            pstmt.setString(2, orderToBeInserted.getStatus());
+-            pstmt.setInt(3, orderToBeInserted.getCodeId());
+-            pstmt.setDate(4, new java.sql.Date(orderToBeInserted.getEstimatedDeliveryTime().getTime()));
++            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO order (orderStatus, customerId, codeId, estimatedDeliveryTime, totalPrice) VALUES (?, ?, ?, ?, ?);");
++            pstmt.setString(1, orderToBeInserted.getStatus());
++            pstmt.setLong(2, orderToBeInserted.getCustomerId());
++            pstmt.setLong(3, orderToBeInserted.getCodeId());
++            pstmt.setDate(4, orderToBeInserted.getEstimatedDeliveryTime());
+             pstmt.setDouble(5, orderToBeInserted.getTotalPrice());
+             pstmt.executeUpdate();
+         } catch (SQLException throwables) {
+@@ -70,11 +69,11 @@
+     public void update(Object object) {
+         try{
+             Order orderToBeUpdated = (Order) object;
+-            PreparedStatement pstmt = conn.prepareStatement("UPDATE orders SET customerId = ?, orderStatus = ?, codeId = ?, estimatedDeliveryTime = ?, totalPrice = ? WHERE orderId = ?;");
+-            pstmt.setInt(1, orderToBeUpdated.getCustomerId());
+-            pstmt.setString(2, orderToBeUpdated.getStatus());
+-            pstmt.setInt(3, orderToBeUpdated.getCodeId());
+-            pstmt.setDate(4, (Date) orderToBeUpdated.getEstimatedDeliveryTime());
++            PreparedStatement pstmt = conn.prepareStatement("UPDATE order SET orderStatus = ?, customerId = ?, codeId = ?, estimatedDeliveryTime = ?, totalPrice = ? WHERE orderId = ?;");
++            pstmt.setString(1, orderToBeUpdated.getStatus());
++            pstmt.setLong(2, orderToBeUpdated.getCustomerId());
++            pstmt.setLong(3, orderToBeUpdated.getCodeId());
++            pstmt.setDate(4, orderToBeUpdated.getEstimatedDeliveryTime());
+             pstmt.setDouble(5, orderToBeUpdated.getTotalPrice());
+             pstmt.executeUpdate();
+         } catch (SQLException throwables) {
+@@ -86,12 +85,11 @@
+     public void delete(Object object) {
+         try{
+             Order orderToBeDeleted = (Order) object;
+-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM orders WHERE orderId = ?;");
+-            pstmt.setInt(1, orderToBeDeleted.getId());
++            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM order WHERE orderId = ?;");
++            pstmt.setLong(1, orderToBeDeleted.getId());
+             pstmt.executeUpdate();
+         } catch (SQLException throwables) {
+             throwables.printStackTrace();
+         }
+     }
+ }
+-
+Index: PizzaAPI.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule=\"true\" type=\"JAVA_MODULE\" version=\"4\">\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_11\">\n    <output url=\"file://$MODULE_DIR$/target/classes\" />\n    <output-test url=\"file://$MODULE_DIR$/target/test-classes\" />\n    <content url=\"file://$MODULE_DIR$\">\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/java\" isTestSource=\"false\" />\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/resources\" type=\"java-resource\" />\n      <sourceFolder url=\"file://$MODULE_DIR$/src/test/java\" isTestSource=\"true\" />\n      <excludeFolder url=\"file://$MODULE_DIR$/target\" />\n    </content>\n    <orderEntry type=\"inheritedJdk\" />\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-web:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-autoconfigure:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-logging:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: ch.qos.logback:logback-classic:1.2.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: ch.qos.logback:logback-core:1.2.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.logging.log4j:log4j-to-slf4j:2.13.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.logging.log4j:log4j-api:2.13.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.slf4j:jul-to-slf4j:1.7.30\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: jakarta.annotation:jakarta.annotation-api:1.3.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.yaml:snakeyaml:1.27\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-json:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-databind:2.11.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-core:2.11.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-tomcat:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.45\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.glassfish:jakarta.el:3.0.3\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.45\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-web:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-beans:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-webmvc:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-aop:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-context:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-expression:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.springframework.boot:spring-boot-starter-test:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.springframework.boot:spring-boot-test:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.springframework.boot:spring-boot-test-autoconfigure:2.4.5\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: com.jayway.jsonpath:json-path:2.4.0\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: net.minidev:json-smart:2.3\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: net.minidev:accessors-smart:1.2\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.ow2.asm:asm:5.0.4\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.slf4j:slf4j-api:1.7.30\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: jakarta.activation:jakarta.activation-api:1.2.2\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.assertj:assertj-core:3.18.1\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.hamcrest:hamcrest:2.2\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter:5.7.1\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-api:5.7.1\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.apiguardian:apiguardian-api:1.1.0\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.opentest4j:opentest4j:1.2.0\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.platform:junit-platform-commons:1.7.1\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-params:5.7.1\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-engine:5.7.1\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.platform:junit-platform-engine:1.7.1\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.mockito:mockito-core:3.6.28\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: net.bytebuddy:byte-buddy:1.10.22\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: net.bytebuddy:byte-buddy-agent:1.10.22\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.objenesis:objenesis:3.1\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.mockito:mockito-junit-jupiter:3.6.28\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.skyscreamer:jsonassert:1.5.0\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-core:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-jcl:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.springframework:spring-test:5.3.6\" level=\"project\" />\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.xmlunit:xmlunit-core:2.7.0\" level=\"project\" />\n    <orderEntry type=\"library\" name=\"mysql-connector-java-8.0.26\" level=\"project\" />\n  </component>\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PizzaAPI.iml b/PizzaAPI.iml
+--- a/PizzaAPI.iml	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/PizzaAPI.iml	(date 1633360787338)
+@@ -72,5 +72,26 @@
+     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.3.6" level="project" />
+     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.7.0" level="project" />
+     <orderEntry type="library" name="mysql-connector-java-8.0.26" level="project" />
++    <orderEntry type="module-library">
++      <library>
++        <CLASSES>
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26" />
++        </CLASSES>
++        <JAVADOC />
++        <SOURCES>
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/build/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/demo/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/generated/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/legacy/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/core-api/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/core-impl/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/protocol-impl/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/user-api/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/main/user-impl/java" />
++          <root url="file://$MODULE_DIR$/mysql-connector-java-8.0.26/src/test/java" />
++        </SOURCES>
++        <jarDirectory url="file://$MODULE_DIR$/mysql-connector-java-8.0.26" recursive="false" />
++      </library>
++    </orderEntry>
+   </component>
+ </module>
+\ No newline at end of file
+Index: src/main/java/Classes/Pizza/Pizza.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Pizza;\n\npublic class Pizza {\n\n    private final int id;\n    private final String name;\n    private final boolean vegetarian;\n\n    public Pizza(int id, String name, boolean vegetarian) {\n        this.id = id;\n        this.name = name;\n        this.vegetarian = vegetarian;\n    }\n\n    public long getId() {\n        return id;\n    }\n\n    public boolean isVegeterian() {\n        return vegetarian;\n    }\n\n    public String getName() { return name; }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Pizza/Pizza.java b/src/main/java/Classes/Pizza/Pizza.java
+--- a/src/main/java/Classes/Pizza/Pizza.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Classes/Pizza/Pizza.java	(date 1633417240603)
+@@ -1,10 +1,13 @@
+ package Classes.Pizza;
+ 
+-public class Pizza {
++import Classes.MenuItem;
++
++public class Pizza implements MenuItem {
+ 
+     private final int id;
+     private final String name;
+     private final boolean vegetarian;
++    private final double price = 0;
+ 
+     public Pizza(int id, String name, boolean vegetarian) {
+         this.id = id;
+@@ -12,13 +15,16 @@
+         this.vegetarian = vegetarian;
+     }
+ 
++    @Override
+     public long getId() {
+         return id;
+     }
+ 
+-    public boolean isVegeterian() {
+-        return vegetarian;
+-    }
+-
++    @Override
+     public String getName() { return name; }
++
++    @Override
++    public double getPrice() { return price; }
++
++    public boolean isVegeterian() { return vegetarian; }
+ }
+\ No newline at end of file
+Index: src/main/java/Classes/Order/Order.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Order;\n\nimport Classes.Pizza.Pizza;\n\nimport java.time.Clock;\nimport java.time.Duration;\nimport java.util.ArrayList;\nimport java.util.Date;\n\npublic class Order {\n\n    private final int orderId;\n    private final int customerId;\n    private String orderStatus;\n    private final int codeId;\n    private double totalPrice;\n    private Date estimatedDeliveryTime;\n\n    public Order(int orderId, int customerId, String status, int codeId, Date time, double price) {\n        this.orderId = orderId;\n        this.customerId = customerId;\n        this.codeId = codeId;\n        this.orderStatus = status;\n        this.totalPrice = price;\n        this.estimatedDeliveryTime = time;\n    }\n\n    public int getId() {\n        return this.orderId;\n    }\n\n    public int getCustomerId() {\n        return this.customerId;\n    }\n\n    public String getStatus() {\n        return this.orderStatus;\n    }\n\n    public void setStatus(String status){\n        this.orderStatus = status;\n    }\n\n    public int getCodeId() { return this.codeId; }\n\n    public double getTotalPrice() { return this.totalPrice; }\n\n    public void setTotalPrice(double price) { this.totalPrice = price; }\n\n    public Date getEstimatedDeliveryTime() { return this.estimatedDeliveryTime; }\n\n    public void setEstimatedDeliveryTime(Date time) { this.estimatedDeliveryTime = time; }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Order/Order.java b/src/main/java/Classes/Order/Order.java
+--- a/src/main/java/Classes/Order/Order.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Classes/Order/Order.java	(date 1633294258095)
+@@ -1,35 +1,39 @@
+ package Classes.Order;
+ 
+-import Classes.Pizza.Pizza;
+-
++import java.sql.Date;
+ import java.time.Clock;
+ import java.time.Duration;
+-import java.util.ArrayList;
+-import java.util.Date;
+ 
+ public class Order {
+-
+-    private final int orderId;
+-    private final int customerId;
++    private final long orderId;
++    private final long customerId;
+     private String orderStatus;
+-    private final int codeId;
++    private final long codeId;
+     private double totalPrice;
+     private Date estimatedDeliveryTime;
+ 
+-    public Order(int orderId, int customerId, String status, int codeId, Date time, double price) {
++    private final String ordered_at;
++    private final String delivery_time;
++    private final Clock clockOrdered = Clock.systemUTC();
++    private final Clock clockDelivered = Clock.offset(clockOrdered, Duration.ofMinutes(20));
++
++    public Order(long orderId, long customerId, String status, long codeId, double price, Date time) {
+         this.orderId = orderId;
+         this.customerId = customerId;
+         this.codeId = codeId;
+         this.orderStatus = status;
+         this.totalPrice = price;
+         this.estimatedDeliveryTime = time;
++
++        this.ordered_at = clockOrdered.instant().toString();
++        this.delivery_time = clockDelivered.instant().toString();
+     }
+ 
+-    public int getId() {
++    public long getId() {
+         return this.orderId;
+     }
+ 
+-    public int getCustomerId() {
++    public long getCustomerId() {
+         return this.customerId;
+     }
+ 
+@@ -41,7 +45,7 @@
+         this.orderStatus = status;
+     }
+ 
+-    public int getCodeId() { return this.codeId; }
++    public long getCodeId() { return this.codeId; }
+ 
+     public double getTotalPrice() { return this.totalPrice; }
+ 
+@@ -51,4 +55,12 @@
+ 
+     public void setEstimatedDeliveryTime(Date time) { this.estimatedDeliveryTime = time; }
+ 
++    public String getOrdered_at() {
++        return ordered_at;
++    }
++
++    public String getDelivery_time() {
++        return delivery_time;
++    }
++
+ }
+Index: src/main/java/Mappers/PizzaDataMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\nimport Classes.Pizza.Pizza;\n\nimport java.sql.*;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Optional;\n\npublic class PizzaDataMapper implements DataMapper {\n\n    Connection conn;\n    public PizzaDataMapper(Connection conn, boolean dropTable){\n        this.conn = conn;\n        Statement stmt;\n        try{\n            stmt = conn.createStatement();\n\n            if(dropTable)\n                stmt.executeUpdate(\"DROP TABLE IF EXISTS pizzas\");\n\n            stmt.executeUpdate(\"CREATE TABLE pizzas (\"\n                + \"pizzaId INT NOT NULL AUTO_INCREMENT, \"\n                + \"name VARCHAR(64), \"\n                + \"isVegeterian TINYINT, \"\n                + \"PRIMARY KEY (pizzaId))\");\n\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n    @Override\n    public Optional<Pizza> find(int id) {\n        Pizza p = null;\n        try{\n            PreparedStatement pstmt = conn.prepareStatement(\"SELECT name, isVegeterian FROM pizzas WHERE pizzaId = ?\");\n            pstmt.setInt(1, id);\n            ResultSet rs = pstmt.executeQuery();\n\n            if(rs.next()){\n                p = new Pizza( id, rs.getString(0), rs.getBoolean(1));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return Optional.ofNullable(p);\n    }\n\n    @Override\n    public void update(Object object) {\n        try{\n            Pizza pizzaToBeUpdated = (Pizza) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"UPDATE pizzas SET name = ?, isVegeterian = ? WHERE pizzaId = ?;\");\n            pstmt.setString(1, pizzaToBeUpdated.getName());\n            pstmt.setBoolean(2, pizzaToBeUpdated.isVegeterian());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void insert(Object object) {\n        try{\n            Pizza pizzaToBeInserted = (Pizza) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"INSERT INTO pizzas (name, isVegeterian) VALUES (?, ?);\");\n            pstmt.setString(1, pizzaToBeInserted.getName());\n            pstmt.setBoolean(2, pizzaToBeInserted.isVegeterian());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void delete(Object object) {\n        try{\n            Pizza pizzaToBeDeleted = (Pizza) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"DELETE FROM pizzas WHERE pizzaId = ?;\");\n            pstmt.setLong(1, pizzaToBeDeleted.getId());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    public List<Pizza> getPizzas(){\n        List<Pizza> pizzasList = new ArrayList<>();\n        try{\n            Statement stmt = conn.createStatement();\n            ResultSet rs = stmt.executeQuery(\"SELECT * FROM pizzas;\");\n\n            while(rs.next()){\n                pizzasList.add(new Pizza(rs.getInt(0), rs.getString(1), rs.getBoolean(2)));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return pizzasList;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/PizzaDataMapper.java b/src/main/java/Mappers/PizzaDataMapper.java
+--- a/src/main/java/Mappers/PizzaDataMapper.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Mappers/PizzaDataMapper.java	(date 1633362032987)
+@@ -4,7 +4,6 @@
+ 
+ import java.sql.*;
+ import java.util.ArrayList;
+-import java.util.List;
+ import java.util.Optional;
+ 
+ public class PizzaDataMapper implements DataMapper {
+@@ -84,8 +83,8 @@
+         }
+     }
+ 
+-    public List<Pizza> getPizzas(){
+-        List<Pizza> pizzasList = new ArrayList<>();
++    public ArrayList<Pizza> getAllPizzas(){
++        ArrayList<Pizza> pizzasList = new ArrayList<>();
+         try{
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM pizzas;");
+Index: src/main/java/Classes/Order/OrderController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Classes.Order;\n\nimport java.util.ArrayList;\nimport java.util.concurrent.atomic.AtomicLong;\n\nimport Classes.Pizza.Pizza;\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.*;\n\n/*@RestController\npublic class OrderController {\n    private final AtomicLong counter = new AtomicLong();\n    private final ArrayList<Order> orders = new ArrayList<>();\n\n    @GetMapping(\"/order/{customer_id}\")\n    public ArrayList<Order> getOrders(@RequestParam(value = \"customerID\", defaultValue = \"-1\") String id){\n        ArrayList<Order> ordersCustomer = new ArrayList<>();\n        boolean found = false;\n        for (int i = 0; i < orders.size(); i++) {\n            if (orders.get(i).getCustomer_id() == id) {\n                ordersCustomer.add(orders.get(i));\n                found = true;\n            }\n        }\n        return ordersCustomer;\n    }\n\n    @PostMapping(\"/order\")\n    public Order submitOrder(@RequestParam(value = \"pizzas\", defaultValue = \"-1\") ArrayList<Pizza> pizzas, @RequestParam(value = \"takeAway\", defaultValue = \"-1\") boolean takeaway, @RequestParam(value = \"paymentType\", defaultValue = \"-1\")String payment_type, @RequestParam(value = \"customerID\", defaultValue = \"-1\")String customer_id, @RequestParam(value = \"deliveryAddress\", defaultValue = \"-1\")ArrayList<String>delivery_address){\n        return new Order(counter.incrementAndGet(), customer_id, \"In Progress\", takeaway, payment_type, delivery_address, pizzas);\n    }\n\n    @PostMapping(\"/save\")\n    public ResponseEntity<Order> addEmployee(@RequestParam(value = \"pizzas\", defaultValue = \"-1\") ArrayList<Pizza> pizzas, @RequestParam(value = \"takeAway\", defaultValue = \"-1\") boolean takeaway, @RequestParam(value = \"paymentType\", defaultValue = \"-1\")String payment_type, @RequestParam(value = \"customerID\", defaultValue = \"-1\")String customer_id, @RequestParam(value = \"deliveryAddress\", defaultValue = \"-1\")ArrayList<String>delivery_address){\n        return new ResponseEntity<Order>(new Order(counter.incrementAndGet(), customer_id, \"In Progress\", takeaway, payment_type, delivery_address, pizzas), HttpStatus.CREATED);\n    }\n\n    @PutMapping(\"/order/cancel/{order_id}\")\n    public Order cancelOrder(@RequestParam(value = \"orderID\", defaultValue = \"-1\") long orderID){\n        Order order = null;\n        for (int i = 0; i < orders.size(); i++) {\n            if (orders.get(i).getId() == orderID) {\n                orders.get(i).setStatus(\"cancelled\");\n                order = orders.get(i);\n            }\n        }\n        return order;\n    }\n\n    @GetMapping(\"/order/deliverytime/{order_id}\")\n    public Order getDeliveryTime(@RequestParam(value = \"orderID\", defaultValue = \"-1\") long orderID){\n        Order order = null;\n        for (int i = 0; i < orders.size(); i++) {\n            if (orders.get(i).getId() == orderID) {\n                order = orders.get(i);\n            }\n        }\n        return order;\n    }\n}\n*/
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Classes/Order/OrderController.java b/src/main/java/Classes/Order/OrderController.java
+--- a/src/main/java/Classes/Order/OrderController.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Classes/Order/OrderController.java	(date 1633294057708)
+@@ -7,7 +7,7 @@
+ import org.springframework.http.HttpStatus;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.web.bind.annotation.*;
+-
++/*
+ /*@RestController
+ public class OrderController {
+     private final AtomicLong counter = new AtomicLong();
+Index: src/main/java/Mappers/DiscountCodeDataMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\nimport Classes.DiscountCode.DiscountCode;\n\nimport java.sql.*;\nimport java.util.Optional;\n\n\npublic class DiscountCodeDataMapper implements DataMapper{\n    Connection conn;\n    public DiscountCodeDataMapper(Connection conn, boolean dropTable){\n        this.conn = conn;\n        Statement stmt;\n        try{\n            stmt = conn.createStatement();\n\n            if(dropTable)\n                stmt.executeUpdate(\"DROP TABLE IF EXISTS discountCodes\");\n\n            stmt.executeUpdate(\"CREATE TABLE discountCodes (\"\n                    + \"discountCodeId INT NOT NULL AUTO_INCREMENT, \"\n                    + \"isUsed TINYINT, \"\n                    + \"PRIMARY KEY (discountCodeId))\");\n\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n\n    }\n    @Override\n    public Optional<DiscountCode> find(int id) {\n        DiscountCode d = null;\n        try{\n            PreparedStatement pstmt = conn.prepareStatement(\"SELECT isUsed FROM discountCodes WHERE discountCodeId = ?\");\n            pstmt.setInt(1, id);\n            ResultSet rs = pstmt.executeQuery();\n\n            if(rs.next()){\n                d = new DiscountCode(id, rs.getBoolean(0));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return Optional.ofNullable(d);\n    }\n\n    @Override\n    public void update(Object object) {\n        try{\n            DiscountCode discountCodeToBeUpdated = (DiscountCode) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"UPDATE discountCodes SET isUsed = ? WHERE discountCodeId = ?;\");\n            pstmt.setBoolean(1, discountCodeToBeUpdated.isUsed());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void insert(Object object) {\n        try{\n            DiscountCode discountCodeToBeInserted = (DiscountCode) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"INSERT INTO discountCodes (isUsed) VALUES (?);\");\n            pstmt.setBoolean(1, discountCodeToBeInserted.isUsed());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void delete(Object object) {\n        try{\n            DiscountCode discountCodeToBeDeleted = (DiscountCode) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"DELETE FROM discountCodes WHERE discountCodeId = ?;\");\n            pstmt.setInt(1, discountCodeToBeDeleted.getId());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n\n    }\n\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/DiscountCodeDataMapper.java b/src/main/java/Mappers/DiscountCodeDataMapper.java
+--- a/src/main/java/Mappers/DiscountCodeDataMapper.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Mappers/DiscountCodeDataMapper.java	(date 1633364837690)
+@@ -5,6 +5,10 @@
+ import java.sql.*;
+ import java.util.Optional;
+ 
++/*
++ * Should we have some discount codes already stored when the program starts and then
++ * compare it with the one that the user inserts?
++ */
+ 
+ public class DiscountCodeDataMapper implements DataMapper{
+     Connection conn;
+@@ -80,6 +84,4 @@
+         }
+ 
+     }
+-
+-}
+-
++}
+\ No newline at end of file
+Index: src/main/java/Mappers/PizzaToppingDataMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Mappers;\n\nimport Classes.Pizza.Pizza;\nimport Classes.PizzaTopping.PizzaTopping;\n\nimport java.sql.*;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Optional;\n\npublic class PizzaToppingDataMapper implements DataMapper {\n\n    Connection conn;\n    public PizzaToppingDataMapper(Connection conn, boolean dropTable){\n        this.conn = conn;\n        Statement stmt;\n        try{\n            stmt = conn.createStatement();\n\n            if(dropTable)\n                stmt.executeUpdate(\"DROP TABLE IF EXISTS pizzaToppings\");\n\n            stmt.executeUpdate(\"CREATE TABLE pizzaToppings (\"\n                    + \"pizzaToppingId INT NOT NULL AUTO_INCREMENT, \"\n                    + \"pizzaId INT, name VARCHAR(64), \"\n                    + \"price FLOAT, PRIMARY KEY (pizzaToppingId, pizzaId))\");\n\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n\n    }\n    @Override\n    public Optional<PizzaTopping> find(int id) {\n        PizzaTopping p = null;\n        try{\n            PreparedStatement pstmt = conn.prepareStatement(\"SELECT pizzaId, name, price FROM pizzas WHERE pizzaToppingId = ?\");\n            pstmt.setInt(1, id);\n            ResultSet rs = pstmt.executeQuery();\n\n            if(rs.next()){\n                p = new PizzaTopping(id, rs.getInt(0), rs.getString(1), rs.getDouble(2));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return Optional.ofNullable(p);\n    }\n\n    @Override\n    public void update(Object object) {\n        try{\n            PizzaTopping pizzaToppingToBeUpdated = (PizzaTopping) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"UPDATE pizzaToppings SET pizzaId = ?, name = ?, price = ? WHERE pizzaToppingId = ?;\");\n            pstmt.setInt(1, pizzaToppingToBeUpdated.getPizzaId());\n            pstmt.setString(2, pizzaToppingToBeUpdated.getName());\n            pstmt.setDouble(3, pizzaToppingToBeUpdated.getPrice());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void insert(Object object) {\n        try{\n            PizzaTopping pizzaToppingToBeInserted = (PizzaTopping) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"INSERT INTO pizzaToppings (pizzaId, name, price) VALUES (?, ?, ?);\");\n            pstmt.setInt(1, pizzaToppingToBeInserted.getPizzaId());\n            pstmt.setString(2, pizzaToppingToBeInserted.getName());\n            pstmt.setDouble(3, pizzaToppingToBeInserted.getPrice());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n    }\n\n    @Override\n    public void delete(Object object) {\n        try{\n            PizzaTopping pizzaToppingToBeDeleted = (PizzaTopping) object;\n            PreparedStatement pstmt = conn.prepareStatement(\"DELETE FROM pizzaToppings WHERE pizzaToppingId = ?;\");\n            pstmt.setLong(1, pizzaToppingToBeDeleted.getId());\n            pstmt.executeUpdate();\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n\n    }\n\n    public List<PizzaTopping> getPizzaToppings(){\n        List<PizzaTopping> pizzaToppingsList = new ArrayList<>();\n        try{\n            Statement stmt = conn.createStatement();\n            ResultSet rs = stmt.executeQuery(\"SELECT * FROM pizzaToppings;\");\n\n            while(rs.next()){\n                pizzaToppingsList.add(new PizzaTopping(rs.getInt(0), rs.getInt(1), rs.getString(2), rs.getDouble(3)));\n            }\n        } catch (SQLException throwables) {\n            throwables.printStackTrace();\n        }\n        return pizzaToppingsList;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Mappers/PizzaToppingDataMapper.java b/src/main/java/Mappers/PizzaToppingDataMapper.java
+--- a/src/main/java/Mappers/PizzaToppingDataMapper.java	(revision 9baf6e0315f185ff6d5a93dcc984d0db383d3257)
++++ b/src/main/java/Mappers/PizzaToppingDataMapper.java	(date 1633367294113)
+@@ -22,8 +22,10 @@
+ 
+             stmt.executeUpdate("CREATE TABLE pizzaToppings ("
+                     + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
+-                    + "pizzaId INT, name VARCHAR(64), "
+-                    + "price FLOAT, PRIMARY KEY (pizzaToppingId, pizzaId))");
++                    + "pizzaId INT, "
++                    + "name VARCHAR(64), "
++                    + "price FLOAT,"
++                    + " PRIMARY KEY (pizzaToppingId, pizzaId))");
+ 
+         } catch (SQLException throwables) {
+             throwables.printStackTrace();
+@@ -88,8 +90,8 @@
+ 
+     }
+ 
+-    public List<PizzaTopping> getPizzaToppings(){
+-        List<PizzaTopping> pizzaToppingsList = new ArrayList<>();
++    public ArrayList<PizzaTopping> getPizzaToppings(){
++        ArrayList<PizzaTopping> pizzaToppingsList = new ArrayList<>();
+         try{
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM pizzaToppings;");

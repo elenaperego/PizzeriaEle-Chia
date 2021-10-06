@@ -31,9 +31,9 @@ public class MenuPanel {
     }
 
     public void initializeMenu() {
-        ArrayList<Pizza> pizzaMenu = new PizzaDataMapper(conn, true).getAllPizzas();
-        ArrayList<Dessert> dessertMenu = new DessertDataMapper(conn, true).getAllDesserts();
-        ArrayList<Drink> drinkMenu = new DrinkDataMapper(conn, true).getAllDrinks();
+        ArrayList<Pizza> pizzaMenu = new PizzaDataMapper(conn).getAllPizzas();
+        ArrayList<Dessert> dessertMenu = new DessertDataMapper(conn).getAllDesserts();
+        ArrayList<Drink> drinkMenu = new DrinkDataMapper(conn).getAllDrinks();
 
         // Loop through all the pizzas and add them to the main panel
         for (Pizza pizza : pizzaMenu) {

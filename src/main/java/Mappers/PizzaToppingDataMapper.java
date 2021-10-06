@@ -10,26 +10,10 @@ import java.util.Optional;
 
 public class PizzaToppingDataMapper implements DataMapper {
 
-    Connection conn = ConnectionImpl.getConnection();
+    Connection conn;
 
-    public PizzaToppingDataMapper(Connection conn, boolean exists) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public PizzaToppingDataMapper(Connection conn) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this.conn = conn;
-        Statement stmt;
-        try{
-            stmt = conn.createStatement();
-
-            if(!exists) {
-
-                stmt.executeUpdate("CREATE TABLE pizzaToppings ("
-                        + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
-                        + "pizzaId INT, "
-                        + "name VARCHAR(64), "
-                        + "price FLOAT,"
-                        + " PRIMARY KEY (pizzaToppingId, pizzaId))");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
 
     }
     @Override

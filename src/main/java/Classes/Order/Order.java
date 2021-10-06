@@ -13,7 +13,7 @@ public class Order {
     private String orderStatus;
     private final long codeId;
     private double totalPrice;
-    private Date estimatedDeliveryTime;
+    private java.util.Date estimatedDeliveryTime;
     private int numberPizzas;
 
     private final String ordered_at;
@@ -21,7 +21,7 @@ public class Order {
     private final Clock clockOrdered = Clock.systemUTC();
     private final Clock clockDelivered = Clock.offset(clockOrdered, Duration.ofMinutes(20));
 
-    public Order(int orderId, int customerId, String status, long codeId, double price, Date time) {
+    public Order(int orderId, int customerId, String status, long codeId, double price, java.util.Date time) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.codeId = codeId;
@@ -33,7 +33,7 @@ public class Order {
         this.delivery_time = clockDelivered.instant().toString();
     }
 
-    public long getId() {
+    public int getId() {
         return this.orderId;
     }
 
@@ -55,9 +55,9 @@ public class Order {
 
     public void setTotalPrice(double price) { this.totalPrice = price; }
 
-    public Date getEstimatedDeliveryTime() { return this.estimatedDeliveryTime; }
+    public java.util.Date getEstimatedDeliveryTime() { return this.estimatedDeliveryTime; }
 
-    public void setEstimatedDeliveryTime(Date time) { this.estimatedDeliveryTime = time; }
+    public void setEstimatedDeliveryTime(java.util.Date time) { this.estimatedDeliveryTime = time; }
 
     public String getOrdered_at() {
         return ordered_at;

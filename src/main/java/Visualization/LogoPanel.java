@@ -48,7 +48,6 @@ public class LogoPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Order order = null;
-        CustomerFrame customerFrame = new CustomerFrame();
         OrderFrame orderFrame = null;
         try {
             orderFrame = new OrderFrame();
@@ -59,10 +58,18 @@ public class LogoPanel extends JPanel implements ActionListener {
         } catch (ClassNotFoundException classNotFoundException) {
             classNotFoundException.printStackTrace();
         }
-
         order = orderFrame.getNewOrder(); // Check whether order is correct
         StatusFrame statusFrame = new StatusFrame(conn, order);
-
+        CustomerFrame customerFrame = null;
+        try {
+            customerFrame = new CustomerFrame(order);
+        } catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
+        } catch (InstantiationException instantiationException) {
+            instantiationException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
+        }
         if (e.getSource() == pizzaLogo) {
             customerFrame.getFrame().setVisible(true);
 

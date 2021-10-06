@@ -9,22 +9,8 @@ import java.util.Optional;
 public class PizzaDataMapper implements DataMapper {
 
     Connection conn;
-    public PizzaDataMapper(Connection conn, boolean exist){
+    public PizzaDataMapper(Connection conn){
         this.conn = conn;
-        Statement stmt;
-        try{
-            stmt = conn.createStatement();
-
-            if(!exist) {
-                stmt.executeUpdate("CREATE TABLE pizzas ("
-                        + "pizzaId INT NOT NULL AUTO_INCREMENT, "
-                        + "name VARCHAR(64), "
-                        + "isVegeterian TINYINT, "
-                        + "PRIMARY KEY (pizzaId))");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
     @Override
     public Optional<Pizza> find(int id) {

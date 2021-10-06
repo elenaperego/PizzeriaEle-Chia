@@ -13,24 +13,8 @@ public class DrinkDataMapper implements DataMapper{
 
     Connection conn;
 
-    public DrinkDataMapper(Connection conn, boolean exists) {
+    public DrinkDataMapper(Connection conn) {
             this.conn = conn;
-            Statement stmt;
-
-            try{
-                stmt = conn.createStatement();
-
-                if(!exists) {
-
-                    stmt.executeUpdate("CREATE TABLE drinks ("
-                            + "drinkId INT NOT NULL AUTO_INCREMENT, "
-                            + "name VARCHAR(64), "
-                            + "price DOUBLE, "
-                            + "PRIMARY KEY (drinkId))");
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
     }
 
     @Override

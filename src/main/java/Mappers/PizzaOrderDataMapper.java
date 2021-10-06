@@ -8,23 +8,8 @@ import java.sql.Statement;
 public class PizzaOrderDataMapper {
     Connection conn;
 
-    public PizzaOrderDataMapper(Connection conn, boolean exists) {
+    public PizzaOrderDataMapper(Connection conn) {
         this.conn = conn;
-        Statement stmt;
-
-        try{
-            stmt = conn.createStatement();
-
-            if(!exists) {
-
-                stmt.executeUpdate("CREATE TABLE pizzaOrders ("
-                        + "orderId INT NOT NULL, "
-                        + "pizzaId INT NOT NULL, "
-                        + "PRIMARY KEY (orderId, pizzaId))");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
 
     public void insert(int orderId, int pizzaId) {

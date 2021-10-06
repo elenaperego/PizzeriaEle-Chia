@@ -14,7 +14,7 @@ public class ToppingsFrame {
 
     Connection conn = ConnectionImpl.getConnection();
     Pizza pizza;
-    ArrayList<PizzaTopping> allToppings = new PizzaToppingDataMapper(conn, true).getPizzaToppings();
+    ArrayList<PizzaTopping> allToppings = new PizzaToppingDataMapper(conn).getPizzaToppings();
     ImageIcon vegIcon = new ImageIcon(ImageLoader.loadImage("src/main/java/Visualization/Resources/Veg.png"));
     ArrayList<PizzaTopping> toppings = new ArrayList<>();
     JFrame toppingsFrame = new JFrame();

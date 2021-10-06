@@ -10,29 +10,12 @@ public class CustomerDataMapper implements DataMapper{
 
     Connection conn;
 
-    public CustomerDataMapper(Connection conn, boolean exists) {
+    public CustomerDataMapper(Connection conn) {
         this.conn = conn;
-            Statement stmt;
-            try{
-                stmt = conn.createStatement();
-
-                if(!exists) {
-
-                    stmt.executeUpdate("CREATE TABLE customers ("
-                            + "customerId INT NOT NULL AUTO_INCREMENT, "
-                            + "name VARCHAR(64), "
-                            + "phoneNumber BIGINT, "
-                            + "addressStreet VARCHAR(64), "
-                            + "addressCode INT, "
-                            + "PRIMARY KEY (customerId))");
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
     }
 
     @Override
-    public Optional find(int id) {
+    public Optional<Customer> find(int id) {
         Customer c = null;
         try{
             PreparedStatement pstmt = conn.prepareStatement("SELECT name, phoneNumber, addressStreet, addressCode FROM customers WHERE customerId = ?");

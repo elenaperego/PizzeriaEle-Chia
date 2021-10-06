@@ -7,34 +7,19 @@ import java.util.Optional;
 
 public class DeliveryPersonMapper implements DataMapper{
     Connection conn;
-    public DeliveryPersonMapper(Connection conn, boolean exists){
+    public DeliveryPersonMapper(Connection conn){
         this.conn = conn;
-        Statement stmt;
-        try{
-            stmt = conn.createStatement();
-
-            if(!exists) {
-
-                stmt.executeUpdate("CREATE TABLE deliveryPersons ("
-                        + "deliveryPersonId INT NOT NULL AUTO_INCREMENT, "
-                        + "isGirl TINYINT, "
-                        + "areaCode INT, PRIMARY KEY (deliveryPersonId))");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
     }
     @Override
     public Optional<DeliveryPerson> find(int id) {
         DeliveryPerson d = null;
         try{
-            PreparedStatement pstmt = conn.prepareStatement("SELECT isGirl, areaCode FROM deliveryPersons WHERE deliveryPersonId = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT isGirl, areaCode, isAvailable FROM deliveryPersons WHERE deliveryPersonId = ?");
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                d = new DeliveryPerson(id, rs.getBoolean(1), rs.getInt(2));
+                d = new DeliveryPerson(id, rs.getBoolean(1), rs.getInt(2), rs.getBoolean(3));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -46,9 +31,10 @@ public class DeliveryPersonMapper implements DataMapper{
     public void update(Object object) {
         try{
             DeliveryPerson deliveryPersonToBeUpdated = (DeliveryPerson) object;
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE deliveryPersons SET isGirl = ?, areaCode = ? WHERE deliveryPersonId = ?;");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE deliveryPersons SET isGirl = ?, areaCode = ?, isAvailable = ? WHERE deliveryPersonId = ?;");
             pstmt.setBoolean(1, deliveryPersonToBeUpdated.isGirl());
             pstmt.setInt(2, deliveryPersonToBeUpdated.getAreaCode());
+            pstmt.setBoolean(3, deliveryPersonToBeUpdated.isAvailable());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -59,9 +45,10 @@ public class DeliveryPersonMapper implements DataMapper{
     public void insert(Object object) {
         try{
             DeliveryPerson deliveryPersonToBeInserted = (DeliveryPerson) object;
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO deliveryPersons (isGirl, areaCode) VALUES (?, ?);");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO deliveryPersons (isGirl, areaCode, isAvailable) VALUES (?, ?, ?);");
             pstmt.setBoolean(1, deliveryPersonToBeInserted.isGirl());
             pstmt.setInt(2, deliveryPersonToBeInserted.getAreaCode());
+            pstmt.setBoolean(3, deliveryPersonToBeInserted.isAvailable());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

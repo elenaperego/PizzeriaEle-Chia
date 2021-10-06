@@ -12,23 +12,8 @@ import java.util.Optional;
 
 public class DiscountCodeDataMapper {
     Connection conn;
-    public DiscountCodeDataMapper(Connection conn, boolean exists){
+    public DiscountCodeDataMapper(Connection conn){
         this.conn = conn;
-        Statement stmt;
-        try{
-            stmt = conn.createStatement();
-
-            if(!exists) {
-
-                stmt.executeUpdate("CREATE TABLE discountCodes ("
-                        + "discountCodeId INT NOT NULL AUTO_INCREMENT, "
-                        + "discountCode BIGINT, "
-                        + "isUsed TINYINT, "
-                        + "PRIMARY KEY (discountCodeId))");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
 
     }
 

@@ -15,19 +15,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Optional;
 
 public class OrderFrame implements ActionListener {
-
     Connection conn = ConnectionImpl.getConnection();
-
     Order newOrder = null;
     double finalPrice = 0;
     long codeId = 0;
     int orderCount = 0;        // Should these two counts remain updated when the application closes or
     int customerCount = 0;     // is it possible to restart them whenever we launch the application again?
-    Date estimatedDeliveryTime = null;
 
     JFrame orderFrame = new JFrame();
     JPanel orderPanel = new JPanel();
@@ -41,6 +40,7 @@ public class OrderFrame implements ActionListener {
     JButton codeButton = new JButton(" CONFIRM CODE");
     JButton confirmButton = new JButton("CONFIRM ORDER");
     ArrayList<MenuItem> orderSummary;
+    java.util.Date orderSubmittedTime;
 
     public OrderFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
 
@@ -106,7 +106,7 @@ public class OrderFrame implements ActionListener {
     }
 
     public boolean checkNumberofPizzas(ArrayList<MenuItem> summary){
-        PizzaDataMapper mapper = new PizzaDataMapper(conn, true);
+        PizzaDataMapper mapper = new PizzaDataMapper(conn);
         ArrayList<Pizza> pizzas = mapper.getAllPizzas();
         int count = 0;
         for(MenuItem item: summary){
@@ -153,7 +153,7 @@ public class OrderFrame implements ActionListener {
 
         // Compare the code inserted by the user with the ones already in the database
         } else if (e.getSource() == codeBox) {
-            DiscountCodeDataMapper codeMapper = new DiscountCodeDataMapper(conn, true);
+            DiscountCodeDataMapper codeMapper = new DiscountCodeDataMapper(conn);
             Optional<DiscountCode> discountCode = codeMapper.find(Long.parseLong(codeBox.getText()));
             if(discountCode.isPresent()){
                 if(discountCode.get().isUsed()){
@@ -171,8 +171,10 @@ public class OrderFrame implements ActionListener {
 
         // Add all the elements to the new order and close the current frame
         } else if (e.getSource() == confirmButton) {
-            newOrder = new Order(orderCount++, customerCount++, "ordered", codeId, finalPrice, estimatedDeliveryTime);
-            OrderDataMapper orderMapper = new OrderDataMapper(conn, true);
+            newOrder = new Order(orderCount++, customerCount++, "ordered", codeId, finalPrice, null);
+            OrderDataMapper orderMapper = new OrderDataMapper(conn);
+            orderSubmittedTime = new java.util.Date();
+            newOrder.setEstimatedDeliveryTime(getDeliveryTime());
             orderMapper.insert(newOrder);
             orderFrame.dispose();
         }
@@ -181,4 +183,22 @@ public class OrderFrame implements ActionListener {
     public Order getNewOrder() { return newOrder; }
 
     public JFrame getFrame() { return this.orderFrame; }
+
+    public java.util.Date getDeliveryTime(){
+        Calendar c = Calendar.getInstance();
+        c.setTime(orderSubmittedTime);
+        long timeInSecs = c.getTimeInMillis();
+        return new java.util.Date(timeInSecs + (20 * 60 * 1000));
+    }
+
+    public boolean is5minutesPassed(java.util.Date now){
+        Calendar c = Calendar.getInstance();
+        c.setTime(orderSubmittedTime);
+        long timeInSecs = c.getTimeInMillis();
+        java.util.Date after5minutes = new java.util.Date(timeInSecs + (5 * 60 * 1000));
+        if(now.after(after5minutes))
+           return true;
+        else
+            return false;
+    }
 }

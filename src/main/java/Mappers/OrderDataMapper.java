@@ -10,26 +10,8 @@ public class OrderDataMapper implements DataMapper{
 
     Connection conn;
 
-    public OrderDataMapper(Connection conn, boolean exists) {
+    public OrderDataMapper(Connection conn) {
         this.conn = conn;
-        Statement stmt;
-        try{
-            stmt = conn.createStatement();
-
-            if(!exists) {
-
-                stmt.executeUpdate("CREATE TABLE orders ("
-                        + "orderId INT NOT NULL AUTO_INCREMENT"
-                        + "orderStatus VARCHAR(64), "
-                        + "customerId TINYINT, "
-                        + "codeId INT, "
-                        + "estimatedDeliveryTime DATE, "
-                        + "totalPrice INT, "
-                        + "PRIMARY KEY (orderId))");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
 
     @Override
@@ -73,7 +55,7 @@ public class OrderDataMapper implements DataMapper{
             pstmt.setString(1, orderToBeUpdated.getStatus());
             pstmt.setLong(2, orderToBeUpdated.getCustomerId());
             pstmt.setLong(3, orderToBeUpdated.getCodeId());
-            pstmt.setDate(4, orderToBeUpdated.getEstimatedDeliveryTime());
+            pstmt.setDate(4, (Date) orderToBeUpdated.getEstimatedDeliveryTime());
             pstmt.setDouble(5, orderToBeUpdated.getTotalPrice());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {

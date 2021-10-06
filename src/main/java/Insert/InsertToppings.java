@@ -1,6 +1,8 @@
-package Mappers;
+package Insert;
 
 import Classes.PizzaTopping.PizzaTopping;
+import Mappers.ConnectionImpl;
+import Mappers.PizzaToppingDataMapper;
 
 import java.sql.Connection;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -13,7 +15,7 @@ public class InsertToppings {
     }
 
     public void insert() throws IllegalAccessException, ClassNotFoundException, InstantiationException {
-        PizzaToppingDataMapper mapper = new PizzaToppingDataMapper(conn, false);
+        PizzaToppingDataMapper mapper = new PizzaToppingDataMapper(conn);
 
         for(int i = 1; i < 9; i++) {
             PizzaTopping p1 = new PizzaTopping(counter.getAndIncrement(), i, "pomodoro", 2);

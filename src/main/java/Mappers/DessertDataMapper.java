@@ -10,24 +10,8 @@ public class DessertDataMapper implements DataMapper{
 
  Connection conn;
 
-    public DessertDataMapper(Connection conn, boolean exists) {
+    public DessertDataMapper(Connection conn) {
         this.conn = conn;
-       Statement stmt;
-
-       try{
-           stmt = conn.createStatement();
-
-       if(!exists) {
-
-           stmt.executeUpdate("CREATE TABLE desserts ("
-                   + "dessertId INT NOT NULL AUTO_INCREMENT, "
-                   + "name VARCHAR(64), "
-                   + "price DOUBLE, "
-                   + "PRIMARY KEY (dessertId))");
-       }
-       } catch (SQLException throwables) {
-           throwables.printStackTrace();
-       }
     }
 
     @Override

@@ -3,6 +3,7 @@ package Visualization;
 import Classes.DeliveryPerson.DeliveryPerson;
 import Classes.Order.Order;
 import Mappers.ConnectionImpl;
+import Mappers.DeliveryPersonMapper;
 import Mappers.DeliveryPersonOrderDataMapper;
 
 import javax.swing.*;
@@ -14,12 +15,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CustomerFrame implements ActionListener {
 
     Connection conn = ConnectionImpl.getConnection();
     JFrame customerFrame = new JFrame();
     Order order;
+    DeliveryPerson deliveryPerson;
     int customerId = 0;
     JLabel customerLabel = new JLabel(" CUSTOMER " + customerId);
     JLabel nameLabel = new JLabel(" NAME: ");
@@ -64,7 +68,6 @@ public class CustomerFrame implements ActionListener {
         if (e.getSource() == nextButton) {
             // Get information from the TextFields in here!!
             // Check text fields and return error if null!
-
             OrderFrame orderFrame = null;
             try {
                 orderFrame = new OrderFrame();
@@ -76,7 +79,12 @@ public class CustomerFrame implements ActionListener {
                 classNotFoundException.printStackTrace();
             }
 
-
+            try {
+                selectDeliveryPerson(postalCodeBox.getText());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            availableAgain();
             customerFrame.dispose();
             orderFrame.getFrame().setVisible(true);
         }
@@ -93,16 +101,31 @@ public class CustomerFrame implements ActionListener {
         PreparedStatement pstmt1 = conn.prepareStatement("SELECT deliveryPersonId, isGirl, isAvailable FROM deliverypersons WHERE areaCode = ?");
         pstmt.setInt(1, areacode);
         ResultSet rs1 = pstmt1.executeQuery();
-        DeliveryPerson deliveryPerson = null;
         while(rs.next()){
             if(rs.getBoolean(3)){
-                deliveryPerson = new DeliveryPerson(rs.getInt(1), rs.getBoolean(2), areacode, rs.getBoolean(3));
+                deliveryPerson = new DeliveryPerson(rs.getInt(1), rs.getBoolean(2), areacode, false);
+                break;
             }
         }
         if(Objects.isNull(deliveryPerson)){
             System.out.println("there is no available delivery person, wait");
+            //ADD ERROR
+        } else {
+            DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
+            mapper.insert(deliveryPerson);
         }
-        DeliveryPersonOrderDataMapper mapper = new DeliveryPersonOrderDataMapper(conn);
-        mapper.insert(order.getId(), deliveryPerson.getDeliveryPersonId());
+    }
+
+    public void availableAgain() {
+        TimerTask task = new TimerTask() {
+            public void run() {
+                DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
+                deliveryPerson.setAvailable(true);
+                mapper.update(deliveryPerson);
+            }
+        };
+        Timer timer = new Timer();
+        long delay = 1800000; //30 min
+        timer.schedule(task, delay);
     }
 }

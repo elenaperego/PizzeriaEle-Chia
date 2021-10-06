@@ -1,11 +1,10 @@
 package Visualization;
 
+import Classes.DiscountCode.DiscountCode;
 import Classes.MenuItem;
 import Classes.Order.Order;
 import Classes.Pizza.Pizza;
-import Mappers.ConnectionImpl;
-import Mappers.DiscountCodeDataMapper;
-import Mappers.OrderDataMapper;
+import Mappers.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class OrderFrame implements ActionListener {
 
@@ -22,8 +22,8 @@ public class OrderFrame implements ActionListener {
     Order newOrder = null;
     double finalPrice = 0;
     long codeId = 0;
-    long orderCount = 0;        // Should these two counts remain updated when the application closes or
-    long customerCount = 0;     // is it possible to restart them whenever we launch the application again?
+    int orderCount = 0;        // Should these two counts remain updated when the application closes or
+    int customerCount = 0;     // is it possible to restart them whenever we launch the application again?
     Date estimatedDeliveryTime = null;
 
     JFrame orderFrame = new JFrame();
@@ -87,6 +87,26 @@ public class OrderFrame implements ActionListener {
             finalPrice += summary.get(i).getPrice();
         }
         finalPrice *= 1.9; // Here the 9 % VAT is added
+        if(checkNumberofPizzas(summary)){
+            finalPrice = finalPrice - (finalPrice*0.1);
+        }
+    }
+
+    public boolean checkNumberofPizzas(ArrayList<MenuItem> summary){
+        PizzaDataMapper mapper = new PizzaDataMapper(conn, true);
+        ArrayList<Pizza> pizzas = mapper.getAllPizzas();
+        int count = 0;
+        for(MenuItem item: summary){
+            for(Pizza pizza: pizzas){
+                if(item.getName() == pizza.getName()){
+                    count++;
+                }
+            }
+        }
+        if(count >= 10)
+            return true;
+        else
+            return false;
     }
 
     public void getEstimatedDeliveryTime() {
@@ -121,6 +141,20 @@ public class OrderFrame implements ActionListener {
         // Compare the code inserted by the user with the ones already in the database
         } else if (e.getSource() == codeBox) {
             DiscountCodeDataMapper codeMapper = new DiscountCodeDataMapper(conn, true);
+            Optional<DiscountCode> discountCode = codeMapper.find(Long.parseLong(codeBox.getText()));
+            if(discountCode.isPresent()){
+                if(discountCode.get().isUsed()){
+                    System.out.println("already used");
+                } else {
+                    System.out.println("not used yet");
+                    discountCode.get().setUsed(false);
+                    codeMapper.update(discountCode.get());
+                }
+            } else {
+                System.out.println("new discount code");
+                codeMapper.insert(new DiscountCode(0, Long.parseLong(codeBox.getText()), true));
+                // id = 0 perchè tanto il metodo neanche lo guarda perchè lo fa da solo
+            }
 
         // Add all the elements to the new order and close the current frame
         } else if (e.getSource() == confirmButton) {

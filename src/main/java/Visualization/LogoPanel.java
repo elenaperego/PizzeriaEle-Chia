@@ -48,7 +48,9 @@ public class LogoPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Order order = null;
+        CustomerFrame customerFrame = null;
         OrderFrame orderFrame = null;
+
         try {
             orderFrame = new OrderFrame();
         } catch (IllegalAccessException illegalAccessException) {
@@ -58,11 +60,12 @@ public class LogoPanel extends JPanel implements ActionListener {
         } catch (ClassNotFoundException classNotFoundException) {
             classNotFoundException.printStackTrace();
         }
-        order = orderFrame.getNewOrder();
+
+        order = orderFrame.getNewOrder(); // Check whether order is correct
         StatusFrame statusFrame = new StatusFrame(conn, order);
 
         if (e.getSource() == pizzaLogo) {
-            orderFrame.getFrame().setVisible(true);
+            customerFrame.getFrame().setVisible(true);
 
         } else if (e.getSource() == vespaLogo) {
             statusFrame.setVisible(true);

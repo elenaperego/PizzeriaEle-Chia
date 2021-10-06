@@ -1,10 +1,11 @@
 package Visualization;
 
-import Classes.DiscountCode.DiscountCode;
 import Classes.MenuItem;
 import Classes.Order.Order;
 import Classes.Pizza.Pizza;
-import Mappers.*;
+import Mappers.ConnectionImpl;
+import Mappers.DiscountCodeDataMapper;
+import Mappers.OrderDataMapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class OrderFrame implements ActionListener {
 
@@ -29,11 +29,15 @@ public class OrderFrame implements ActionListener {
     JFrame orderFrame = new JFrame();
     JPanel orderPanel = new JPanel();
     JLabel orderLabel = new JLabel("ORDER NUMBER: " + orderCount);
-    JLabel orderSummary = new JLabel("      ORDER SUMMARY");
+    JLabel orderSummaryLabel = new JLabel("      ORDER SUMMARY");
     JComboBox<Object> summary = new JComboBox<>();
+    JLabel priceLabel = new JLabel(" PRICE: ");
+    JLabel numberPriceLabel = new JLabel();
     JLabel codeLabel = new JLabel("     INSERT CODE HERE");
     JTextField codeBox = new JTextField();
+    JButton codeButton = new JButton(" CONFIRM CODE");
     JButton confirmButton = new JButton("CONFIRM ORDER");
+    ArrayList<MenuItem> orderSummary = null;
 
     public OrderFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
 
@@ -48,20 +52,26 @@ public class OrderFrame implements ActionListener {
 
     public void addPanel() {
         orderPanel.setSize(500, 500);
-        orderPanel.setLayout(new GridLayout(6, 1));
+        orderPanel.setLayout(new GridLayout(6, 2));
 
         orderLabel.setFont(new Font("Serif", Font.BOLD, 17));
         orderLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        orderSummary.setFont(new Font("Serif", Font.BOLD, 17));
+        orderSummaryLabel.setFont(new Font("Serif", Font.BOLD, 17));
         codeLabel.setFont(new Font("Serif", Font.BOLD, 17));
         codeBox.setPreferredSize(new Dimension(200, 70));
         confirmButton.setPreferredSize(new Dimension(100, 70));
 
+        getFinalPrice(orderSummary);
+        numberPriceLabel.setText("" + finalPrice);
+
         orderPanel.add(orderLabel);
-        orderPanel.add(orderSummary);
+        orderPanel.add(orderSummaryLabel);
         orderPanel.add(summary);
+        orderPanel.add(priceLabel);
+        orderPanel.add(numberPriceLabel);
         orderPanel.add(codeLabel);
         orderPanel.add(codeBox);
+        orderPanel.add(codeButton);
         orderPanel.add(confirmButton);
 
         this.orderFrame.add(orderPanel);
@@ -129,7 +139,7 @@ public class OrderFrame implements ActionListener {
         // Add pizzas to order summary if selected in the menu panel
         // Sum price of all the objects and include profits??????
         if (e.getSource() == summary) {
-            ArrayList<MenuItem> orderSummary = new ArrayList<>();
+            orderSummary = new ArrayList<>();
             for (int i = 0; i < menu.menu.size(); i++) {
                 if (menu.getObject(i).getCheckBox().isSelected()) {
                     summary.addItem(menu.getObject(i).getObject());

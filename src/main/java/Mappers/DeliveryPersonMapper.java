@@ -34,7 +34,7 @@ public class DeliveryPersonMapper implements DataMapper{
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                d = new DeliveryPerson(id, rs.getBoolean(0), rs.getInt(1));
+                d = new DeliveryPerson(id, rs.getBoolean(1), rs.getInt(2));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

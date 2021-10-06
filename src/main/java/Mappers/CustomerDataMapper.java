@@ -40,7 +40,7 @@ public class CustomerDataMapper implements DataMapper{
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                c = new Customer((int) id, rs.getString(0), rs.getString(1), rs.getString(2), rs.getInt(3));
+                c = new Customer( id, rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

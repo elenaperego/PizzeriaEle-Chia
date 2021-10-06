@@ -1,11 +1,13 @@
 package Visualization;
 
+import Classes.DiscountCode.DiscountCode;
 import Classes.MenuItem;
 import Classes.Order.Order;
 import Classes.Pizza.Pizza;
 import Mappers.ConnectionImpl;
 import Mappers.DiscountCodeDataMapper;
 import Mappers.OrderDataMapper;
+import Mappers.PizzaDataMapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class OrderFrame implements ActionListener {
 
@@ -37,7 +40,7 @@ public class OrderFrame implements ActionListener {
     JTextField codeBox = new JTextField();
     JButton codeButton = new JButton(" CONFIRM CODE");
     JButton confirmButton = new JButton("CONFIRM ORDER");
-    ArrayList<MenuItem> orderSummary = null;
+    ArrayList<MenuItem> orderSummary;
 
     public OrderFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
 
@@ -61,7 +64,7 @@ public class OrderFrame implements ActionListener {
         codeBox.setPreferredSize(new Dimension(200, 70));
         confirmButton.setPreferredSize(new Dimension(100, 70));
 
-        getFinalPrice(orderSummary);
+        //getFinalPrice(orderSummary);
         numberPriceLabel.setText("" + finalPrice);
 
         orderPanel.add(orderLabel);

@@ -35,7 +35,7 @@ public class PizzaDataMapper implements DataMapper {
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                p = new Pizza( id, rs.getString(0), rs.getBoolean(1));
+                p = new Pizza(id, rs.getString(1), rs.getBoolean(2));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

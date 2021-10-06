@@ -10,8 +10,9 @@ import java.util.Optional;
 
 public class PizzaToppingDataMapper implements DataMapper {
 
-    Connection conn;
-    public PizzaToppingDataMapper(Connection conn, boolean exists){
+    Connection conn = ConnectionImpl.getConnection();
+
+    public PizzaToppingDataMapper(Connection conn, boolean exists) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this.conn = conn;
         Statement stmt;
         try{
@@ -40,7 +41,7 @@ public class PizzaToppingDataMapper implements DataMapper {
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                p = new PizzaTopping(id, rs.getInt(0), rs.getString(1), rs.getDouble(2));
+                p = new PizzaTopping(id, rs.getInt(1), rs.getString(2), rs.getDouble(3));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

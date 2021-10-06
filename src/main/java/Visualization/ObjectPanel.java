@@ -47,7 +47,16 @@ public class ObjectPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == nameLabel) {
-            ToppingsFrame toppings = new ToppingsFrame(conn, (Pizza) item);
+            ToppingsFrame toppings = null;
+            try {
+                toppings = new ToppingsFrame((Pizza) item);
+            } catch (IllegalAccessException illegalAccessException) {
+                illegalAccessException.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            } catch (InstantiationException instantiationException) {
+                instantiationException.printStackTrace();
+            }
             toppings.getFrame().setVisible(true);
         }
     }

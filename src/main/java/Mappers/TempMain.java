@@ -10,28 +10,25 @@ import Classes.Pizza.Pizza;
 import Classes.PizzaTopping.PizzaTopping;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class TempMain {
 
-    static AtomicInteger counter =new AtomicInteger();;
+    static AtomicInteger counter = new AtomicInteger();
 
     public static void main (String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
         Connection conn = ConnectionImpl.getConnection();
-        PizzaToppingDataMapper mapper = new PizzaToppingDataMapper(conn, true);
-        PizzaDataMapper mapper1 = new PizzaDataMapper(conn, true);
-        PizzaTopping p = new PizzaTopping(counter.getAndIncrement(), 0,"pomodoro", 2);
-        //mapper.insert(p);
-        mapper1.delete(new Pizza(3, "margherita", true));
-        ArrayList<PizzaTopping> pizzas = mapper.getPizzaToppings();
+        DessertDataMapper mapper = new DessertDataMapper(conn, false);
+        Dessert d1 = new Dessert(counter.getAndIncrement(), "tiramisù", 5);
+        Dessert d2 = new Dessert(counter.getAndIncrement(), "cheesecake", 7);
+        mapper.insert(d1);
+        mapper.insert(d2);
 
-        for (PizzaTopping p1: pizzas) {
-            System.out.println(p1.getName());
-        }
+
     }
 }

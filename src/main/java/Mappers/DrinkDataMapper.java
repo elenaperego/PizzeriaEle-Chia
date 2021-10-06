@@ -42,7 +42,7 @@ public class DrinkDataMapper implements DataMapper{
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                d = new Drink(id, rs.getString(0), rs.getDouble(1));
+                d = new Drink(id, rs.getString(1), rs.getDouble(2));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

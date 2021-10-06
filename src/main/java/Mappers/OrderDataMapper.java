@@ -19,6 +19,7 @@ public class OrderDataMapper implements DataMapper{
             if(!exists) {
 
                 stmt.executeUpdate("CREATE TABLE orders ("
+                        + "orderId INT NOT NULL AUTO_INCREMENT"
                         + "orderStatus VARCHAR(64), "
                         + "customerId TINYINT, "
                         + "codeId INT, "
@@ -32,7 +33,7 @@ public class OrderDataMapper implements DataMapper{
     }
 
     @Override
-    public Optional find(int id) {
+    public Optional<Order> find(int id) {
         Order o = null;
         try{
             PreparedStatement pstmt = conn.prepareStatement("SELECT orderStatus, customerId, codeId, estimatedDeliveryTime, totalPrice FROM order WHERE orderId = ?");
@@ -40,7 +41,7 @@ public class OrderDataMapper implements DataMapper{
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                o = new Order((long) id, rs.getLong(0), rs.getString(1), rs.getLong(3), rs.getDouble(4), rs.getDate(5));
+                o = new Order(id, rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getDouble(4), rs.getDate(5));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -56,7 +57,7 @@ public class OrderDataMapper implements DataMapper{
             pstmt.setString(1, orderToBeInserted.getStatus());
             pstmt.setLong(2, orderToBeInserted.getCustomerId());
             pstmt.setLong(3, orderToBeInserted.getCodeId());
-            pstmt.setDate(4, orderToBeInserted.getEstimatedDeliveryTime());
+            pstmt.setDate(4, new java.sql.Date(orderToBeInserted.getEstimatedDeliveryTime().getTime()));
             pstmt.setDouble(5, orderToBeInserted.getTotalPrice());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {

@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class CustomerFrame implements ActionListener {
 
-    JFrame customerFrame = new JFrame();
+    JFrame customerFrame = new JFrame();;
     int customerId = 0;
     JLabel customerLabel = new JLabel(" CUSTOMER " + customerId);
     JLabel nameLabel = new JLabel(" NAME: ");
@@ -60,6 +60,7 @@ public class CustomerFrame implements ActionListener {
             } catch (ClassNotFoundException classNotFoundException) {
                 classNotFoundException.printStackTrace();
             }
+            customerFrame.dispose();
             orderFrame.getFrame().setVisible(true);
         }
     }

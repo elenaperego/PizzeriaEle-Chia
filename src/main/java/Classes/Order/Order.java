@@ -1,23 +1,27 @@
 package Classes.Order;
 
-import java.sql.Date;
+import Classes.Pizza.Pizza;
+import Mappers.ConnectionImpl;
+
+import java.sql.*;
 import java.time.Clock;
 import java.time.Duration;
 
 public class Order {
-    private final long orderId;
-    private final long customerId;
+    private final int orderId;
+    private final int customerId;
     private String orderStatus;
     private final long codeId;
     private double totalPrice;
     private Date estimatedDeliveryTime;
+    private int numberPizzas;
 
     private final String ordered_at;
     private final String delivery_time;
     private final Clock clockOrdered = Clock.systemUTC();
     private final Clock clockDelivered = Clock.offset(clockOrdered, Duration.ofMinutes(20));
 
-    public Order(long orderId, long customerId, String status, long codeId, double price, Date time) {
+    public Order(int orderId, int customerId, String status, long codeId, double price, Date time) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.codeId = codeId;
@@ -62,5 +66,6 @@ public class Order {
     public String getDelivery_time() {
         return delivery_time;
     }
+
 
 }

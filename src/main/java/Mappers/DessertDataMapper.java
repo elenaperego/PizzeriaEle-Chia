@@ -39,7 +39,7 @@ public class DessertDataMapper implements DataMapper{
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                d = new Dessert((int) id, rs.getString(0), rs.getDouble(1));
+                d = new Dessert(id, rs.getString(1), rs.getDouble(2));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

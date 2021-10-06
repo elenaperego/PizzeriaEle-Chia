@@ -3,10 +3,12 @@ package Classes.DiscountCode;
 public class DiscountCode {
 
     private final int id;
-    private final boolean isUsed;
+    private boolean isUsed;
+    private final long discountCode;
 
-    public DiscountCode(int id, boolean isUsed) {
+    public DiscountCode(int id, long discountCode, boolean isUsed) {
         this.id = id;
+        this.discountCode = discountCode;
         this.isUsed = isUsed;
     }
 
@@ -18,4 +20,9 @@ public class DiscountCode {
         return isUsed;
     }
 
+    public long getDiscountCode() { return discountCode; }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
 }

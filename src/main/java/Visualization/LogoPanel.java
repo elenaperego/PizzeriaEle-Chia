@@ -48,9 +48,8 @@ public class LogoPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Order order = null;
-        CustomerFrame customerFrame = null;
+        CustomerFrame customerFrame = new CustomerFrame();
         OrderFrame orderFrame = null;
-
         try {
             orderFrame = new OrderFrame();
         } catch (IllegalAccessException illegalAccessException) {

@@ -2,6 +2,7 @@ package Visualization;
 
 import Classes.MenuItem;
 import Classes.Pizza.Pizza;
+import Mappers.ConnectionImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,15 +13,13 @@ import java.sql.Connection;
 public class ObjectPanel implements ActionListener {
 
     MenuItem item;
-    Connection conn;
     JPanel objectPanel = new JPanel();
     JCheckBox checkBox = new JCheckBox();
     JButton nameLabel = new JButton();
     JLabel priceLabel = new JLabel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    public ObjectPanel(Connection conn, MenuItem item) {
-        this.conn = conn;
+    public ObjectPanel(MenuItem item) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this.item = item;
 
         nameLabel.setText(item.getName());

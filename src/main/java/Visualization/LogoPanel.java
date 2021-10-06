@@ -11,7 +11,7 @@ import java.sql.Connection;
 
 public class LogoPanel extends JPanel implements ActionListener {
 
-    Connection conn = ConnectionImpl.getConnection();
+    //Connection conn = ConnectionImpl.getConnection();
 
     JLabel logo = new JLabel("            CHIA & ELE PIZZERIA");
     JButton pizzaLogo = new JButton();
@@ -59,7 +59,7 @@ public class LogoPanel extends JPanel implements ActionListener {
             classNotFoundException.printStackTrace();
         }
         order = orderFrame.getNewOrder(); // Check whether order is correct
-        StatusFrame statusFrame = new StatusFrame(conn, order);
+        StatusFrame statusFrame = new StatusFrame(order);
         CustomerFrame customerFrame = null;
         try {
             customerFrame = new CustomerFrame(order);
@@ -74,7 +74,7 @@ public class LogoPanel extends JPanel implements ActionListener {
             customerFrame.getFrame().setVisible(true);
 
         } else if (e.getSource() == vespaLogo) {
-            statusFrame.setVisible(true);
+            statusFrame.getFrame().setVisible(true);
         }
     }
 }

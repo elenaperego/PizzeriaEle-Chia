@@ -40,6 +40,7 @@ public class CustomerFrame implements ActionListener {
         customerFrame.setLayout(new GridLayout(6, 2));
 
         customerFrame.add(customerLabel);
+        customerFrame.add(new JLabel(""));
         customerFrame.add(nameLabel);
         customerFrame.add(nameBox);
         customerFrame.add(phoneLabel);
@@ -48,6 +49,7 @@ public class CustomerFrame implements ActionListener {
         customerFrame.add(addressBox);
         customerFrame.add(postalCodeLabel);
         customerFrame.add(postalCodeBox);
+        customerFrame.add(new JLabel(""));
         customerFrame.add(nextButton);
 
         customerFrame.setLocationRelativeTo(null);

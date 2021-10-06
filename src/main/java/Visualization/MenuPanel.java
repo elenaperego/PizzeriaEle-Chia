@@ -52,7 +52,16 @@ public class MenuPanel {
     }
 
     public void addPanel(MenuItem o) {
-        ObjectPanel panel = new ObjectPanel(conn, o);
+        ObjectPanel panel = null;
+        try {
+            panel = new ObjectPanel(o);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         menuPanel.add(panel.getPanel());
         menuPanel.add(Box.createRigidArea(new Dimension(screenSize.width, 30)));
     }

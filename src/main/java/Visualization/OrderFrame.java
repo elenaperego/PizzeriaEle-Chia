@@ -27,6 +27,8 @@ public class OrderFrame implements ActionListener {
     long codeId = 0;
     int orderCount = 0;        // Should these two counts remain updated when the application closes or
     int customerCount = 0;     // is it possible to restart them whenever we launch the application again?
+    double profit = 0;
+    Date estimatedDeliveryTime = null;
 
     JFrame orderFrame = new JFrame();
     JPanel orderPanel = new JPanel();
@@ -68,13 +70,16 @@ public class OrderFrame implements ActionListener {
         numberPriceLabel.setText("" + finalPrice);
 
         orderPanel.add(orderLabel);
+        orderPanel.add(new Label());
         orderPanel.add(orderSummaryLabel);
         orderPanel.add(summary);
         orderPanel.add(priceLabel);
         orderPanel.add(numberPriceLabel);
         orderPanel.add(codeLabel);
+        orderPanel.add(new Label());
         orderPanel.add(codeBox);
         orderPanel.add(codeButton);
+        orderPanel.add(new Label());
         orderPanel.add(confirmButton);
 
         this.orderFrame.add(orderPanel);
@@ -99,7 +104,9 @@ public class OrderFrame implements ActionListener {
         for (int i = 0; i < summary.size(); i++) {
             finalPrice += summary.get(i).getPrice();
         }
-        finalPrice *= 1.9; // Here the 9 % VAT is added
+        finalPrice *= 1.9;          // Here the 9 % VAT is added
+        finalPrice += profit;       // Here the profit is added
+
         if(checkNumberofPizzas(summary)){
             finalPrice = finalPrice - (finalPrice*0.1);
         }
@@ -112,6 +119,7 @@ public class OrderFrame implements ActionListener {
         for(MenuItem item: summary){
             for(Pizza pizza: pizzas){
                 if(item.getName() == pizza.getName()){
+                    profit += pizza.getPrice() * 0.40;
                     count++;
                 }
             }
@@ -158,6 +166,9 @@ public class OrderFrame implements ActionListener {
             if(discountCode.isPresent()){
                 if(discountCode.get().isUsed()){
                     System.out.println("already used");
+                    JFrame errorFrame = getErrorFrame();
+                    errorFrame.setVisible(true);
+
                 } else {
                     System.out.println("not used yet");
                     discountCode.get().setUsed(false);

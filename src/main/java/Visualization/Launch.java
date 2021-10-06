@@ -10,7 +10,7 @@ public class Launch {
 
     public static void main (String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
 
-        Connection conn = ConnectionImpl.getConnection();
+        //Connection conn = ConnectionImpl.getConnection();
 
         JFrame frame = new JFrame();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

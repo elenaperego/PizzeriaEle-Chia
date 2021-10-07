@@ -23,6 +23,7 @@ public class ObjectPanel implements ActionListener {
         this.item = item;
 
         nameLabel.setText(item.getName());
+
         priceLabel.setText("" + item.getPrice() + " €");
 
         nameLabel.addActionListener(this);

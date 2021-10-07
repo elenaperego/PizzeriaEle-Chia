@@ -1,9 +1,11 @@
 package Mappers;
 
 import Classes.Customer.Customer;
+import Classes.Dessert.Dessert;
 import Classes.Pizza.Pizza;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class CustomerDataMapper implements DataMapper{
@@ -71,5 +73,20 @@ public class CustomerDataMapper implements DataMapper{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public ArrayList<Customer> getAllCustomers(){
+        ArrayList<Customer> customersList = new ArrayList<>();
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM desserts;");
+
+            while(rs.next()){
+                customersList.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return customersList;
     }
 }

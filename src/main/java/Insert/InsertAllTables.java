@@ -52,6 +52,22 @@ public class InsertAllTables {
                 + "orderId INT NOT NULL, "
                 + "pizzaId INT NOT NULL, "
                 + "PRIMARY KEY (orderId, pizzaId))");
-
+        s.execute("CREATE TABLE deliveryPersons ("
+                + "deliveryPersonId INT NOT NULL AUTO_INCREMENT, "
+                + "isGirl TINYINT, "
+                + "areaCode INT, "
+                + "isAvailable TINYINT, "
+                + "PRIMARY KEY (deliveryPersonId))");
+        s.execute("CREATE TABLE pizzaToppings ("
+                + "pizzaToppingId INT NOT NULL AUTO_INCREMENT, "
+                + "pizzaId INT, "
+                + "name VARCHAR(64), "
+                + "price INT, "
+                + "PRIMARY KEY (pizzaToppingId))");
+        s.execute("CREATE TABLE drinks ("
+                + "drinkId INT NOT NULL AUTO_INCREMENT, "
+                + "name VARCHAR(64), "
+                + "price INT, "
+                + "PRIMARY KEY (drinkId))");
     }
 }

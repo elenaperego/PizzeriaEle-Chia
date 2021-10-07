@@ -1,3 +1,4 @@
+/*
 package Classes.Pizza;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class PizzaController {
 
     @GetMapping("/create")
     public Pizza pizza(@RequestParam(value = "name", defaultValue = "niente") String name, @RequestParam(value = "vegetarian", defaultValue = "false") boolean veg) {
-        Pizza newPizza = new Pizza((int) counter.incrementAndGet(), name, veg);
+        //Pizza newPizza = new Pizza((int) counter.incrementAndGet(), name, veg);
         pizzas.add(newPizza);
         return newPizza;
     }
@@ -41,3 +42,4 @@ public class PizzaController {
         return pizza;
     }
 }
+*/

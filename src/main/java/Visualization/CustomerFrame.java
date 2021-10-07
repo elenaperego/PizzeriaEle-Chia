@@ -1,10 +1,11 @@
 package Visualization;
 
+import Classes.Customer.Customer;
 import Classes.DeliveryPerson.DeliveryPerson;
 import Classes.Order.Order;
 import Mappers.ConnectionImpl;
+import Mappers.CustomerDataMapper;
 import Mappers.DeliveryPersonMapper;
-import Mappers.DeliveryPersonOrderDataMapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,18 +15,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CustomerFrame implements ActionListener {
 
     Connection conn = ConnectionImpl.getConnection();
     JFrame customerFrame = new JFrame();
     Order order;
+    Customer customer;
     DeliveryPerson deliveryPerson;
-    int customerId = 0;
-    JLabel customerLabel = new JLabel(" CUSTOMER " + customerId);
+    JLabel customerLabel = new JLabel(" CUSTOMER DETAILS: ");
     JLabel nameLabel = new JLabel(" NAME: ");
     JLabel phoneLabel = new JLabel(" PHONE NUMBER: ");
     JLabel addressLabel = new JLabel(" ADDRESS: ");
@@ -35,6 +38,7 @@ public class CustomerFrame implements ActionListener {
     JTextField addressBox = new JTextField();
     JTextField postalCodeBox = new JTextField();
     JButton nextButton = new JButton(" NEXT ");
+    static AtomicInteger counter = new AtomicInteger();
 
     public CustomerFrame(Order order) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this.order = order;
@@ -65,9 +69,34 @@ public class CustomerFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // FIX THIS METHOD !!!!!!!!!!!!
         if (e.getSource() == nextButton) {
-            // Get information from the TextFields in here!!
-            // Check text fields and return error if null!
+            if (nameBox.getText() == null || phoneBox.getText() == null || addressBox.getText() == null || postalCodeBox.getText() == null) {
+                // SHOW ERROR IF AT LEAST ONE BOX IS NULL
+                System.out.println("Error: Empty Box!!!");
+
+            // IF NO BOX IS NULL, check whether the customer has already ordered before by checking his/her name
+            // If the name already exists get that customer, otherwise create a new customer!!
+            } else {
+                CustomerDataMapper mapper = new CustomerDataMapper(conn);
+                ArrayList<Customer> allCustomers = mapper.getAllCustomers();
+
+                boolean exists = false;
+                for (Customer c : allCustomers) {
+                    if (nameBox.getText().equals(c.getName()) && phoneBox.getText().equals(c.getPhoneNumber())) {
+                        this.customer = c;  // Customer already exists
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if(!exists) {
+                    Customer newCustomer = new Customer(counter.getAndIncrement(), nameBox.getText(), phoneBox.getText(), addressBox.getText(), Integer.parseInt(postalCodeBox.getText()));
+                    mapper.insert(newCustomer);
+                    this.customer = newCustomer;
+                }
+            }
+
             OrderFrame orderFrame = null;
             try {
                 orderFrame = new OrderFrame();
@@ -101,6 +130,7 @@ public class CustomerFrame implements ActionListener {
         PreparedStatement pstmt1 = conn.prepareStatement("SELECT deliveryPersonId, isGirl, isAvailable FROM deliverypersons WHERE areaCode = ?");
         pstmt.setInt(1, areacode);
         ResultSet rs1 = pstmt1.executeQuery();
+        DeliveryPerson deliveryPerson = null;
         while(rs.next()){
             if(rs.getBoolean(3)){
                 deliveryPerson = new DeliveryPerson(rs.getInt(1), rs.getBoolean(2), areacode, false);
@@ -109,7 +139,7 @@ public class CustomerFrame implements ActionListener {
         }
         if(Objects.isNull(deliveryPerson)){
             System.out.println("there is no available delivery person, wait");
-            //ADD ERROR
+            // ADD ERROR FRAME IF DELIVERY PERSON NOT AVAILABLE
         } else {
             DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
             mapper.insert(deliveryPerson);

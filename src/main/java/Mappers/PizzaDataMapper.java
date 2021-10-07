@@ -25,6 +25,12 @@ public class PizzaDataMapper implements DataMapper {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return Optional.ofNullable(p);
     }
@@ -78,6 +84,12 @@ public class PizzaDataMapper implements DataMapper {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return pizzasList;
     }

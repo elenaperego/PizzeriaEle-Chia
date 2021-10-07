@@ -10,6 +10,8 @@ import java.awt.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import static javax.swing.BoxLayout.Y_AXIS;
+
 public class ToppingsFrame {
 
     Connection conn = ConnectionImpl.getConnection();
@@ -18,7 +20,7 @@ public class ToppingsFrame {
     ImageIcon vegIcon = new ImageIcon(ImageLoader.loadImage("src/main/java/Visualization/Resources/Veg.png"));
     ArrayList<PizzaTopping> toppings = new ArrayList<>();
     JFrame toppingsFrame = new JFrame();
-    JLabel toppingsLabel = new JLabel();
+    JPanel toppingsPanel = new JPanel();
 
     ToppingsFrame(Pizza pizza) throws IllegalAccessException, ClassNotFoundException, InstantiationException {
         this.pizza = pizza;
@@ -29,7 +31,7 @@ public class ToppingsFrame {
         toppingsFrame.setBackground(Color.ORANGE);
         toppingsFrame.setSize(300, 200);
         toppingsFrame.setTitle("Toppings");
-        toppingsFrame.add(toppingsLabel);
+        toppingsFrame.add(toppingsPanel);
 
         // Only if pizza is vegetarian add this icon!
         if (this.pizza.isVegeterian()) {
@@ -41,18 +43,19 @@ public class ToppingsFrame {
     }
 
     public void getToppings() {
-        String toppingsString = "";
+        toppingsPanel.setLayout(new BoxLayout(toppingsPanel, Y_AXIS));
+        toppingsPanel.add(new JLabel("  Toppings: "));
+        toppingsPanel.add(new JLabel(" "));
 
         for (int i = 0; i < allToppings.size(); i++) {
             PizzaTopping newTopping = allToppings.get(i);
 
             if (newTopping.getPizzaId() == this.pizza.getId()) {
                 this.toppings.add(newTopping);
-                toppingsString += newTopping.getName() + System.lineSeparator();
+                JLabel toppingLabel = new JLabel("  " + newTopping.getName());
+                toppingsPanel.add(toppingLabel);
             }
         }
-        System.out.println(toppingsString);
-        toppingsLabel.setText(toppingsString);
     }
 
     public JFrame getFrame() { return this.toppingsFrame; }

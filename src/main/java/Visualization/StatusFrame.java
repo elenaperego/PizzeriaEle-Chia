@@ -30,7 +30,7 @@ public class StatusFrame {
         statusFrame.setSize(500, 500);
         statusFrame.setTitle("Status");
 
-        statusFrame.setLayout(new GridLayout(6, 2));
+        statusFrame.setLayout(new GridLayout(5, 2));
 
         statusFrame.add(orderLabel);
         statusFrame.add(new JLabel(""));

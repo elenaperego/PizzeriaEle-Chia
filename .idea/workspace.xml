@@ -22,18 +22,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de5680a0-8afb-4d08-b781-cf661715b336" name="Default Changelist" comment="Changes in Visualization">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Insert/InsertDrinks.java" afterDir="false" />
+    <list default="true" id="de5680a0-8afb-4d08-b781-cf661715b336" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Pizza/PizzaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Pizza/PizzaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Insert/InsertAllTables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Insert/InsertAllTables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/CustomerDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/CustomerDataMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/PizzaDataMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/TempMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/TempMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/CustomerFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/CustomerFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/ObjectPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/ObjectPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/ToppingsFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/ToppingsFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/LogoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/LogoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/Resources/Vespa.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/Resources/Vespa.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/StatusFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/StatusFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +63,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/Visualization/Resources" />
       <recent name="$PROJECT_DIR$/src/main/java/com/PizzaAPI/PizzaAPI" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -237,7 +231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633551468239</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fixed pizza prices, Fixed toppings frames, started method to get information from customer">
+      <created>1633594917572</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1633594917572</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -265,7 +266,8 @@
     <MESSAGE value="OrderFrame" />
     <MESSAGE value="visualization fixed" />
     <MESSAGE value="Changes in Visualization" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes in Visualization" />
+    <MESSAGE value="Fixed pizza prices, Fixed toppings frames, started method to get information from customer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed pizza prices, Fixed toppings frames, started method to get information from customer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

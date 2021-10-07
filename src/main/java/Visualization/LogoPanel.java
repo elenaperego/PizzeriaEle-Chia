@@ -37,6 +37,7 @@ public class LogoPanel extends JPanel implements ActionListener {
 
         vespaLogo.setIcon(vespaIcon);
         vespaLogo.setPreferredSize(new Dimension(screenSize.width/5, screenSize.height/6));
+        pizzaLogo.setBackground(Color.RED);
         vespaLogo.setBorderPainted(false);
         vespaLogo.addActionListener(this);
 

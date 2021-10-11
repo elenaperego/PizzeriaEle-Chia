@@ -48,7 +48,7 @@ public class Pizza implements MenuItem {
         }
         amount *= 1.9;          // Here the 9 % VAT is added
         amount = Math.round(amount);
-        System.out.println(name + ": "+amount);
+        //System.out.println(name + ": "+amount);
         return amount;
     }
 

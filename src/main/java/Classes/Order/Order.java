@@ -1,9 +1,5 @@
 package Classes.Order;
 
-import Classes.Pizza.Pizza;
-import Mappers.ConnectionImpl;
-
-import java.sql.*;
 import java.time.Clock;
 import java.time.Duration;
 
@@ -36,7 +32,7 @@ public class Order {
         return this.orderId;
     }
 
-    public long getCustomerId() {
+    public int getCustomerId() {
         return this.customerId;
     }
 
@@ -44,27 +40,11 @@ public class Order {
         return this.orderStatus;
     }
 
-    public void setStatus(String status){
-        this.orderStatus = status;
-    }
-
     public String getCodeId() { return this.codeId; }
 
     public double getTotalPrice() { return this.totalPrice; }
 
-    public void setTotalPrice(double price) { this.totalPrice = price; }
-
     public java.util.Date getEstimatedDeliveryTime() { return this.estimatedDeliveryTime; }
 
     public void setEstimatedDeliveryTime(java.util.Date time) { this.estimatedDeliveryTime = time; }
-
-    public String getOrdered_at() {
-        return ordered_at;
-    }
-
-    public String getDelivery_time() {
-        return delivery_time;
-    }
-
-
 }

@@ -230,7 +230,7 @@ public class CustomerFrame implements ActionListener {
                 timer.cancel();
             }
         };
-        long delay = 180000; //3 min in milliseconds (should be 30 min)
+        long delay = 60000; //1 min in milliseconds (should be 30 min)
         timer.schedule(task, delay);
     }
 

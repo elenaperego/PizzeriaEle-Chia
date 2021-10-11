@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,6 +18,7 @@ public class StatusFrame implements ActionListener {
 
     Connection conn = ConnectionImpl.getConnection();
     OrderFrame orderFrame;
+    Timer timer;
     Order order;
     DeliveryPerson deliveryPerson;
     int orderId;
@@ -29,12 +31,14 @@ public class StatusFrame implements ActionListener {
     JLabel statusLabel = new JLabel("    STATUS");
     JLabel status = new JLabel(" in process");    // cancelled, in process, out for delivery, delivered
     JButton cancelButton = new JButton(" CANCEL ORDER ");
+    OrderDataMapper orderMapper = new OrderDataMapper(conn);
 
     StatusFrame(OrderFrame orderFrame) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this.orderFrame = orderFrame;
         this.order = orderFrame.getNewOrder();
         this.orderId = order.getId();
         this.deliveryPerson = orderFrame.customerFrame.getDeliveryPerson();
+        this.timer = new Timer();
 
         GridLayout layout = new GridLayout(5, 2);
         layout.setHgap(15);
@@ -87,9 +91,9 @@ public class StatusFrame implements ActionListener {
             public void run() {
                 status.setText(" out for delivery");    // After 5 minutes order should be out for delivery
                 cancelButton.setVisible(false);
+                orderMapper.update(new Order(order.getId(), order.getCustomerId(), "out for delivery", order.getCodeId(), order.getTotalPrice(), order.getEstimatedDeliveryTime()));
             }
         };
-        java.util.Timer timer = new Timer();
         long delay = 60000/2; //30 sec in milliseconds (should be 5)
         timer.schedule(task, delay);
     }
@@ -99,9 +103,10 @@ public class StatusFrame implements ActionListener {
         TimerTask task = new TimerTask() {
             public void run() {
                 status.setText(" delivered");
+                orderMapper.update(new Order(order.getId(), order.getCustomerId(), "delivered", order.getCodeId(), order.getTotalPrice(), order.getEstimatedDeliveryTime()));
+                timer.cancel();
             }
         };
-        java.util.Timer timer = new Timer();
         long delay = 120000/2; //1 min in milliseconds (should be 15)
         timer.schedule(task, delay);
     }
@@ -113,6 +118,7 @@ public class StatusFrame implements ActionListener {
             mapper.delete(order);
             this.order = null;
             this.status.setText(" cancelled");      // Make sure the label changes when the order is cancelled
+            orderMapper.update(new Order(order.getId(), order.getCustomerId(), "cancelled", order.getCodeId(), order.getTotalPrice(), order.getEstimatedDeliveryTime()));
             JOptionPane.showMessageDialog(null, "Order has been cancelled!");
         }
     }

@@ -4,7 +4,7 @@ import Classes.Drink.Drink;
 import java.sql.*;
 import java.util.Optional;
 
-public class DrinkOrderDataMapper {
+public class DrinkOrderDataMapper{
     Connection conn;
 
     public DrinkOrderDataMapper(Connection conn) {

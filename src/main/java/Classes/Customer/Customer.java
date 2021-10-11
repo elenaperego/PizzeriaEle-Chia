@@ -1,5 +1,7 @@
 package Classes.Customer;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Customer {
     private final int customerId;
     private final String customerName;
@@ -7,8 +9,10 @@ public class Customer {
     private final String addressStreet;
     private final String addressCode;
     private int orderedPizzas;      // Parameter added to check pizzas (at least 10 to get discount code)
+    private static AtomicInteger counter = new AtomicInteger(0);
+
     public Customer(int id, String name, String number, String street, String code, int orderedPizzas) {
-        this.customerId = id;
+        this.customerId = counter.incrementAndGet();
         this.customerName = name;
         this.phoneNumber = number;
         this.addressStreet = street;

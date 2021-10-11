@@ -1,7 +1,9 @@
 package Visualization;
 
 import Classes.Customer.Customer;
+import Classes.Dessert.Dessert;
 import Classes.DiscountCode.DiscountCode;
+import Classes.Drink.Drink;
 import Classes.MenuItem;
 import Classes.Order.Order;
 import Classes.Pizza.Pizza;
@@ -11,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -215,6 +218,7 @@ public class OrderFrame implements ActionListener {
                 orderSubmittedTime = new java.util.Date();
                 newOrder.setEstimatedDeliveryTime(getDeliveryTime());
                 orderMapper.insert(newOrder);
+                updateOrderDataDatabases(newOrder.getId());
                 orderFrame.dispose();
                 StatusFrame statusFrame = null;
                 try {
@@ -285,5 +289,37 @@ public class OrderFrame implements ActionListener {
            return true;
         else
             return false;
+    }
+
+    public void updateOrderDataDatabases(int orderId){
+        PizzaDataMapper pizzaMapper = new PizzaDataMapper(conn);
+        DrinkDataMapper drinkMapper = new DrinkDataMapper(conn);
+        DessertDataMapper dessertMapper = new DessertDataMapper(conn);
+        PizzaOrderDataMapper pizzaOrderMapper = new PizzaOrderDataMapper(conn);
+        DrinkOrderDataMapper drinkOrderMapper = new DrinkOrderDataMapper(conn);
+        DessertOrderDataMapper dessertOrderMapper = new DessertOrderDataMapper(conn);
+        ArrayList<Pizza> pizzas = pizzaMapper.getAllPizzas();
+        ArrayList<Drink> drinks = drinkMapper.getAllDrinks();
+        ArrayList<Dessert> desserts = dessertMapper.getAllDesserts();
+        for(MenuItem item: orderSummary){
+           for(Pizza pizza: pizzas){
+               if(item.getName().equals(pizza.getName())){
+                   pizzaOrderMapper.insert(orderId, item.getId());
+                   break;
+               }
+           }
+           for(Drink drink: drinks){
+               if(item.getName().equals(drink.getName())) {
+                   drinkOrderMapper.insert(orderId, item.getId());
+                   break;
+               }
+           }
+           for(Dessert dessert: desserts){
+               if(item.getName().equals(dessert.getName())) {
+                   dessertOrderMapper.insert(orderId, item.getId());
+                   break;
+               }
+           }
+        }
     }
 }

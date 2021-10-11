@@ -1,6 +1,7 @@
 package Visualization;
 
 import Classes.MenuItem;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class PizzaOrderDataMapper {
+public class PizzaOrderDataMapper{
     Connection conn;
 
     public PizzaOrderDataMapper(Connection conn) {

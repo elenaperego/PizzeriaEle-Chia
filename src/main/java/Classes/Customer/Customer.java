@@ -5,9 +5,9 @@ public class Customer {
     private final String customerName;
     private final String phoneNumber;
     private final String addressStreet;
-    private final int addressCode;
+    private final String addressCode;
     private int orderedPizzas;      // Parameter added to check pizzas (at least 10 to get discount code)
-    public Customer(int id, String name, String number, String street, int code, int orderedPizzas) {
+    public Customer(int id, String name, String number, String street, String code, int orderedPizzas) {
         this.customerId = id;
         this.customerName = name;
         this.phoneNumber = number;
@@ -26,7 +26,7 @@ public class Customer {
 
     public String getAddressStreet() { return this.addressStreet; }
 
-    public int getAddressCode() { return this.addressCode; }
+    public String getAddressCode() { return this.addressCode; }
 
     public int getOrderedPizzas() { return this.orderedPizzas; }
 

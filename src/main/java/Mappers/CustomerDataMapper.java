@@ -23,7 +23,7 @@ public class CustomerDataMapper implements DataMapper{
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                c = new Customer( id, rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+                c = new Customer( id, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -39,7 +39,7 @@ public class CustomerDataMapper implements DataMapper{
             pstmt.setString(1, customerToBeInserted.getName());
             pstmt.setString(2, customerToBeInserted.getPhoneNumber());
             pstmt.setString(3, customerToBeInserted.getAddressStreet());
-            pstmt.setInt(4, customerToBeInserted.getAddressCode());
+            pstmt.setString(4, customerToBeInserted.getAddressCode());
             pstmt.setInt(5, customerToBeInserted.getOrderedPizzas());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
@@ -55,7 +55,7 @@ public class CustomerDataMapper implements DataMapper{
             pstmt.setString(1, customerToBeUpdated.getName());
             pstmt.setString(2, customerToBeUpdated.getPhoneNumber());
             pstmt.setString(3, customerToBeUpdated.getAddressStreet());
-            pstmt.setInt(4, customerToBeUpdated.getAddressCode());
+            pstmt.setString(4, customerToBeUpdated.getAddressCode());
             pstmt.setInt(5, customerToBeUpdated.getOrderedPizzas());
             pstmt.setInt(6, customerToBeUpdated.getId());
             pstmt.executeUpdate();
@@ -83,7 +83,7 @@ public class CustomerDataMapper implements DataMapper{
             ResultSet rs = stmt.executeQuery("SELECT * FROM customers;");
 
             while(rs.next()){
-                customersList.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
+                customersList.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

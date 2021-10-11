@@ -21,7 +21,7 @@ public class TempMain {
                 + "name VARCHAR(64), "
                 + "phoneNumber BIGINT, "
                 + "addressStreet VARCHAR(64), "
-                + "addressCode INT, "
+                + "addressCode VARCHAR(64), "
                 + "orderedPizzas INT, "
                 + "PRIMARY KEY (customerId))");
     }

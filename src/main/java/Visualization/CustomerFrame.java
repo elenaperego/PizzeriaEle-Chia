@@ -86,7 +86,6 @@ public class CustomerFrame implements ActionListener {
     public Customer getCustomer() { return this.customer; }
 
     @Override
-    // IT WORKSSSSSSSS!!!! (Customer are added correctly)
     // Handbreak to make video smaller
     public void actionPerformed(ActionEvent e) {
 
@@ -96,7 +95,7 @@ public class CustomerFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: empty box!!");
 
             // If postal code is less than 7 digits it is not accepted
-            } else if (postalCodeBox.getText().length() < 7 || postalCodeBox.getText().length() > 7) {
+            } else if (postalCodeBox.getText().length() < 6) {
                 JOptionPane.showMessageDialog(null, "Error: postal code not valid!");
 
             // IF NO BOX IS NULL, check whether the customer has already ordered before by checking his/her name
@@ -116,7 +115,7 @@ public class CustomerFrame implements ActionListener {
 
                 if (!exists) {
                     // Since customer is new the ordered pizzas are equal to 0
-                    Customer newCustomer = new Customer(counter.getAndIncrement(), nameBox.getText(), phoneBox.getText(), addressBox.getText(), Integer.parseInt(postalCodeBox.getText()), 0);
+                    Customer newCustomer = new Customer(counter.getAndIncrement(), nameBox.getText(), phoneBox.getText(), addressBox.getText(), postalCodeBox.getText(), 0);
                     mapper.insert(newCustomer);
                     this.customer = newCustomer;
                 }
@@ -153,7 +152,7 @@ public class CustomerFrame implements ActionListener {
      * @throws SQLException
      */
     public void selectDeliveryPerson(String postalCode) throws SQLException {
-        String postalCodeTrimmed = postalCode.substring(0, 5);      // Check error from method above!
+        String postalCodeTrimmed = postalCode.substring(0, 4);      // Check error from method above!
         int code = Integer.parseInt(postalCodeTrimmed);
         PreparedStatement pstmt = conn.prepareStatement("SELECT areacode FROM areacodes WHERE postalcode = ?");
         pstmt.setInt(1, code);

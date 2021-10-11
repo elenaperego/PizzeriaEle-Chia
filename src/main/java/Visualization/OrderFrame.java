@@ -24,9 +24,10 @@ public class OrderFrame implements ActionListener {
 
     Connection conn = ConnectionImpl.getConnection();
     Order newOrder = null;
-    double finalPrice = 0;
+    double finalPrice;
     int orderCount = 0;        // Should these two counts remain updated when the application closes or
     double profit;
+    int pizzaCount;
 
     CustomerFrame customerFrame;
     JFrame orderFrame = new JFrame();
@@ -46,9 +47,13 @@ public class OrderFrame implements ActionListener {
     java.util.Date orderSubmittedTime;
 
     public OrderFrame(CustomerFrame customerFrame) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        finalPrice = 0;
+        profit = 0;
         this.customerFrame = customerFrame;
         this.orderSummary = customerFrame.getOrderSummary();
-
+        pizzaCount = checkNumberofPizzas(orderSummary);
+        getFinalPrice(orderSummary);
+        numberPriceLabel.setText(String.valueOf(finalPrice));
         fillInSummary();
 
         orderFrame.setBackground(Color.GREEN);
@@ -87,9 +92,6 @@ public class OrderFrame implements ActionListener {
         codeButton.addActionListener(this);
         confirmButton.addActionListener(this);
 
-        //getFinalPrice(orderSummary);
-        numberPriceLabel.setText("" + finalPrice);
-
         orderPanel.add(orderLabel);
         orderPanel.add(new Label());
         orderPanel.add(orderSummaryLabel);
@@ -125,7 +127,7 @@ public class OrderFrame implements ActionListener {
         for (MenuItem menuItem : summary) {
             finalPrice += menuItem.getPrice();
         }
-        finalPrice += profit;       // Here the profit is added
+        finalPrice += profit;      // Here the profit is added
     }
 
     /**
@@ -155,9 +157,9 @@ public class OrderFrame implements ActionListener {
         // Sum price of all the objects and include profits??????
         if (e.getSource() == summary) {
 
-            getFinalPrice(orderSummary);    // This is the price without the discount applied
+            //getFinalPrice(orderSummary);    // This is the price without the discount applied
 
-            int pizzaCount = checkNumberofPizzas(orderSummary);     // Number of pizzas ordered by customer
+
 
             // Update number of pizzas ordered by customer and add it back to the database
             CustomerDataMapper mapper = new CustomerDataMapper(conn);
@@ -190,12 +192,14 @@ public class OrderFrame implements ActionListener {
                     discountCode.get().setUsed(false);
                     codeMapper.update(discountCode.get());
                     finalPrice = finalPrice - (finalPrice*0.1);
+                    System.out.println("4: "+finalPrice);
                 }
             } else {
                 System.out.println("does not exist");
                 JOptionPane.showMessageDialog(null, "Error: code does not exist!");
             }
             numberPriceLabel.setText(String.valueOf(finalPrice));
+            System.out.println("5: "+finalPrice);
 
         // Calculate final price and apply discount if code is valid
         } else if (e.getSource() == priceButton) {

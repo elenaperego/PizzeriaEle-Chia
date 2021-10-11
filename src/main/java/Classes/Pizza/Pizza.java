@@ -15,7 +15,7 @@ public class Pizza implements MenuItem {
     private final int id;
     private final String name;
     private final boolean vegetarian;
-    private double price = 0;
+    private final double price;
     PizzaToppingDataMapper toppingsMapper = new PizzaToppingDataMapper(conn);
     private ArrayList<PizzaTopping> allToppings = toppingsMapper.getPizzaToppings();
 
@@ -23,6 +23,7 @@ public class Pizza implements MenuItem {
         this.id = id;
         this.name = name;
         this.vegetarian = vegetarian;
+        this.price = calculatePrice();
     }
 
     @Override
@@ -35,14 +36,20 @@ public class Pizza implements MenuItem {
 
     @Override
     public double getPrice() {
+        return price;
+    }
+
+    public double calculatePrice(){
+        double amount = 0;
         for (PizzaTopping t : allToppings) {
             if (t.getPizzaId() == this.id) {
-                price += t.getPrice();
+                amount += t.getPrice();
             }
         }
-        price *= 1.9;          // Here the 9 % VAT is added
-        price = Math.round(price);
-        return price;
+        amount *= 1.9;          // Here the 9 % VAT is added
+        amount = Math.round(amount);
+        System.out.println(name + ": "+amount);
+        return amount;
     }
 
     public boolean isVegeterian() { return vegetarian; }

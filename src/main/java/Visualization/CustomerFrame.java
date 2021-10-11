@@ -25,7 +25,8 @@ public class CustomerFrame implements ActionListener {
 
     Connection conn = ConnectionImpl.getConnection();
 
-    ArrayList<Classes.MenuItem> orderSummary;
+    Timer timer;
+    ArrayList<MenuItem> orderSummary;
     JFrame customerFrame = new JFrame();
     Customer customer;
     DeliveryPerson deliveryPerson;
@@ -149,6 +150,7 @@ public class CustomerFrame implements ActionListener {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+
                 availableAgain();
 
                 customerFrame.dispose();
@@ -194,14 +196,15 @@ public class CustomerFrame implements ActionListener {
      * This method sets a delivery person to be available again after 30 minutes
      */
     public void availableAgain() {
+        timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
                 DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
                 deliveryPerson.setAvailable(true);
                 mapper.update(deliveryPerson);
+                timer.cancel();
             }
         };
-        Timer timer = new Timer();
         long delay = 1800000; //30 min in milliseconds
         timer.schedule(task, delay);
     }

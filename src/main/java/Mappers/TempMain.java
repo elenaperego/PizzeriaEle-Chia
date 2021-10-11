@@ -13,13 +13,14 @@ public class TempMain {
         Connection conn = ConnectionImpl.getConnection();
         Statement s = conn.createStatement();
 
-        s.execute("CREATE TABLE orders ("
-                + "orderId INT NOT NULL AUTO_INCREMENT, "
-                + "orderStatus VARCHAR(64), "
-                + "customerId TINYINT, "
-                + "codeId VARCHAR(64), "
-                + "estimatedDeliveryTime DATE, "
-                + "totalPrice INT, "
-                + "PRIMARY KEY (orderId))");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 1, isAvailable = 1 WHERE deliveryPersonId = 1;");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 1, isAvailable = 1 WHERE deliveryPersonId = 2;");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 1, isAvailable = 1 WHERE deliveryPersonId = 3;");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 2, isAvailable = 1 WHERE deliveryPersonId = 4;");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 2, isAvailable = 1 WHERE deliveryPersonId = 5;");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 2, isAvailable = 1 WHERE deliveryPersonId = 6;");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 3, isAvailable = 1 WHERE deliveryPersonId = 7;");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 3, isAvailable = 1 WHERE deliveryPersonId = 8;");
+        s.execute("UPDATE deliveryPersons SET isGirl = 1, areaCode = 3, isAvailable = 1 WHERE deliveryPersonId = 9;");
     }
 }

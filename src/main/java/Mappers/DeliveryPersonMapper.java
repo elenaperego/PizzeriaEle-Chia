@@ -1,8 +1,10 @@
 package Mappers;
 
 import Classes.DeliveryPerson.DeliveryPerson;
+import Classes.PizzaTopping.PizzaTopping;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class DeliveryPersonMapper implements DataMapper{
@@ -66,7 +68,22 @@ public class DeliveryPersonMapper implements DataMapper{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
+
+    public ArrayList<DeliveryPerson> getDeliveryPersons(){
+        ArrayList<DeliveryPerson> deliveryPeopleList = new ArrayList<>();
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM deliveryPersons;");
+
+            while(rs.next()){
+                deliveryPeopleList.add(new DeliveryPerson(rs.getInt(1), rs.getBoolean(2), rs.getInt(3), rs.getBoolean(4)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return deliveryPeopleList;
+    }
+
 
 }

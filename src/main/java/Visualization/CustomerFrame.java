@@ -92,6 +92,8 @@ public class CustomerFrame implements ActionListener {
 
     public ArrayList<MenuItem> getOrderSummary() { return this.orderSummary; }
 
+    public DeliveryPerson getDeliveryPerson() { return this.deliveryPerson; }
+
     @Override
     // Handbreak to make video smaller
     public void actionPerformed(ActionEvent e) {
@@ -105,10 +107,9 @@ public class CustomerFrame implements ActionListener {
             } else if (postalCodeBox.getText().length() < 6) {
                 JOptionPane.showMessageDialog(null, "Error: postal code not valid!");
 
-            // No person is available
-            } else if(false) {
-            // TO BE IMPLEMENTED!!!!!
-
+            // No person is available (CHECK IF IT WORKS!!)
+            } else if(areDeliveryPersonsAvailable(postalCodeBox.getText())) {
+                JOptionPane.showMessageDialog(null, "Error: no delivery person available, wait!");
 
             // IF NO BOX IS NULL, check whether the customer has already ordered before by checking his/her name
             // If the name already exists get that customer, otherwise create a new customer!!
@@ -160,6 +161,30 @@ public class CustomerFrame implements ActionListener {
     }
 
     /**
+     * @param postalCode is the postal code to be checked for the delivery persons
+     * @return true if there are delivery persons available for a given postalCode
+     */
+    public boolean areDeliveryPersonsAvailable(String postalCode) {
+        DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
+        ArrayList<DeliveryPerson> deliveryPeople = mapper.getDeliveryPersons();
+
+        String postalCodeTrimmed = postalCode.substring(0, 4);
+        int code = Integer.parseInt(postalCodeTrimmed);
+
+        boolean isAvailable = false;
+
+        for (DeliveryPerson p : deliveryPeople) {
+            if (p.getAreaCode() == code) {
+                if(p.isAvailable()) {
+                    isAvailable = true;
+                    break;
+                }
+            }
+        }
+        return isAvailable;
+    }
+
+    /**
      * A delivery person is selected for a given order
      * @param postalCode is the postal code associated with this order
      * @throws SQLException
@@ -176,7 +201,6 @@ public class CustomerFrame implements ActionListener {
         PreparedStatement pstmt1 = conn.prepareStatement("SELECT deliveryPersonId, isGirl, isAvailable FROM deliverypersons WHERE areaCode = ?");
         pstmt1.setInt(1, areacode);
         ResultSet rs1 = pstmt1.executeQuery();
-        DeliveryPerson deliveryPerson = null;
         while(rs1.next()){
             if(rs1.getBoolean(3)){
                 deliveryPerson = new DeliveryPerson(rs1.getInt(1), rs1.getBoolean(2), areacode, false);
@@ -198,6 +222,7 @@ public class CustomerFrame implements ActionListener {
     public void availableAgain() {
         timer = new Timer();
         TimerTask task = new TimerTask() {
+
             public void run() {
                 DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
                 deliveryPerson.setAvailable(true);
@@ -205,7 +230,7 @@ public class CustomerFrame implements ActionListener {
                 timer.cancel();
             }
         };
-        long delay = 1800000; //30 min in milliseconds
+        long delay = 180000; //3 min in milliseconds (should be 30 min)
         timer.schedule(task, delay);
     }
 

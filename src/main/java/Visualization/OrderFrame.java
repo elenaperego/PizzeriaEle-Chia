@@ -11,10 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.charset.Charset;
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
@@ -25,7 +22,7 @@ public class OrderFrame implements ActionListener {
     Connection conn = ConnectionImpl.getConnection();
     Order newOrder = null;
     double finalPrice;
-    int orderCount = 0;        // Should these two counts remain updated when the application closes or
+    static int orderCount;        // Should these two counts remain updated when the application closes or
     double profit;
     int pizzaCount;
 
@@ -148,6 +145,7 @@ public class OrderFrame implements ActionListener {
                 }
             }
         }
+        System.out.println("number of pizzas: "+count);
         return count;
     }
 
@@ -158,8 +156,6 @@ public class OrderFrame implements ActionListener {
         if (e.getSource() == summary) {
 
             //getFinalPrice(orderSummary);    // This is the price without the discount applied
-
-
 
             // Update number of pizzas ordered by customer and add it back to the database
             CustomerDataMapper mapper = new CustomerDataMapper(conn);
@@ -212,7 +208,9 @@ public class OrderFrame implements ActionListener {
 
             // CHECK WHETHER THE FOLLOWING METHOD WORKS
             if (atLeastOnePizza(orderSummary)) {
-                newOrder = new Order(orderCount++, customerFrame.getCustomer().getId(), "ordered", customerFrame.getCustomer().getAddressCode(), finalPrice, null);
+                newOrder = new Order(++orderCount, customerFrame.getCustomer().getId(), "ordered", customerFrame.getCustomer().getAddressCode(), finalPrice, null);
+                System.out.println("orderframe, ordercount: "+orderCount);
+                System.out.println("orderframe, customerid: "+customerFrame.getCustomer().getId());
                 OrderDataMapper orderMapper = new OrderDataMapper(conn);
                 orderSubmittedTime = new java.util.Date();
                 newOrder.setEstimatedDeliveryTime(getDeliveryTime());

@@ -24,10 +24,10 @@
   <component name="ChangeListManager">
     <list default="true" id="de5680a0-8afb-4d08-b781-cf661715b336" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Order/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Pizza/Pizza.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Classes/Customer/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Classes/Customer/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Mappers/OrderDataMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Mappers/OrderDataMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/CustomerFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/CustomerFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/OrderFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/OrderFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Visualization/StatusFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visualization/StatusFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -304,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633986064254</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Timer fixed (not database updates)">
+      <created>1633988783607</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1633988783607</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,7 +346,8 @@
     <MESSAGE value="ALMOST DONE!" />
     <MESSAGE value="non lo so" />
     <MESSAGE value="TIMER FIXED FOR STATUS FRAME" />
-    <option name="LAST_COMMIT_MESSAGE" value="TIMER FIXED FOR STATUS FRAME" />
+    <MESSAGE value="Timer fixed (not database updates)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Timer fixed (not database updates)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -356,7 +364,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$Launch.ic" NAME="Launch Coverage Results" MODIFIED="1633980456172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$Launch.ic" NAME="Launch Coverage Results" MODIFIED="1633991669834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>Visualization.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/PizzaAPI__Ele_$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1621702250345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
@@ -365,8 +373,8 @@
     <SUITE FILE_PATH="coverage/PizzaAPI__Latest_$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1631546958602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$TempMain.ic" NAME="TempMain Coverage Results" MODIFIED="1633091251286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>Mappers.*</FILTER>
+    <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$TempMain.ic" NAME="TempMain Coverage Results" MODIFIED="1633991105777" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>Insert.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/PizzeriaEle_Chia$PizzaApiApplication.ic" NAME="PizzaApiApplication Coverage Results" MODIFIED="1632490991463" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.PizzaAPI.PizzaAPI.Pizza.*</FILTER>

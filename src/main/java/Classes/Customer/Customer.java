@@ -29,9 +29,4 @@ public class Customer {
     public String getAddressCode() { return this.addressCode; }
 
     public int getOrderedPizzas() { return this.orderedPizzas; }
-
-    // n is the number of pizza ordered during a new order
-    //public void addOrderedPizzas(int n) { this.orderedPizzas += n; }
-
-    //public void setOrderedPizzas(int n) { this.orderedPizzas = n; }
 }

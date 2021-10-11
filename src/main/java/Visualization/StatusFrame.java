@@ -49,7 +49,7 @@ public class StatusFrame implements ActionListener {
         statusFrame.setSize(600, 600);
         statusFrame.setTitle("Status");
 
-        personIdLabel.setText("" + deliveryPerson.getDeliveryPersonId());
+        //personIdLabel.setText("" + deliveryPerson.getDeliveryPersonId());
 
         orderLabel.setFont(new Font("Serif", Font.BOLD, 17));
         estimatedDeliveryTimeLabel.setFont(new Font("Serif", Font.BOLD, 17));
@@ -92,6 +92,7 @@ public class StatusFrame implements ActionListener {
                 status.setText(" out for delivery");    // After 5 minutes order should be out for delivery
                 cancelButton.setVisible(false);
                 orderMapper.update(new Order(order.getId(), order.getCustomerId(), "out for delivery", order.getCodeId(), order.getTotalPrice(), order.getEstimatedDeliveryTime()));
+                System.out.println(order.getId());
             }
         };
         long delay = 60000/2; //30 sec in milliseconds (should be 5)
@@ -104,6 +105,7 @@ public class StatusFrame implements ActionListener {
             public void run() {
                 status.setText(" delivered");
                 orderMapper.update(new Order(order.getId(), order.getCustomerId(), "delivered", order.getCodeId(), order.getTotalPrice(), order.getEstimatedDeliveryTime()));
+                System.out.println(order.getId());
                 timer.cancel();
             }
         };

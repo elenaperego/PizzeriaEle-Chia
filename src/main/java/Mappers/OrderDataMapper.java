@@ -54,8 +54,9 @@ public class OrderDataMapper implements DataMapper{
             pstmt.setString(1, orderToBeUpdated.getStatus());
             pstmt.setLong(2, orderToBeUpdated.getCustomerId());
             pstmt.setString(3, orderToBeUpdated.getCodeId());
-            pstmt.setDate(4, (Date) orderToBeUpdated.getEstimatedDeliveryTime());
+            pstmt.setDate(4, new java.sql.Date(orderToBeUpdated.getEstimatedDeliveryTime().getTime()));
             pstmt.setDouble(5, orderToBeUpdated.getTotalPrice());
+            pstmt.setInt(6, orderToBeUpdated.getId());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

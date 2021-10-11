@@ -29,6 +29,7 @@ public class CustomerFrame implements ActionListener {
     ArrayList<MenuItem> orderSummary;
     JFrame customerFrame = new JFrame();
     Customer customer;
+    static int customerCount;
     DeliveryPerson deliveryPerson;
     JLabel customerLabel = new JLabel(" CUSTOMER DETAILS: ");
     JLabel nameLabel = new JLabel(" NAME: ");
@@ -45,7 +46,6 @@ public class CustomerFrame implements ActionListener {
 
     public CustomerFrame(ArrayList<MenuItem> summary) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this.orderSummary = summary;
-
         customerFrame.setBackground(Color.GREEN);
         customerFrame.setSize(600, 600);
         customerFrame.setTitle("Customer");
@@ -108,54 +108,62 @@ public class CustomerFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: postal code not valid!");
 
             // No person is available (CHECK IF IT WORKS!!)
-            } else if(areDeliveryPersonsAvailable(postalCodeBox.getText())) {
-                JOptionPane.showMessageDialog(null, "Error: no delivery person available, wait!");
-
-            // IF NO BOX IS NULL, check whether the customer has already ordered before by checking his/her name
-            // If the name already exists get that customer, otherwise create a new customer!!
             } else {
-                CustomerDataMapper mapper = new CustomerDataMapper(conn);
-                ArrayList<Customer> allCustomers = mapper.getAllCustomers();
+                try {
+                    if(!areDeliveryPersonsAvailable(postalCodeBox.getText())) {
+                        JOptionPane.showMessageDialog(null, "Error: no delivery person available, wait!");
+                        customerFrame.dispose();
 
-                boolean exists = false;
-                for (Customer c : allCustomers) {
-                    if (nameBox.getText().equals(c.getName()) && phoneBox.getText().equals(c.getPhoneNumber())) {
-                        this.customer = c;  // Customer already exists
-                        exists = true;
-                        break;
+                    // IF NO BOX IS NULL, check whether the customer has already ordered before by checking his/her name
+                    // If the name already exists get that customer, otherwise create a new customer!!
+                    } else {
+                        CustomerDataMapper mapper = new CustomerDataMapper(conn);
+                        ArrayList<Customer> allCustomers = mapper.getAllCustomers();
+
+                        boolean exists = false;
+                        for (Customer c : allCustomers) {
+                            if (nameBox.getText().equals(c.getName()) && phoneBox.getText().equals(c.getPhoneNumber())) {
+                                this.customer = c;  // Customer already exists
+                                exists = true;
+                                break;
+                            }
+                        }
+
+                        if (!exists) {
+                            // Since customer is new the ordered pizzas are equal to 0
+                            Customer newCustomer = new Customer(++customerCount, nameBox.getText(), phoneBox.getText(), addressBox.getText(), postalCodeBox.getText(), 0);
+                            mapper.insert(newCustomer);
+                            this.customer = newCustomer;
+                            System.out.println("customerframe, customercount: "+customerCount);
+                        }
+
+                        OrderFrame orderFrame = null;
+                        try {
+                            orderFrame = new OrderFrame(this);
+                        } catch (IllegalAccessException illegalAccessException) {
+                            illegalAccessException.printStackTrace();
+                        } catch (InstantiationException instantiationException) {
+                            instantiationException.printStackTrace();
+                        } catch (ClassNotFoundException classNotFoundException) {
+                            classNotFoundException.printStackTrace();
+                        }
+
+                        // Check whether this method works having introduced the new else if
+                        // Code format: 1234 AB = 7 digits
+                        try {
+                            selectDeliveryPerson(postalCodeBox.getText());
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+
+                        availableAgain();
+
+                        customerFrame.dispose();
+                        orderFrame.getFrame().setVisible(true);
                     }
-                }
-
-                if (!exists) {
-                    // Since customer is new the ordered pizzas are equal to 0
-                    Customer newCustomer = new Customer(counter.getAndIncrement(), nameBox.getText(), phoneBox.getText(), addressBox.getText(), postalCodeBox.getText(), 0);
-                    mapper.insert(newCustomer);
-                    this.customer = newCustomer;
-                }
-
-                OrderFrame orderFrame = null;
-                try {
-                    orderFrame = new OrderFrame(this);
-                } catch (IllegalAccessException illegalAccessException) {
-                    illegalAccessException.printStackTrace();
-                } catch (InstantiationException instantiationException) {
-                    instantiationException.printStackTrace();
-                } catch (ClassNotFoundException classNotFoundException) {
-                    classNotFoundException.printStackTrace();
-                }
-
-                // Check whether this method works having introduced the new else if
-                // Code format: 1234 AB = 7 digits
-                try {
-                    selectDeliveryPerson(postalCodeBox.getText());
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-
-                availableAgain();
-
-                customerFrame.dispose();
-                orderFrame.getFrame().setVisible(true);
             }
         }
     }
@@ -164,32 +172,7 @@ public class CustomerFrame implements ActionListener {
      * @param postalCode is the postal code to be checked for the delivery persons
      * @return true if there are delivery persons available for a given postalCode
      */
-    public boolean areDeliveryPersonsAvailable(String postalCode) {
-        DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
-        ArrayList<DeliveryPerson> deliveryPeople = mapper.getDeliveryPersons();
-
-        String postalCodeTrimmed = postalCode.substring(0, 4);
-        int code = Integer.parseInt(postalCodeTrimmed);
-
-        boolean isAvailable = false;
-
-        for (DeliveryPerson p : deliveryPeople) {
-            if (p.getAreaCode() == code) {
-                if(p.isAvailable()) {
-                    isAvailable = true;
-                    break;
-                }
-            }
-        }
-        return isAvailable;
-    }
-
-    /**
-     * A delivery person is selected for a given order
-     * @param postalCode is the postal code associated with this order
-     * @throws SQLException
-     */
-    public void selectDeliveryPerson(String postalCode) throws SQLException {
+    public boolean areDeliveryPersonsAvailable(String postalCode) throws SQLException{
         String postalCodeTrimmed = postalCode.substring(0, 4);      // Check error from method above!
         int code = Integer.parseInt(postalCodeTrimmed);
         PreparedStatement pstmt = conn.prepareStatement("SELECT areacode FROM areacodes WHERE postalcode = ?");
@@ -208,11 +191,48 @@ public class CustomerFrame implements ActionListener {
             }
         }
         if(Objects.isNull(deliveryPerson)){
-            JOptionPane.showMessageDialog(null, "There is no available delivery person, wait!");
+            return false;
 
         } else {
+            return true;
+        }
+
+
+
+
+        /*
+        DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
+        ArrayList<DeliveryPerson> deliveryPeople = mapper.getDeliveryPersons();
+
+        String postalCodeTrimmed = postalCode.substring(0, 4);
+        int code = Integer.parseInt(postalCodeTrimmed);
+
+        boolean isAvailable = false;
+
+        for (DeliveryPerson p : deliveryPeople) {
+            if (p.getAreaCode() == code) {
+                if(p.isAvailable()) {
+                    isAvailable = true;
+                    break;
+                }
+            }
+        }
+        return isAvailable;
+
+         */
+    }
+
+    /**
+     * A delivery person is selected for a given order
+     * @param postalCode is the postal code associated with this order
+     * @throws SQLException
+     */
+    public void selectDeliveryPerson(String postalCode) throws SQLException {
+        if(areDeliveryPersonsAvailable(postalCode)){
             DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
             mapper.update(deliveryPerson);
+        } else {
+            JOptionPane.showMessageDialog(null, "There is no available delivery person, wait!");
         }
     }
 

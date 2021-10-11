@@ -11,12 +11,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
+import java.util.Random;
 
 public class OrderFrame implements ActionListener {
 
@@ -172,8 +174,11 @@ public class OrderFrame implements ActionListener {
             // If the number of ordered pizzas is a multiple of 10 a code is given
             if (updatedCustomer.getOrderedPizzas() % 10 == 0) {
                 DiscountCodeDataMapper codeMapper = new DiscountCodeDataMapper(conn);
-                // create new code here!
-
+                Random random = new Random();
+                int num = random.nextInt(100000);
+                String discountCode = String.format("%05d", num);
+                DiscountCodeDataMapper discountMapper = new DiscountCodeDataMapper(conn);
+                discountMapper.insert(new DiscountCode(-1, Long.parseLong(discountCode), false));
                 JOptionPane.showMessageDialog(null, "Congratulation, this is your discount code: ");
             }
 
@@ -190,19 +195,17 @@ public class OrderFrame implements ActionListener {
                     System.out.println("not used yet");
                     discountCode.get().setUsed(false);
                     codeMapper.update(discountCode.get());
+                    finalPrice = finalPrice - (finalPrice*0.1);
                 }
             } else {
-                System.out.println("new discount code");
-                codeMapper.insert(new DiscountCode(0, Long.parseLong(codeBox.getText()), true));
-                // id = 0 perchè tanto il metodo neanche lo guarda perchè lo fa da solo
+                System.out.println("does not exist");
+                JOptionPane.showMessageDialog(null, "Error: code does not exist!");
             }
+            numberPriceLabel.setText(String.valueOf(finalPrice));
 
         // Calculate final price and apply discount if code is valid
         } else if (e.getSource() == priceButton) {
-            // Apply discount if the customer has a valid code
-            if(true){
-                finalPrice = finalPrice - (finalPrice*0.1);     // 10% discount
-            }
+
 
 
         // Add all the elements to the new order and insert it to the database

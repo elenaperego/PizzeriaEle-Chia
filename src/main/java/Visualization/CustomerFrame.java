@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CustomerFrame implements ActionListener {
 
-    Connection conn = ConnectionImpl.getConnection();
+    Connection conn;
     JFrame customerFrame = new JFrame();
     Customer customer;
     DeliveryPerson deliveryPerson;
@@ -159,23 +159,23 @@ public class CustomerFrame implements ActionListener {
         ResultSet rs = pstmt.executeQuery();
         rs.next();
         int areacode = rs.getInt(1);
+        System.out.println("areacode: "+ areacode);
         PreparedStatement pstmt1 = conn.prepareStatement("SELECT deliveryPersonId, isGirl, isAvailable FROM deliverypersons WHERE areaCode = ?");
-        pstmt.setInt(1, areacode);
+        pstmt1.setInt(1, areacode);
         ResultSet rs1 = pstmt1.executeQuery();
         DeliveryPerson deliveryPerson = null;
-        while(rs.next()){
-            if(rs.getBoolean(3)){
-                deliveryPerson = new DeliveryPerson(rs.getInt(1), rs.getBoolean(2), areacode, false);
+        while(rs1.next()){
+            if(rs1.getBoolean(3)){
+                deliveryPerson = new DeliveryPerson(rs1.getInt(1), rs1.getBoolean(2), areacode, false);
                 break;
             }
         }
         if(Objects.isNull(deliveryPerson)){
-            //System.out.println("there is no available delivery person, wait");
             JOptionPane.showMessageDialog(null, "There is no available delivery person, wait!");
 
         } else {
             DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
-            mapper.insert(deliveryPerson);
+            mapper.update(deliveryPerson);
         }
     }
 
@@ -194,4 +194,5 @@ public class CustomerFrame implements ActionListener {
         long delay = 1800000; //30 min in milliseconds
         timer.schedule(task, delay);
     }
+
 }

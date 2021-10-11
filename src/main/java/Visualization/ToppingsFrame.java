@@ -42,6 +42,9 @@ public class ToppingsFrame {
         toppingsFrame.setVisible(false);
     }
 
+    /**
+     * Add all the toppings to a frame bases on the pizza they belong to
+     */
     public void getToppings() {
         toppingsPanel.setLayout(new BoxLayout(toppingsPanel, Y_AXIS));
         toppingsPanel.add(new JLabel("  Toppings: "));

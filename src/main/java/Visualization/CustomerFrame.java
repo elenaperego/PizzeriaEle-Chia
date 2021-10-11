@@ -25,7 +25,6 @@ public class CustomerFrame implements ActionListener {
 
     Connection conn = ConnectionImpl.getConnection();
     JFrame customerFrame = new JFrame();
-    Order order;
     Customer customer;
     DeliveryPerson deliveryPerson;
     JLabel customerLabel = new JLabel(" CUSTOMER DETAILS: ");
@@ -33,19 +32,36 @@ public class CustomerFrame implements ActionListener {
     JLabel phoneLabel = new JLabel(" PHONE NUMBER: ");
     JLabel addressLabel = new JLabel(" ADDRESS: ");
     JLabel postalCodeLabel = new JLabel(" POSTAL CODE: ");
-    JTextField nameBox = new JTextField();
-    JTextField phoneBox = new JTextField();
-    JTextField addressBox = new JTextField();
-    JTextField postalCodeBox = new JTextField();
-    JButton nextButton = new JButton(" NEXT ");
+    JTextField nameBox = new JTextField(20);
+    JTextField phoneBox = new JTextField(10);
+    JTextField addressBox = new JTextField(20);
+    JTextField postalCodeBox = new JTextField(1);
+    JButton nextButton = new JButton();
+    ImageIcon nextIcon = new ImageIcon(ImageLoader.loadImage("src/main/java/Visualization/Resources/NextIcon.png"));
     static AtomicInteger counter = new AtomicInteger();
 
-    public CustomerFrame(Order order) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        this.order = order;
+    public CustomerFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         customerFrame.setBackground(Color.GREEN);
-        customerFrame.setSize(500, 500);
+        customerFrame.setSize(600, 600);
         customerFrame.setTitle("Customer");
         customerFrame.setLayout(new GridLayout(6, 2));
+
+        customerLabel.setFont(new Font("Serif", Font.BOLD, 17));
+        customerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        nameLabel.setFont(new Font("Serif", Font.BOLD, 17));
+        phoneLabel.setFont(new Font("Serif", Font.BOLD, 17));
+        addressLabel.setFont(new Font("Serif", Font.BOLD, 17));
+        postalCodeLabel.setFont(new Font("Serif", Font.BOLD, 17));
+
+        nextButton.setIcon(nextIcon);
+        nextButton.setBackground(Color.LIGHT_GRAY);
+        nextButton.setBorderPainted(false);
+
+        nameBox.addActionListener(this);
+        phoneBox.addActionListener(this);
+        addressBox.addActionListener(this);
+        postalCodeBox.addActionListener(this);
+        nextButton.addActionListener(this);
 
         customerFrame.add(customerLabel);
         customerFrame.add(new JLabel(""));
@@ -67,13 +83,21 @@ public class CustomerFrame implements ActionListener {
 
     public JFrame getFrame() { return this.customerFrame; }
 
+    public Customer getCustomer() { return this.customer; }
+
     @Override
+    // IT WORKSSSSSSSS!!!! (Customer are added correctly)
+    // Handbreak to make video smaller
     public void actionPerformed(ActionEvent e) {
-        // FIX THIS METHOD !!!!!!!!!!!!
+
         if (e.getSource() == nextButton) {
-            if (nameBox.getText() == null || phoneBox.getText() == null || addressBox.getText() == null || postalCodeBox.getText() == null) {
-                // SHOW ERROR IF AT LEAST ONE BOX IS NULL
-                System.out.println("Error: Empty Box!!!");
+            // If either one of the boxes is empty return an error!
+            if (nameBox.getText().isEmpty() || phoneBox.getText().isEmpty() || addressBox.getText().isEmpty() || postalCodeBox.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Error: empty box!!");
+
+            // If postal code is less than 7 digits it is not accepted
+            } else if (postalCodeBox.getText().length() < 7 || postalCodeBox.getText().length() > 7) {
+                JOptionPane.showMessageDialog(null, "Error: postal code not valid!");
 
             // IF NO BOX IS NULL, check whether the customer has already ordered before by checking his/her name
             // If the name already exists get that customer, otherwise create a new customer!!
@@ -90,37 +114,46 @@ public class CustomerFrame implements ActionListener {
                     }
                 }
 
-                if(!exists) {
-                    Customer newCustomer = new Customer(counter.getAndIncrement(), nameBox.getText(), phoneBox.getText(), addressBox.getText(), Integer.parseInt(postalCodeBox.getText()));
+                if (!exists) {
+                    // Since customer is new the ordered pizzas are equal to 0
+                    Customer newCustomer = new Customer(counter.getAndIncrement(), nameBox.getText(), phoneBox.getText(), addressBox.getText(), Integer.parseInt(postalCodeBox.getText()), 0);
                     mapper.insert(newCustomer);
                     this.customer = newCustomer;
                 }
-            }
 
-            OrderFrame orderFrame = null;
-            try {
-                orderFrame = new OrderFrame();
-            } catch (IllegalAccessException illegalAccessException) {
-                illegalAccessException.printStackTrace();
-            } catch (InstantiationException instantiationException) {
-                instantiationException.printStackTrace();
-            } catch (ClassNotFoundException classNotFoundException) {
-                classNotFoundException.printStackTrace();
-            }
+                OrderFrame orderFrame = null;
+                try {
+                    orderFrame = new OrderFrame(this);
+                } catch (IllegalAccessException illegalAccessException) {
+                    illegalAccessException.printStackTrace();
+                } catch (InstantiationException instantiationException) {
+                    instantiationException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
 
-            try {
-                selectDeliveryPerson(postalCodeBox.getText());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                // Check whether this method works having introduced the new else if
+                // Code format: 1234 AB = 7 digits
+                try {
+                    selectDeliveryPerson(postalCodeBox.getText());
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                availableAgain();
+
+                customerFrame.dispose();
+                orderFrame.getFrame().setVisible(true);
             }
-            availableAgain();
-            customerFrame.dispose();
-            orderFrame.getFrame().setVisible(true);
         }
     }
 
+    /**
+     * A delivery person is selected for a given order
+     * @param postalCode is the postal code associated with this order
+     * @throws SQLException
+     */
     public void selectDeliveryPerson(String postalCode) throws SQLException {
-        String postalCodeTrimmed = postalCode.substring(0, 5);
+        String postalCodeTrimmed = postalCode.substring(0, 5);      // Check error from method above!
         int code = Integer.parseInt(postalCodeTrimmed);
         PreparedStatement pstmt = conn.prepareStatement("SELECT areacode FROM areacodes WHERE postalcode = ?");
         pstmt.setInt(1, code);
@@ -138,14 +171,18 @@ public class CustomerFrame implements ActionListener {
             }
         }
         if(Objects.isNull(deliveryPerson)){
-            System.out.println("there is no available delivery person, wait");
-            // ADD ERROR FRAME IF DELIVERY PERSON NOT AVAILABLE
+            //System.out.println("there is no available delivery person, wait");
+            JOptionPane.showMessageDialog(null, "There is no available delivery person, wait!");
+
         } else {
             DeliveryPersonMapper mapper = new DeliveryPersonMapper(conn);
             mapper.insert(deliveryPerson);
         }
     }
 
+    /**
+     * This method sets a delivery person to be available again after 30 minutes
+     */
     public void availableAgain() {
         TimerTask task = new TimerTask() {
             public void run() {
@@ -155,7 +192,7 @@ public class CustomerFrame implements ActionListener {
             }
         };
         Timer timer = new Timer();
-        long delay = 1800000; //30 min
+        long delay = 1800000; //30 min in milliseconds
         timer.schedule(task, delay);
     }
 }

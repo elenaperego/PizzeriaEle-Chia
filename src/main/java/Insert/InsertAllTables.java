@@ -22,6 +22,7 @@ public class InsertAllTables {
                 + "phoneNumber BIGINT, "
                 + "addressStreet VARCHAR(64), "
                 + "addressCode INT, "
+                + "orderedPizzas INT, "
                 + "PRIMARY KEY (customerId))");
         s.execute("CREATE TABLE deliveryPersonOrders ("
                 + "orderId INT NOT NULL, "

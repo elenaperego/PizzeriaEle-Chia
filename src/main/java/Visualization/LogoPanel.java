@@ -1,13 +1,11 @@
 package Visualization;
 
 import Classes.Order.Order;
-import Mappers.ConnectionImpl;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 
 public class LogoPanel extends JPanel implements ActionListener {
 
@@ -37,7 +35,7 @@ public class LogoPanel extends JPanel implements ActionListener {
 
         vespaLogo.setIcon(vespaIcon);
         vespaLogo.setPreferredSize(new Dimension(screenSize.width/5, screenSize.height/6));
-        pizzaLogo.setBackground(Color.RED);
+        vespaLogo.setBackground(Color.RED);
         vespaLogo.setBorderPainted(false);
         vespaLogo.addActionListener(this);
 
@@ -47,7 +45,9 @@ public class LogoPanel extends JPanel implements ActionListener {
     }
 
     @Override
+    // Change the structures of the frames that show up when the buttons are pressed!!!!!!
     public void actionPerformed(ActionEvent e) {
+        /*
         Order order = null;
         OrderFrame orderFrame = null;
         try {
@@ -60,10 +60,21 @@ public class LogoPanel extends JPanel implements ActionListener {
             classNotFoundException.printStackTrace();
         }
         order = orderFrame.getNewOrder(); // Check whether order is correct
-        StatusFrame statusFrame = new StatusFrame(order);
+
+        StatusFrame statusFrame = null;
+        try {
+            statusFrame = new StatusFrame(order);
+        } catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
+        } catch (InstantiationException instantiationException) {
+            instantiationException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
+        }*/
+
         CustomerFrame customerFrame = null;
         try {
-            customerFrame = new CustomerFrame(order);
+            customerFrame = new CustomerFrame();
         } catch (IllegalAccessException illegalAccessException) {
             illegalAccessException.printStackTrace();
         } catch (InstantiationException instantiationException) {
@@ -75,7 +86,7 @@ public class LogoPanel extends JPanel implements ActionListener {
             customerFrame.getFrame().setVisible(true);
 
         } else if (e.getSource() == vespaLogo) {
-            statusFrame.getFrame().setVisible(true);
+            //statusFrame.getFrame().setVisible(true);
         }
     }
 }

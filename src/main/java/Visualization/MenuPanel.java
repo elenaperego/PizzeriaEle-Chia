@@ -11,15 +11,18 @@ import Mappers.PizzaDataMapper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-public class MenuPanel {
+public class MenuPanel implements ActionListener {
 
     Connection conn = ConnectionImpl.getConnection();
     JPanel menuPanel = new JPanel();
     JScrollPane scrollPane = new JScrollPane(menuPanel);
     ArrayList<ObjectPanel> menu = new ArrayList();
+    ArrayList<MenuItem> orderSummary = new ArrayList<>();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     MenuPanel() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
@@ -64,9 +67,21 @@ public class MenuPanel {
         }
         menuPanel.add(panel.getPanel());
         menuPanel.add(Box.createRigidArea(new Dimension(screenSize.width, 30)));
+        menu.add(panel);
     }
+
+    public ArrayList<MenuItem> getOrderSummary() { return this.orderSummary; }
 
     public ObjectPanel getObject(int i) { return this.menu.get(i); }
 
     public JScrollPane getMenuPanel() { return this.scrollPane; }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for (ObjectPanel o : menu) {
+            if (o.getCheckBox().isSelected()) {
+                orderSummary.add(o.getObject());
+            }
+        }
+    }
 }

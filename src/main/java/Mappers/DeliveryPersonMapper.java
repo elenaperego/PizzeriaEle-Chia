@@ -35,6 +35,7 @@ public class DeliveryPersonMapper implements DataMapper{
             pstmt.setBoolean(1, deliveryPersonToBeUpdated.isGirl());
             pstmt.setInt(2, deliveryPersonToBeUpdated.getAreaCode());
             pstmt.setBoolean(3, deliveryPersonToBeUpdated.isAvailable());
+            pstmt.setInt(4, deliveryPersonToBeUpdated.getDeliveryPersonId());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

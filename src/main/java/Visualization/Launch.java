@@ -1,10 +1,7 @@
 package Visualization;
 
-import Mappers.ConnectionImpl;
-
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Connection;
 
 public class Launch {
 

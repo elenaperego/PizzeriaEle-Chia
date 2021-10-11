@@ -45,7 +45,7 @@ public class InsertAllTables {
                 + "orderId INT NOT NULL AUTO_INCREMENT, "
                 + "orderStatus VARCHAR(64), "
                 + "customerId TINYINT, "
-                + "codeId INT, "
+                + "codeId VARCHAR(64), "
                 + "estimatedDeliveryTime DATE, "
                 + "totalPrice INT, "
                 + "PRIMARY KEY (orderId))");

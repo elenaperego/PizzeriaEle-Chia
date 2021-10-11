@@ -2,7 +2,7 @@ package Visualization;
 
 import Classes.Customer.Customer;
 import Classes.DeliveryPerson.DeliveryPerson;
-import Classes.Order.Order;
+import Classes.MenuItem;
 import Mappers.ConnectionImpl;
 import Mappers.CustomerDataMapper;
 import Mappers.DeliveryPersonMapper;
@@ -23,7 +23,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CustomerFrame implements ActionListener {
 
-    Connection conn;
+    Connection conn = ConnectionImpl.getConnection();
+
+    ArrayList<Classes.MenuItem> orderSummary;
     JFrame customerFrame = new JFrame();
     Customer customer;
     DeliveryPerson deliveryPerson;
@@ -40,7 +42,9 @@ public class CustomerFrame implements ActionListener {
     ImageIcon nextIcon = new ImageIcon(ImageLoader.loadImage("src/main/java/Visualization/Resources/NextIcon.png"));
     static AtomicInteger counter = new AtomicInteger();
 
-    public CustomerFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public CustomerFrame(ArrayList<MenuItem> summary) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        this.orderSummary = summary;
+
         customerFrame.setBackground(Color.GREEN);
         customerFrame.setSize(600, 600);
         customerFrame.setTitle("Customer");
@@ -85,6 +89,8 @@ public class CustomerFrame implements ActionListener {
 
     public Customer getCustomer() { return this.customer; }
 
+    public ArrayList<MenuItem> getOrderSummary() { return this.orderSummary; }
+
     @Override
     // Handbreak to make video smaller
     public void actionPerformed(ActionEvent e) {
@@ -97,6 +103,11 @@ public class CustomerFrame implements ActionListener {
             // If postal code is less than 7 digits it is not accepted
             } else if (postalCodeBox.getText().length() < 6) {
                 JOptionPane.showMessageDialog(null, "Error: postal code not valid!");
+
+            // No person is available
+            } else if(true) {
+            // TO BE IMPLEMENTED!!!!!
+
 
             // IF NO BOX IS NULL, check whether the customer has already ordered before by checking his/her name
             // If the name already exists get that customer, otherwise create a new customer!!

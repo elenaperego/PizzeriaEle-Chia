@@ -35,7 +35,7 @@ public class OrderFrame implements ActionListener {
     JPanel orderPanel = new JPanel();
     JLabel orderLabel = new JLabel("ORDER DETAILS:");
     JLabel orderSummaryLabel = new JLabel("      ORDER SUMMARY");
-    JComboBox<Object> summary = new JComboBox<>();
+    JComboBox<Object> summary;
     JButton priceButton = new JButton();
     JLabel numberPriceLabel = new JLabel();
     JLabel codeLabel = new JLabel("      INSERT CODE HERE");
@@ -49,6 +49,9 @@ public class OrderFrame implements ActionListener {
 
     public OrderFrame(CustomerFrame customerFrame) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this.customerFrame = customerFrame;
+        this.orderSummary = customerFrame.getOrderSummary();
+
+        fillInSummary();
 
         orderFrame.setBackground(Color.GREEN);
         orderFrame.setSize(600, 600);
@@ -106,6 +109,17 @@ public class OrderFrame implements ActionListener {
     }
 
     /**
+     * Fill in the combobox with the items of the ordersummary
+     */
+    public void fillInSummary() {
+        String[] names = new String[orderSummary.size()];
+        for (int i = 0; i < orderSummary.size(); i++) {
+            names[i] = orderSummary.get(i).getName();
+        }
+        summary = new JComboBox<>(names);
+    }
+
+    /**
      * This method calculates the final price of the order based on the order summary (including the profit and the 9% VAT)
      * @param summary is the order summary
      */
@@ -140,27 +154,10 @@ public class OrderFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        MenuPanel menu = null;
-        try {
-            menu = new MenuPanel();
-        } catch (IllegalAccessException illegalAccessException) {
-            illegalAccessException.printStackTrace();
-        } catch (InstantiationException instantiationException) {
-            instantiationException.printStackTrace();
-        } catch (ClassNotFoundException classNotFoundException) {
-            classNotFoundException.printStackTrace();
-        }
-
         // Add pizzas to order summary if selected in the menu panel
         // Sum price of all the objects and include profits??????
         if (e.getSource() == summary) {
-            orderSummary = new ArrayList<>();
-            for (int i = 0; i < menu.menu.size(); i++) {
-                if (menu.getObject(i).getCheckBox().isSelected()) {
-                    summary.addItem(menu.getObject(i).getObject().getName());
-                    orderSummary.add(menu.getObject(i).getObject());
-                }
-            }
+
             getFinalPrice(orderSummary);    // This is the price without the discount applied
 
             int pizzaCount = checkNumberofPizzas(orderSummary);     // Number of pizzas ordered by customer
@@ -179,7 +176,7 @@ public class OrderFrame implements ActionListener {
                 String discountCode = String.format("%05d", num);
                 DiscountCodeDataMapper discountMapper = new DiscountCodeDataMapper(conn);
                 discountMapper.insert(new DiscountCode(-1, Long.parseLong(discountCode), false));
-                JOptionPane.showMessageDialog(null, "Congratulation, this is your discount code: ");
+                JOptionPane.showMessageDialog(null, "Congratulation, this is your discount code: " + discountCode);
             }
 
         // Compare the code inserted by the user with the ones already in the database
@@ -214,7 +211,7 @@ public class OrderFrame implements ActionListener {
 
             // CHECK WHETHER THE FOLLOWING METHOD WORKS
             if (atLeastOnePizza(orderSummary)) {
-                newOrder = new Order(orderCount++, customerCount++, "ordered", codeId, finalPrice, null);
+                newOrder = new Order(orderCount++, customerFrame.getCustomer().getId(), "ordered", customerFrame.getCustomer().getAddressCode(), finalPrice, null);
                 OrderDataMapper orderMapper = new OrderDataMapper(conn);
                 orderSubmittedTime = new java.util.Date();
                 newOrder.setEstimatedDeliveryTime(getDeliveryTime());

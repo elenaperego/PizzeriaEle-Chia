@@ -39,6 +39,7 @@ public class DiscountCodeDataMapper {
             PreparedStatement pstmt = conn.prepareStatement("UPDATE discountCodes SET discountCode = ?, isUsed = ? WHERE discountCodeId = ?;");
             pstmt.setLong(1, discountCodeToBeUpdated.getDiscountCode());
             pstmt.setBoolean(2, discountCodeToBeUpdated.isUsed());
+            pstmt.setInt(3, discountCodeToBeUpdated.getId());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

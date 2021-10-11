@@ -18,12 +18,12 @@ public class OrderDataMapper implements DataMapper{
     public Optional<Order> find(int id) {
         Order o = null;
         try{
-            PreparedStatement pstmt = conn.prepareStatement("SELECT orderStatus, customerId, codeId, estimatedDeliveryTime, totalPrice FROM order WHERE orderId = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT orderStatus, customerId, codeId, estimatedDeliveryTime, totalPrice FROM orders WHERE orderId = ?");
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                o = new Order(id, rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getDouble(4), rs.getDate(5));
+                o = new Order(id, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getDate(5));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -35,10 +35,10 @@ public class OrderDataMapper implements DataMapper{
     public void insert(Object object) {
         try{
             Order orderToBeInserted = (Order) object;
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO order (orderStatus, customerId, codeId, estimatedDeliveryTime, totalPrice) VALUES (?, ?, ?, ?, ?);");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO orders (orderStatus, customerId, codeId, estimatedDeliveryTime, totalPrice) VALUES (?, ?, ?, ?, ?);");
             pstmt.setString(1, orderToBeInserted.getStatus());
             pstmt.setLong(2, orderToBeInserted.getCustomerId());
-            pstmt.setLong(3, orderToBeInserted.getCodeId());
+            pstmt.setString(3, orderToBeInserted.getCodeId());
             pstmt.setDate(4, new java.sql.Date(orderToBeInserted.getEstimatedDeliveryTime().getTime()));
             pstmt.setDouble(5, orderToBeInserted.getTotalPrice());
             pstmt.executeUpdate();
@@ -51,10 +51,10 @@ public class OrderDataMapper implements DataMapper{
     public void update(Object object) {
         try{
             Order orderToBeUpdated = (Order) object;
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE order SET orderStatus = ?, customerId = ?, codeId = ?, estimatedDeliveryTime = ?, totalPrice = ? WHERE orderId = ?;");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE orders SET orderStatus = ?, customerId = ?, codeId = ?, estimatedDeliveryTime = ?, totalPrice = ? WHERE orderId = ?;");
             pstmt.setString(1, orderToBeUpdated.getStatus());
             pstmt.setLong(2, orderToBeUpdated.getCustomerId());
-            pstmt.setLong(3, orderToBeUpdated.getCodeId());
+            pstmt.setString(3, orderToBeUpdated.getCodeId());
             pstmt.setDate(4, (Date) orderToBeUpdated.getEstimatedDeliveryTime());
             pstmt.setDouble(5, orderToBeUpdated.getTotalPrice());
             pstmt.executeUpdate();
@@ -67,7 +67,7 @@ public class OrderDataMapper implements DataMapper{
     public void delete(Object object) {
         try{
             Order orderToBeDeleted = (Order) object;
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM order WHERE orderId = ?;");
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM orders WHERE orderId = ?;");
             pstmt.setLong(1, orderToBeDeleted.getId());
             pstmt.executeUpdate();
         } catch (SQLException throwables) {

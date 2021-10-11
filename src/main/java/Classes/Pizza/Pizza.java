@@ -40,6 +40,8 @@ public class Pizza implements MenuItem {
                 price += t.getPrice();
             }
         }
+        price *= 1.9;          // Here the 9 % VAT is added
+        price = Math.round(price);
         return price;
     }
 

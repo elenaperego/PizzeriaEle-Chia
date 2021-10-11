@@ -105,7 +105,7 @@ public class CustomerFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: postal code not valid!");
 
             // No person is available
-            } else if(true) {
+            } else if(false) {
             // TO BE IMPLEMENTED!!!!!
 
 

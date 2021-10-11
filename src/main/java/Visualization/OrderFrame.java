@@ -25,10 +25,8 @@ public class OrderFrame implements ActionListener {
     Connection conn = ConnectionImpl.getConnection();
     Order newOrder = null;
     double finalPrice = 0;
-    long codeId = 0;
     int orderCount = 0;        // Should these two counts remain updated when the application closes or
-    int customerCount = 0;     // is it possible to restart them whenever we launch the application again?
-    double profit = 0;
+    double profit;
 
     CustomerFrame customerFrame;
     JFrame orderFrame = new JFrame();
@@ -127,7 +125,6 @@ public class OrderFrame implements ActionListener {
         for (MenuItem menuItem : summary) {
             finalPrice += menuItem.getPrice();
         }
-        finalPrice *= 1.9;          // Here the 9 % VAT is added
         finalPrice += profit;       // Here the profit is added
     }
 
@@ -232,6 +229,7 @@ public class OrderFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Error: there should be at least one pizza in the order!");
             }
+            System.out.println(profit);
         }
     }
 

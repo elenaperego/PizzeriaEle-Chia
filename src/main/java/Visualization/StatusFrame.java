@@ -18,7 +18,7 @@ public class StatusFrame implements ActionListener {
     Order order;
     int orderId;
     JFrame statusFrame = new JFrame();
-    JLabel orderLabel = new JLabel("    ORDER STATUS  " + orderId + " :");
+    JLabel orderLabel = new JLabel("    ORDER STATUS:");
     JLabel estimatedDeliveryTimeLabel = new JLabel("    ESTIMATED DELIVERY TIME:");
     JLabel timeLabel = new JLabel();
     JLabel summaryLabel = new JLabel("    ORDER SUMMARY");
